@@ -29,6 +29,8 @@
 
 2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
+![](./docs/images/vcftomat.excalidraw.png)
+
 ## Usage
 
 > [!NOTE]
