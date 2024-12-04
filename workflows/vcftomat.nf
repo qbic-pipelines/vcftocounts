@@ -5,6 +5,8 @@
 */
 
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
+include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
+include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
