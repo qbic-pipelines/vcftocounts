@@ -53,6 +53,10 @@ workflow VCFTOMAT {
         ch_vcf = ch_samplesheet
     }
 
+    //
+    // Merge multiple VCFs per sample with BCFTOOLS_MERGE
+    //
+    
     // Bring all vcfs from one sample into a channel
     // Branch based on the number of VCFs per sample
     (ch_single_vcf, ch_multiple_vcf) = ch_vcf
@@ -84,10 +88,11 @@ workflow VCFTOMAT {
     // Merge the results back into a single channel
     ch_merged_vcfs = ch_single_vcf.mix(BCFTOOLS_MERGE.out.vcf)
 
-    ch_merged_vcfs.map{ it -> [it[0], it[1]] }.view()
-
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 
+    //
+    // Convert VCFs to Count Matrices
+    //
     VCF2MAT(
         ch_merged_vcfs.map{ it -> [it[0], it[1]] },
     )
