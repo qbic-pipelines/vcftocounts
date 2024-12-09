@@ -235,5 +235,16 @@
         {
             "$ref": "#/$defs/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "gvcf": {
+            "type": "string"
+        },
+        "fai": {
+            "type": "string"
+        },
+        "dict": {
+            "type": "string"
+        }
+    }
 }
