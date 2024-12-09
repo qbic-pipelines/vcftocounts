@@ -13,14 +13,27 @@
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
                 "meta": ["id"]
             },
-            "vcf": {
-                "type": "string",
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.vcf\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+            "gvcf": {
+                "type": "boolean",
+                "errorMessage": "",
+                "meta": ["gvcf"]
             },
-            "vcf_index": {
+            "vcf_path": {
+                "errorMessage": "VCF file cannot contain spaces and must have extension '.vcf' or '.vcf.gz'",
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "pattern": "^\\S+\\.vcf(\\.gz)?$"
+                    },
+                    {
+                        "type": "string",
+                        "maxLength": 0
+                    }
+                ],
+                "format": "file-path",
+                "exists": true
+            },
+            "vcf_index_path": {
                 "type": "string",
                 "format": "file-path",
                 "exists": true,
@@ -28,6 +41,6 @@
                 "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
             }
         },
-        "required": ["sample", "vcf"]
+        "required": ["sample", "gvcf" ,"vcf_path"]
     }
 }

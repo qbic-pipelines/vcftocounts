@@ -7,6 +7,7 @@
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
+include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { VCF2MAT                } from '../modules/local/vcf2mat/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -30,13 +31,35 @@ workflow VCFTOMAT {
     main:
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
-    ch_vcf = Channel.empty()
+
+    //
+    // add index to non-indexed VCFs
+    //
+    (ch_has_index, ch_has_no_index) = ch_samplesheet.branch{
+        is_indexed:  it[1][1] != null
+        to_index:    it[1][1] == null
+    }
+
+    // Remove empty index [] from channel = it[2]
+    input_to_index = ch_has_no_index.map{ it -> [it[0], it[1]] }
+
+    TABIX_TABIX( input_to_index )
+
+    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
+
+    // Join tbi index back to input
+    ch_indexed = input_to_index.join(
+        TABIX_TABIX.out.tbi
+            .map{ it -> [ it[0], [it[1]] ] }
+        ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
+
+    // Join both channels back together
+    ch_vcf_tbi = ch_has_index.mix(ch_indexed)
 
     //
     // Convert gvcfs to vcfs
     //
-
-    (ch_gvcf, ch_normal_vcf) = ch_samplesheet.branch {
+    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch {
             gvcf: it[0].gvcf
             vcf: !it[0].gvcf
         }
