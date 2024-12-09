@@ -13,10 +13,6 @@ Arguments:
   VCF                     input vcf file
 '->doc
 
-library(VariantAnnotation)
-library(docopt)
-library(Matrix)
-
 suppressMessages(library(VariantAnnotation, warn.conflicts = FALSE, quietly=TRUE))
 suppressMessages(library(docopt, warn.conflicts = FALSE, quietly=TRUE))
 suppressMessages(library(Matrix, warn.conflicts = FALSE, quietly=TRUE))
@@ -26,6 +22,7 @@ generateMatrixfromVCF<-function(VCF, ofile){
   vcfobj <- readVcf(VCF)
   #Convert genotype to SNP matrix
   genomat<-geno(vcfobj)$GT
+
   variantmat<-apply(genomat,c(1,2), function(x){
     xstrip<-gsub("[[:punct:]]", "", x)
     if( xstrip=="11"){
