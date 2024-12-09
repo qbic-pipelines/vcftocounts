@@ -1,5 +1,4 @@
 #!/usr/bin/env Rscript
-
 'VCF to count matrix converter
 
 Usage:
@@ -13,6 +12,11 @@ Options:
 Arguments:
   VCF                     input vcf file
 '->doc
+
+library(VariantAnnotation)
+library(docopt)
+library(Matrix)
+
 suppressMessages(library(VariantAnnotation, warn.conflicts = FALSE, quietly=TRUE))
 suppressMessages(library(docopt, warn.conflicts = FALSE, quietly=TRUE))
 suppressMessages(library(Matrix, warn.conflicts = FALSE, quietly=TRUE))
@@ -26,15 +30,14 @@ generateMatrixfromVCF<-function(VCF, ofile){
     xstrip<-gsub("[[:punct:]]", "", x)
     if( xstrip=="11"){
       return (2)
-      } else if (xstrip %in%c("01","10")){
-        return(1)
-        } else if (xstrip %in%c("00","")){
-          return(0)
-        } else{
-          return(NA)
-        }
-      })
-  outputvariants
+    } else if (xstrip %in%c("01","10")){
+      return(1)
+    } else if (xstrip %in%c("00","")){
+      return(0)
+    } else{
+      return(NA)
+    }
+  })
   write.csv(variantmat,file=ofile)
 }
 opt<-docopt(doc)
