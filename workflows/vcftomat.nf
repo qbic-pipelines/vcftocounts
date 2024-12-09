@@ -7,6 +7,7 @@
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
+include { VCF2MAT                } from '../modules/local/vcf2mat/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -22,10 +23,76 @@ workflow VCFTOMAT {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
-    main:
+    fasta
+    fai
+    dict
 
+    main:
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
+    ch_vcf = Channel.empty()
+
+    //
+    // Convert gvcfs to vcfs
+    //
+    if (params.gvcf) {
+
+        GATK4_GENOTYPEGVCFS(
+            ch_samplesheet,
+            fasta,
+            fai,
+            dict,
+            [], // dbsnp
+            [] // dbsnp_tbi
+        )
+
+        ch_vcf = GATK4_GENOTYPEGVCFS.out.vcf.join(GATK4_GENOTYPEGVCFS.out.tbi)
+
+        ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
+    } else {
+        ch_vcf = ch_samplesheet
+    }
+
+    // Bring all vcfs from one sample into a channel
+    // Branch based on the number of VCFs per sample
+    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+        .map { meta, files ->
+            // Assuming files is a list of all VCF and TBI files
+            def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
+            def tbis = files.findAll { it.name.endsWith('.vcf.gz.tbi') }
+            [meta.id, meta, vcfs, tbis]
+        }
+        .groupTuple(by: 0)
+        .map { id, metas, vcfs, tbis ->
+            def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
+            def vcf_count = vcfs.flatten().size()
+            meta.single_vcf = (vcf_count == 1)
+            [meta, vcfs.flatten(), tbis.flatten()]
+        }.branch {
+            single: it[0].single_vcf
+            multiple: !it[0].single_vcf
+        }
+
+    // Run BCFTOOLS_MERGE only on samples with multiple VCFs
+    BCFTOOLS_MERGE(
+        ch_multiple_vcf,
+        fasta.map{ it -> [ [ id:it.baseName ], it ] },
+        fai.map{ it -> [ [ id:it.baseName ], it ] },
+        [[],[]] // bed
+    )
+
+    // Merge the results back into a single channel
+    ch_merged_vcfs = ch_single_vcf.mix(BCFTOOLS_MERGE.out.vcf)
+
+    ch_merged_vcfs.map{ it -> [it[0], it[1]] }.view()
+
+    ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
+
+    VCF2MAT(
+        ch_merged_vcfs.map{ it -> [it[0], it[1]] },
+    )
+
+    ch_versions = ch_versions.mix(VCF2MAT.out.versions)
 
     //
     // Collate and save software versions
@@ -79,7 +146,9 @@ workflow VCFTOMAT {
         []
     )
 
-    emit:multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
+    emit:
+    csv            = VCF2MAT.out.csv             // channel: *.csv
+    multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 
 }
