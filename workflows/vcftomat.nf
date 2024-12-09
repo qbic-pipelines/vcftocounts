@@ -35,28 +35,33 @@ workflow VCFTOMAT {
     //
     // Convert gvcfs to vcfs
     //
-    if (params.gvcf) {
 
-        GATK4_GENOTYPEGVCFS(
-            ch_samplesheet,
-            fasta,
-            fai,
-            dict,
-            [], // dbsnp
-            [] // dbsnp_tbi
-        )
+    (ch_gvcf, ch_normal_vcf) = ch_samplesheet.branch {
+            gvcf: it[0].gvcf
+            vcf: !it[0].gvcf
+        }
 
-        ch_vcf = GATK4_GENOTYPEGVCFS.out.vcf.join(GATK4_GENOTYPEGVCFS.out.tbi)
+    GATK4_GENOTYPEGVCFS(
+        ch_gvcf.map{ it -> [ it[0], it[1][0], it[1][1], [], [] ] },
+        fasta.map{ it -> [ [ id:it.baseName ], it ] },
+        fai.map{ it -> [ [ id:it.baseName ], it ] },
+        dict.map{ it -> [ [ id:it.baseName ], it ] },
+        [[],[]], // dbsnp
+        [[],[]] // dbsnp_tbi
+    )
 
-        ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
-    } else {
-        ch_vcf = ch_samplesheet
-    }
+    ch_vcf_index = GATK4_GENOTYPEGVCFS.out.vcf
+            .join(GATK4_GENOTYPEGVCFS.out.tbi)
+            .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+    ch_vcf = ch_normal_vcf.mix(ch_vcf_index)
+
+    ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     //
     // Merge multiple VCFs per sample with BCFTOOLS_MERGE
     //
-    
+
     // Bring all vcfs from one sample into a channel
     // Branch based on the number of VCFs per sample
     (ch_single_vcf, ch_multiple_vcf) = ch_vcf
