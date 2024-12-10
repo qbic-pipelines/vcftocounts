@@ -237,9 +237,6 @@
         }
     ],
     "properties": {
-        "gvcf": {
-            "type": "string"
-        },
         "fai": {
             "type": "string"
         },

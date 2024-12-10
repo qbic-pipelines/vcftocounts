@@ -37,7 +37,6 @@
                 "type": "string",
                 "format": "file-path",
                 "exists": true,
-                "pattern": "^.tbi$",
                 "errorMessage": "Index of VCF file must have extension '.tbi'- Optional"
             }
         },
