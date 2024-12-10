@@ -36,8 +36,8 @@ workflow VCFTOMAT {
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet.branch{
-        is_indexed:  it[1][1] != null
-        to_index:    it[1][1] == null
+            has_index: !it[0].to_index
+            to_index: it[0].to_index
     }
 
     // Remove empty index [] from channel = it[2]
@@ -108,8 +108,8 @@ workflow VCFTOMAT {
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
     BCFTOOLS_MERGE(
         ch_multiple_vcf,
-        fasta.map{ it -> [ [ id:it.baseName ], it ] },
-        fai.map{ it -> [ [ id:it.baseName ], it ] },
+        [[],[]], // fasta reference only needed for gvcf
+        [[],[]], // fasta.fai reference only needed for gvcf
         [[],[]] // bed
     )
 
