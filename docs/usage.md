@@ -25,12 +25,12 @@ SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
 SAMPLE-2,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
 ```
 
-| Column    | Description                                                                                                                                                                                                  |
-| --------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `sample`  | Custom sample name. This entry will be identical for vcfs that originate from the same bam but were yielded with different callers. Spaces in sample names are automatically converted to underscores (`_`). |
-| `gvcf` | Boolean whether the supplied sample is a gvcf (true) or a normal vcf (false).                                                             |
-| `vcf_path` | Full path to VCF file, should have the extension ".g.vcf.gz", ".vcf.gz", ".g.vcf" or ".vcf".                                                             |
-| `vcf_index_path` | Full path to index of (g)VCF file. Optional. Should have extension ".tbi".                                                            |
+| Column           | Description                                                                                                                                                                                                  |
+| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `sample`         | Custom sample name. This entry will be identical for vcfs that originate from the same bam but were yielded with different callers. Spaces in sample names are automatically converted to underscores (`_`). |
+| `gvcf`           | Boolean whether the supplied sample is a gvcf (true) or a normal vcf (false).                                                                                                                                |
+| `vcf_path`       | Full path to VCF file, should have the extension ".g.vcf.gz", ".vcf.gz", ".g.vcf" or ".vcf".                                                                                                                 |
+| `vcf_index_path` | Full path to index of (g)VCF file. Optional. Should have extension ".tbi".                                                                                                                                   |
 
 An [example samplesheet](../assets/samplesheet.csv) has been provided with the pipeline.
 

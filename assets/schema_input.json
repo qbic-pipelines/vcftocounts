@@ -40,6 +40,6 @@
                 "errorMessage": "Index of VCF file must have extension '.tbi'- Optional"
             }
         },
-        "required": ["sample", "gvcf" ,"vcf_path"]
+        "required": ["sample", "gvcf", "vcf_path"]
     }
 }

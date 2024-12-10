@@ -1,5 +1,3 @@
-
-
 # famosab/vcftomat
 
 [![GitHub Actions CI Status](https://github.com/famosab/vcftomat/actions/workflows/ci.yml/badge.svg)](https://github.com/famosab/vcftomat/actions/workflows/ci.yml)
@@ -29,7 +27,6 @@
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-
 First, prepare a samplesheet with your input data that looks as follows:
 
 `samplesheet.csv`:
@@ -47,7 +44,6 @@ Each row represents a VCF file coming from a sample.
 
 Now, you can run the pipeline using:
 
-
 ```bash
 nextflow run famosab/vcftomat \
    -profile <docker/singularity/.../institute> \
@@ -64,7 +60,6 @@ nextflow run famosab/vcftomat \
 famosab/vcftomat was originally written by Famke Bäuerle, Dorothy Ellis.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
-
 
 ## Contributions and Support
 
