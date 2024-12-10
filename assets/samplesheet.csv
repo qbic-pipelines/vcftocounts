@@ -1,5 +1,4 @@
 sample,gvcf,vcf_path,vcf_index_path
-FFPE,false,/Users/famke/01-japan-project/test-files/variant_calling/haplotypecaller/S1/S1.haplotypecaller.filtered.vcf.gz,/Users/famke/01-japan-project/test-files/variant_calling/haplotypecaller/S1/S1.haplotypecaller.filtered.vcf.gz.tbi
-FFPE,false,/Users/famke/01-japan-project/test-files/variant_calling/freebayes/S1/S1.freebayes.vcf.gz,/Users/famke/01-japan-project/test-files/variant_calling/freebayes/S1/S1.freebayes.vcf.gz.tbi
-WES,false,/Users/famke/01-japan-project/test-files/S1.haplotypecaller.vcf.gz,/Users/famke/01-japan-project/test-files/S1.haplotypecaller.vcf.gz.tbi
-strelka,false,/Users/famke/01-japan-project/test-files/variant_calling/strelka/S1/S1.strelka.genome.vcf.gz,
+SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
+SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
+SAMPLE-2,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi

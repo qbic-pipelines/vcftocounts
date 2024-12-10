@@ -1,0 +1,4 @@
+sample,gvcf,vcf_path,vcf_index_path
+ch22,false,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878.chr22.1X.vcf.gz,
+gvcf,true,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/gvcf/test.genome.g.vcf.gz,
+indexed,false,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878_chrM.vcf.gz,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878_chrM.vcf.gz.tbi
