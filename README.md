@@ -26,8 +26,11 @@
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
 
-
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
+2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
+3. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+4. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
+5. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
 ![](./docs/images/vcftomat.excalidraw.png)
 
