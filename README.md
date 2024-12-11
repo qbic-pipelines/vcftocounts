@@ -38,9 +38,7 @@ SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
 SAMPLE-2,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
 ```
 
-Each row represents a VCF file coming from a sample.
-
--->
+Each row represents a VCF file coming from a sample. The `gvcf` column indicates whether the file is a g.vcf file or not. The `vcf_path` and `vcf_index_path` columns contain the path to the VCF file and its index, respectively.
 
 Now, you can run the pipeline using:
 
