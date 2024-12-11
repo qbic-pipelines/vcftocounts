@@ -2,6 +2,17 @@
     "Params: default - stub": {
         "content": [
             3,
+            {
+                "TABIX_TABIX": {
+                    "tabix": 1.2
+                },
+                "VCF2MAT": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "famosab/vcftomat": "v1.0.0"
+                }
+            },
             [
                 "multiqc",
                 "multiqc/multiqc_data",
@@ -17,8 +28,8 @@
             ],
             [
                 "multiqc_report.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "params_2024-12-11_09-12-41.json:md5,916e2b2b6635538ece3ccec49e756f4a",
-                "pipeline_software_mqc_versions.yml:md5,7b97edffe2541392321482aca61a9e1b",
+                "params_2024-12-11_10-43-35.json:md5,968166186e8c46974d7165db1f4e84b0",
+                "pipeline_software_mqc_versions.yml:md5,4a3c08d739de008e8cfee04b52a64b05",
                 "NA12878.chr22.1X.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr22.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -28,24 +39,55 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-11T09:12:42.846505"
+        "timestamp": "2024-12-11T10:43:42.254076"
     },
     "Params: default": {
         "content": [
-            0,
+            3,
+            {
+                "TABIX_TABIX": {
+                    "tabix": 1.2
+                },
+                "VCF2MAT": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "famosab/vcftomat": "v1.0.0"
+                }
+            },
             [
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/pipeline_software_mqc_versions.yml"
+                "pipeline_info/pipeline_software_mqc_versions.yml",
+                "tabix",
+                "tabix/NA12878.chr22.1X.vcf.gz.tbi",
+                "vcf2mat",
+                "vcf2mat/chr22.csv"
             ],
             [
-                "params_2024-12-11_09-12-35.json:md5,abec49678396801c417664bc7d8dee37",
-                "pipeline_software_mqc_versions.yml:md5,ad4600e7c46af5a1c96d2d4b0a5a4009"
+                "multiqc.log:md5,736a9776b795a76b320c4517e3903960",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "multiqc_data.json:md5,7a0f5cde50f9daeb4004a4c73566bc7c",
+                "multiqc_software_versions.txt:md5,5b52328f6144cbad9faab2aebb879f2a",
+                "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
+                "multiqc_report.html:md5,9e4fe836c14dbbb9cea88d42c34e2bd3",
+                "params_2024-12-11_10-43-10.json:md5,b088670a94ed20471600d3ac5928ba66",
+                "pipeline_software_mqc_versions.yml:md5,4a3c08d739de008e8cfee04b52a64b05",
+                "NA12878.chr22.1X.vcf.gz.tbi:md5,3ca6e94f86c548be87dd5fcc391a2525",
+                "chr22.csv:md5,765ece7265a0b6abac7df8d8632a1500"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-11T09:12:37.826195"
+        "timestamp": "2024-12-11T10:43:31.48623"
     }
 }
