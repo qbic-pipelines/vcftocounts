@@ -36,7 +36,7 @@ template:
   force: false
   is_nfcore: false
   name: vcftomat
-  org: famosab
+  org: qbic-pipelines
   outdir: .
   skip_features:
     - gitpod

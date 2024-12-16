@@ -1,5 +1,5 @@
 //
-// Subworkflow with functionality specific to the famosab/vcftomat pipeline
+// Subworkflow with functionality specific to the qbic-pipelines/vcftomat pipeline
 //
 
 /*

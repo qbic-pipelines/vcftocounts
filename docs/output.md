@@ -1,4 +1,4 @@
-# famosab/vcftomat: Output
+# qbic-pipelines/vcftomat: Output
 
 ## Introduction
 
