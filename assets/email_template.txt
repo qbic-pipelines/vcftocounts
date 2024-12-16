@@ -1,10 +1,10 @@
 Run Name: $runName
 
 <% if (success){
-    out << "## famosab/vcftomat execution completed successfully! ##"
+    out << "## qbic-pipelines/vcftomat execution completed successfully! ##"
 } else {
     out << """####################################################
-## famosab/vcftomat execution completed unsuccessfully! ##
+## qbic-pipelines/vcftomat execution completed unsuccessfully! ##
 ####################################################
 The exit status of the task that caused the workflow execution to fail was: $exitStatus.
 The full error message was:
@@ -27,5 +27,5 @@ Pipeline Configuration:
 <% out << summary.collect{ k,v -> " - $k: $v" }.join("\n") %>
 
 --
-famosab/vcftomat
-https://github.com/famosab/vcftomat
+qbic-pipelines/vcftomat
+https://github.com/qbic-pipelines/vcftomat

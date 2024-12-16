@@ -1,4 +1,4 @@
-# famosab/vcftomat: Citations
+# qbic-pipelines/vcftomat: Citations
 
 ## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
 

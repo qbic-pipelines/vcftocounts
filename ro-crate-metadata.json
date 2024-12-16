@@ -52,14 +52,14 @@
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
             "keywords": ["nf-core", "nextflow"],
             "license": ["MIT"],
-            "name": ["famosab/vcftomat"],
+            "name": ["qbic-pipelines/vcftomat"],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
             "sdPublisher": {
                 "@id": "https://nf-co.re/"
             },
-            "url": ["https://github.com/famosab/vcftomat", "https://nf-co.re/famosab/vcftomat/dev/"],
+            "url": ["https://github.com/qbic-pipelines/vcftomat", "https://nf-co.re/qbic-pipelines/vcftomat/dev/"],
             "version": ["1.0.0dev"]
         },
         {
@@ -85,13 +85,13 @@
             "mainEntity": {
                 "@id": "main.nf"
             },
-            "name": "Test suite for famosab/vcftomat"
+            "name": "Test suite for qbic-pipelines/vcftomat"
         },
         {
             "@id": "#812ae302-1686-4339-815d-ec28877e71f6",
             "@type": "TestInstance",
-            "name": "GitHub Actions workflow for testing famosab/vcftomat",
-            "resource": "repos/famosab/vcftomat/actions/workflows/ci.yml",
+            "name": "GitHub Actions workflow for testing qbic-pipelines/vcftomat",
+            "resource": "repos/qbic-pipelines/vcftomat/actions/workflows/ci.yml",
             "runsOn": {
                 "@id": "https://w3id.org/ro/terms/test#GithubService"
             },

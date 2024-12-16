@@ -16,7 +16,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "famosab/vcftomat": "v1.0.0"
+                    "qbic-pipelines/vcftomat": "v1.0.0"
                 }
             },
             [
@@ -97,7 +97,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "famosab/vcftomat": "v1.0.0"
+                    "qbic-pipelines/vcftomat": "v1.0.0"
                 }
             },
             [
