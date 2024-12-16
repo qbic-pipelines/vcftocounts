@@ -1,5 +1,3 @@
-
-
 # famosab/vcftomat
 
 [![GitHub Actions CI Status](https://github.com/famosab/vcftomat/actions/workflows/ci.yml/badge.svg)](https://github.com/famosab/vcftomat/actions/workflows/ci.yml)
@@ -25,7 +23,6 @@
 <!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
      workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
 <!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
-
 
 2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
