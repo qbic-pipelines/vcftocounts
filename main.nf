@@ -39,7 +39,7 @@ params.dict  = getGenomeAttribute('dict')
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow qbic-pipelines_VCFTOMAT {
+workflow QBICPIPELINES_VCFTOMAT {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -88,7 +88,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    qbic-pipelines_VCFTOMAT (
+    QBICPIPELINES_VCFTOMAT (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
@@ -101,7 +101,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        qbic-pipelines_VCFTOMAT.out.multiqc_report
+        QBICPIPELINES_VCFTOMAT.out.multiqc_report
     )
 }
 
