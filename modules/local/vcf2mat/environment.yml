@@ -1,0 +1,7 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - bioconda::bioconductor-variantannotation
+  - conda-forge::r-docopt
+  - conda-forge::r-matrix

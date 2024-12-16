@@ -13,21 +13,33 @@
                 "errorMessage": "Sample name must be provided and cannot contain spaces",
                 "meta": ["id"]
             },
-            "fastq_1": {
-                "type": "string",
-                "format": "file-path",
-                "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 1 must be provided, cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+            "gvcf": {
+                "type": "boolean",
+                "errorMessage": "",
+                "meta": ["gvcf"]
             },
-            "fastq_2": {
+            "vcf_path": {
+                "errorMessage": "VCF file cannot contain spaces and must have extension '.vcf' or '.vcf.gz'",
+                "anyOf": [
+                    {
+                        "type": "string",
+                        "pattern": "^\\S+\\.vcf(\\.gz)?$"
+                    },
+                    {
+                        "type": "string",
+                        "maxLength": 0
+                    }
+                ],
+                "format": "file-path",
+                "exists": true
+            },
+            "vcf_index_path": {
                 "type": "string",
                 "format": "file-path",
                 "exists": true,
-                "pattern": "^\\S+\\.f(ast)?q\\.gz$",
-                "errorMessage": "FastQ file for reads 2 cannot contain spaces and must have extension '.fq.gz' or '.fastq.gz'"
+                "errorMessage": "Index of VCF file must have extension '.tbi'- Optional"
             }
         },
-        "required": ["sample", "fastq_1"]
+        "required": ["sample", "gvcf", "vcf_path"]
     }
 }

@@ -75,20 +75,12 @@ workflow PIPELINE_INITIALISATION {
     Channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
         .map {
-            meta, fastq_1, fastq_2 ->
-                if (!fastq_2) {
-                    return [ meta.id, meta + [ single_end:true ], [ fastq_1 ] ]
+            meta, vcf_path, vcf_index_path ->
+                if (!vcf_index_path) {
+                    return [ meta + [ to_index:true ] , [ vcf_path ] ]
                 } else {
-                    return [ meta.id, meta + [ single_end:false ], [ fastq_1, fastq_2 ] ]
+                    return [ meta + [ to_index:false ] , [ vcf_path, vcf_index_path ] ]
                 }
-        }
-        .groupTuple()
-        .map { samplesheet ->
-            validateInputSamplesheet(samplesheet)
-        }
-        .map {
-            meta, fastqs ->
-                return [ meta, fastqs.flatten() ]
         }
         .set { ch_samplesheet }
 
@@ -116,6 +108,7 @@ workflow PIPELINE_COMPLETION {
 
     main:
     summary_params = paramsSummaryMap(workflow, parameters_schema: "nextflow_schema.json")
+    def multiqc_reports = multiqc_report.toList()
 
     //
     // Completion email and summary
@@ -129,7 +122,7 @@ workflow PIPELINE_COMPLETION {
                 plaintext_email,
                 outdir,
                 monochrome_logs,
-                multiqc_report.toList()
+                multiqc_reports.getVal(),
             )
         }
 
@@ -204,7 +197,7 @@ def toolCitationText() {
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def citation_text = [
             "Tools used in the workflow included:",
-            
+
             "MultiQC (Ewels et al. 2016)",
             "."
         ].join(' ').trim()
@@ -217,7 +210,7 @@ def toolBibliographyText() {
     // Can use ternary operators to dynamically construct based conditions, e.g. params["run_xyz"] ? "<li>Author (2023) Pub name, Journal, DOI</li>" : "",
     // Uncomment function in methodsDescriptionText to render in MultiQC report
     def reference_text = [
-            
+
             "<li>Ewels, P., Magnusson, M., Lundin, S., & Käller, M. (2016). MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics , 32(19), 3047–3048. doi: /10.1093/bioinformatics/btw354</li>"
         ].join(' ').trim()
 
@@ -225,7 +218,7 @@ def toolBibliographyText() {
 }
 
 def methodsDescriptionText(mqc_methods_yaml) {
-    // Convert  to a named map so can be used as with familar NXF ${workflow} variable syntax in the MultiQC YML file
+    // Convert  to a named map so can be used as with familiar NXF ${workflow} variable syntax in the MultiQC YML file
     def meta = [:]
     meta.workflow = workflow.toMap()
     meta["manifest_map"] = workflow.manifest.toMap()

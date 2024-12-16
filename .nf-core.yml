@@ -1,48 +1,46 @@
-bump_version: null
 lint:
   files_exist:
-  - CODE_OF_CONDUCT.md
-  - assets/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_dark.png
-  - .github/ISSUE_TEMPLATE/config.yml
-  - .github/workflows/awstest.yml
-  - .github/workflows/awsfulltest.yml
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
   files_unchanged:
-  - .github/CONTRIBUTING.md
-  - .prettierignore
-  - .github/CONTRIBUTING.md
-  - .prettierignore
-  - CODE_OF_CONDUCT.md
-  - assets/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_dark.png
-  - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/CONTRIBUTING.md
+    - .prettierignore
+    - .github/CONTRIBUTING.md
+    - .prettierignore
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
+  included_configs: false
   multiqc_config:
-  - report_comment
+    - report_comment
   nextflow_config:
-  - manifest.name
-  - manifest.homePage
-  - validation.help.beforeText
-  - validation.help.afterText
-  - validation.summary.beforeText
-  - validation.summary.afterText
-nf_core_version: 3.0.2
-org_path: null
+    - manifest.name
+    - manifest.homePage
+    - validation.help.beforeText
+    - validation.help.afterText
+    - validation.summary.beforeText
+    - validation.summary.afterText
+nf_core_version: 3.1.0
 repository_type: pipeline
 template:
   author: "Famke B\xE4uerle, Dorothy Ellis"
   description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical
     analysis
-  force: true
+  force: false
   is_nfcore: false
   name: vcftomat
   org: famosab
   outdir: .
   skip_features:
-  - gitpod
-  - codespaces
-  - fastqc
-  - adaptivecard
+    - gitpod
+    - codespaces
+    - fastqc
+    - adaptivecard
   version: 1.0.0dev
-update: null

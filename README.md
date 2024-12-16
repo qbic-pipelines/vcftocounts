@@ -1,5 +1,3 @@
-
-
 # famosab/vcftomat
 
 [![GitHub Actions CI Status](https://github.com/famosab/vcftomat/actions/workflows/ci.yml/badge.svg)](https://github.com/famosab/vcftomat/actions/workflows/ci.yml)
@@ -14,20 +12,13 @@
 
 ## Introduction
 
-**famosab/vcftomat** is a bioinformatics pipeline that ...
+**famosab/vcftomat** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-<!-- TODO nf-core:
-   Complete this sentence with a 2-3 sentence summary of what types of data the pipeline ingests, a brief overview of the
-   major pipeline sections and the types of output it produces. You're giving an overview to someone new
-   to nf-core here, in 15-20 seconds. For an example, see https://github.com/nf-core/rnaseq/blob/master/README.md#introduction
--->
-
-<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
-     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
-<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->
-
-
-2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
+1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
+2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
+3. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+4. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
+5. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
 ![](./docs/images/vcftomat.excalidraw.png)
 
@@ -36,30 +27,26 @@
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
 First, prepare a samplesheet with your input data that looks as follows:
 
 `samplesheet.csv`:
 
 ```csv
-sample,fastq_1,fastq_2
-CONTROL_REP1,AEG588A1_S1_L002_R1_001.fastq.gz,AEG588A1_S1_L002_R2_001.fastq.gz
+sample,gvcf,vcf_path,vcf_index_path
+SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
+SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
+SAMPLE-2,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
 ```
 
-Each row represents a fastq file (single-end) or a pair of fastq files (paired end).
-
--->
+Each row represents a VCF file coming from a sample. The `gvcf` column indicates whether the file is a g.vcf file or not. The `vcf_path` and `vcf_index_path` columns contain the path to the VCF file and its index, respectively.
 
 Now, you can run the pipeline using:
-
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
 nextflow run famosab/vcftomat \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
+   --genome GATK.GRCh38 \
    --outdir <OUTDIR>
 ```
 
@@ -71,8 +58,6 @@ nextflow run famosab/vcftomat \
 famosab/vcftomat was originally written by Famke Bäuerle, Dorothy Ellis.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
-
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
 ## Contributions and Support
 
