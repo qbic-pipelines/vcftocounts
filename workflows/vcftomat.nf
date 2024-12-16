@@ -40,14 +40,13 @@ workflow VCFTOMAT {
             to_index: it[0].to_index
     }
 
-    // Remove empty index [] from channel = it[2]
-    input_to_index = ch_has_no_index.map{ it -> [it[0], it[1]] }
+    // Remove empty index [] from channel = it[2] and add file name for joining
+    input_to_index = ch_has_no_index.map{ it -> [ it[0] + [name:it[1][0].baseName], it[1] ] }
 
     TABIX_TABIX( input_to_index )
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
-    // Join tbi index back to input
     ch_indexed = input_to_index.join(
         TABIX_TABIX.out.tbi
             .map{ it -> [ it[0], [it[1]] ] }

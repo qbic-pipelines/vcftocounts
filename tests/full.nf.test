@@ -3,9 +3,9 @@ nextflow_pipeline {
     name "Test pipeline with default settings"
     script "../main.nf"
 
-    test("Params: default") {
+    test("Params: default | input full-size") {
 
-        config 'conf/test.config'
+        config 'conf/test_full.config'
 
         when {
             params {
@@ -34,11 +34,11 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: default - stub") {
+    test("Params: default | input full-size - stub") {
 
         options "-stub"
 
-        config 'conf/test.config'
+        config 'conf/test_full.config'
 
         when {
             params {
