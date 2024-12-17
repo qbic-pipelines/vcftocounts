@@ -2,6 +2,7 @@
 
 [![GitHub Actions CI Status](https://github.com/qbic-pipelines/vcftomat/actions/workflows/ci.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomat/actions/workflows/ci.yml)
 [![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftomat/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomat/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.XXXXXXX-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.XXXXXXX)
+
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
@@ -13,6 +14,7 @@
 ## Introduction
 
 **qbic-pipelines/vcftomat** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
+
 
 1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
