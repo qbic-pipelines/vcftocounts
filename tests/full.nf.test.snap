@@ -2,23 +2,7 @@
     "Params: default | input full-size": {
         "content": [
             15,
-            {
-                "BCFTOOLS_MERGE": {
-                    "bcftools": 1.2
-                },
-                "GATK4_GENOTYPEGVCFS": {
-                    "gatk4": "4.6.1.0"
-                },
-                "TABIX_TABIX": {
-                    "tabix": 1.2
-                },
-                "VCF2MAT": {
-                    "vcf2counts.R": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.0.0"
-                }
-            },
+            null,
             [
                 "bcftools",
                 "bcftools/indexed_merge.merged.vcf",
@@ -37,7 +21,7 @@
                 "multiqc/multiqc_data/multiqc_sources.txt",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/pipeline_software_mqc_versions.yml",
+                "pipeline_info/vcftomat_software_mqc_versions.yml",
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "tabix/test.genome.g.vcf.gz.tbi",
@@ -50,20 +34,20 @@
                 "vcf2mat/toindex_nomerge.csv"
             ],
             [
-                "indexed_merge.merged.vcf:md5,6e7b63a467a7490760a772503dc45e2f",
-                "toindex_gvcf_merge.merged.vcf:md5,89b6ab10b8c019287cf987f9eaaa6490",
-                "test.vcf.gz:md5,ab2e3acf677384a527d6fd15279e1308",
+                "indexed_merge.merged.vcf:md5,013962d9215643898ffd39881e786133",
+                "toindex_gvcf_merge.merged.vcf:md5,c72c37c0ab72a9111bf77e3815df62fb",
+                "test.vcf.gz:md5,b8a36d36a34194a4d19367b189b48f66",
                 "test.vcf.gz.tbi:md5,0613c73f14e6004eadbfc526e0fc65a0",
-                "test2.vcf.gz:md5,ef3d1e3200d95bc2a4b622e74b6c7dad",
+                "test2.vcf.gz:md5,0decad50778778f466bc0e0f6bbc3f9c",
                 "test2.vcf.gz.tbi:md5,fea49a9f40baf32f545a7751e83349f5",
-                "multiqc.log:md5,a4724d0703c65afa594812ffbbe2cee6",
+                "multiqc.log:md5,66d79fa3e0cd5a6d8bc8982997f1415d",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,2458fdbc4e37592ee1369405a45fff8f",
-                "multiqc_software_versions.txt:md5,7cd6280ad9aab78724d0729c9a3e22ef",
+                "multiqc_data.json:md5,77c0ad7f4580221800952ffdab5ea92c",
+                "multiqc_software_versions.txt:md5,7f6d72fabd37e3a29d3126d0ae19b572",
                 "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_report.html:md5,7a88b785de013b9be1e80d10599f6623",
-                "params_2024-12-11_13-01-24.json:md5,b230863e6e2b61cce98fb66078d01f59",
-                "pipeline_software_mqc_versions.yml:md5,1b2f9328e5885175a2b6f3a5cd03f323",
+                "multiqc_report.html:md5,cf4dae2aa600caf7216dcc07a7d89088",
+                "params_2024-12-17_13-58-41.json:md5,ac59bfbb71d6cdbe86637cbaca1f5d73",
+                "vcftomat_software_mqc_versions.yml:md5,72c9c6ae7b6e16588f3707eb2b16fe82",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,3ca6e94f86c548be87dd5fcc391a2525",
                 "test.genome.g.vcf.gz.tbi:md5,e7611a7f7d2eb07d5adeb4d4569578ab",
                 "test2.genome.vcf.gz.tbi:md5,6fe54f8e8d38cbbc0046f4427b21e11a",
@@ -78,28 +62,12 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-11T13:02:46.414504"
+        "timestamp": "2024-12-17T13:59:58.047421"
     },
     "Params: default | input full-size - stub": {
         "content": [
             15,
-            {
-                "BCFTOOLS_MERGE": {
-                    "bcftools": 1.2
-                },
-                "GATK4_GENOTYPEGVCFS": {
-                    "gatk4": "4.6.1.0"
-                },
-                "TABIX_TABIX": {
-                    "tabix": 1.2
-                },
-                "VCF2MAT": {
-                    "vcf2counts.R": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.0.0"
-                }
-            },
+            null,
             [
                 "bcftools",
                 "bcftools/indexed_merge.merged.vcf",
@@ -114,7 +82,7 @@
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/pipeline_software_mqc_versions.yml",
+                "pipeline_info/vcftomat_software_mqc_versions.yml",
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.csi",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
@@ -137,8 +105,8 @@
                 "test2.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "test2.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "multiqc_report.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "params_2024-12-11_13-02-50.json:md5,9d3347ebf0840fd1553b6a3cf4bf5061",
-                "pipeline_software_mqc_versions.yml:md5,1b2f9328e5885175a2b6f3a5cd03f323",
+                "params_2024-12-17_14-00-02.json:md5,13b2af0a51b42d5f6588aa03fe3794cb",
+                "vcftomat_software_mqc_versions.yml:md5,72c9c6ae7b6e16588f3707eb2b16fe82",
                 "NA12878.chr22.1X.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test.genome.g.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -156,6 +124,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-11T13:03:31.768336"
+        "timestamp": "2024-12-17T14:00:44.768531"
     }
 }

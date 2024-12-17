@@ -34,19 +34,18 @@ workflow VCFTOMAT {
     //
     // add index to non-indexed VCFs
     //
-    (ch_has_index, ch_has_no_index) = ch_samplesheet.branch{
-            has_index: !it[0].to_index
-            to_index: it[0].to_index
-    }
+    (ch_has_index, ch_has_no_index) = ch_samplesheet
+        .map{ it -> [ it[0] + [ name:it[1][0].baseName ], it[1] ] }
+        .branch{
+                has_index: !it[0].to_index
+                to_index: it[0].to_index
+        }
 
-    // Remove empty index [] from channel = it[2] and add file name for joining
-    input_to_index = ch_has_no_index.map{ it -> [ it[0] + [name:it[1][0].baseName], it[1] ] }
-
-    TABIX_TABIX( input_to_index )
+    TABIX_TABIX( ch_has_no_index )
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
-    ch_indexed = input_to_index.join(
+    ch_indexed = ch_has_no_index.join(
         TABIX_TABIX.out.tbi
             .map{ it -> [ it[0], [it[1]] ] }
         ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
