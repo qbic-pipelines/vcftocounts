@@ -2,7 +2,17 @@
     "Params: default - stub": {
         "content": [
             3,
-            null,
+            {
+                "TABIX_TABIX": {
+                    "tabix": 1.2
+                },
+                "VCF2MAT": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "qbic-pipelines/vcftomat": "v1.0.0"
+                }
+            },
             [
                 "multiqc",
                 "multiqc/multiqc_data",
@@ -18,7 +28,7 @@
             ],
             [
                 "multiqc_report.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "params_2024-12-17_14-02-33.json:md5,5c9d8832abc6291c2ca958bb14fbb0e3",
+                "params_2024-12-17_14-11-30.json:md5,e889d2cdd5bc9ee3c6ba30670bcc6e9d",
                 "vcftomat_software_mqc_versions.yml:md5,943ea09b23c917a604b0c4ca7e6cd2a9",
                 "NA12878.chr22.1X.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -29,12 +39,22 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-17T14:02:40.492573"
+        "timestamp": "2024-12-17T14:11:37.029125"
     },
     "Params: default": {
         "content": [
             3,
-            null,
+            {
+                "TABIX_TABIX": {
+                    "tabix": 1.2
+                },
+                "VCF2MAT": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "qbic-pipelines/vcftomat": "v1.0.0"
+                }
+            },
             [
                 "multiqc",
                 "multiqc/multiqc_data",
@@ -52,13 +72,13 @@
                 "vcf2mat/chr22.csv"
             ],
             [
-                "multiqc.log:md5,68fdbcb57aae09f878dc9f71c32bc2c4",
+                "multiqc.log:md5,f1831b4704ace0f1bf40484b89e1c0cc",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,151e3ab9f29218e1c7b05dba7f2d6179",
+                "multiqc_data.json:md5,9e060d91e3c502ff73a23427677e2cd0",
                 "multiqc_software_versions.txt:md5,26e022537cef236e3ea03361c21fd853",
                 "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_report.html:md5,6a4d5d68b1850ed51dd0c2eb5d132b27",
-                "params_2024-12-17_14-02-10.json:md5,6676a2c4e3dfa107de172c7db76ad4bb",
+                "multiqc_report.html:md5,07eb72927d74a418f50d2e573ab8dab4",
+                "params_2024-12-17_14-11-05.json:md5,80d6ed47cd3b26995e93eefb2d91877d",
                 "vcftomat_software_mqc_versions.yml:md5,943ea09b23c917a604b0c4ca7e6cd2a9",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,3ca6e94f86c548be87dd5fcc391a2525",
                 "chr22.csv:md5,765ece7265a0b6abac7df8d8632a1500"
@@ -68,6 +88,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-17T14:02:29.550331"
+        "timestamp": "2024-12-17T14:11:26.411256"
     }
 }
