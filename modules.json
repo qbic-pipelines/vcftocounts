@@ -1,6 +1,6 @@
 {
-    "name": "famosab/vcftomat",
-    "homePage": "https://github.com/famosab/vcftomat",
+    "name": "qbic-pipelines/vcftomat",
+    "homePage": "https://github.com/qbic-pipelines/vcftomat",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

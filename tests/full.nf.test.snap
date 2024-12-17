@@ -16,7 +16,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "famosab/vcftomat": "v1.0.0"
+                    "qbic-pipelines/vcftomat": "v1.0.0"
                 }
             },
             [
@@ -37,7 +37,7 @@
                 "multiqc/multiqc_data/multiqc_sources.txt",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/pipeline_software_mqc_versions.yml",
+                "pipeline_info/vcftomat_software_mqc_versions.yml",
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "tabix/test.genome.g.vcf.gz.tbi",
@@ -50,20 +50,20 @@
                 "vcf2mat/toindex_nomerge.csv"
             ],
             [
-                "indexed_merge.merged.vcf:md5,6e7b63a467a7490760a772503dc45e2f",
-                "toindex_gvcf_merge.merged.vcf:md5,89b6ab10b8c019287cf987f9eaaa6490",
-                "test.vcf.gz:md5,ab2e3acf677384a527d6fd15279e1308",
-                "test.vcf.gz.tbi:md5,0613c73f14e6004eadbfc526e0fc65a0",
-                "test2.vcf.gz:md5,ef3d1e3200d95bc2a4b622e74b6c7dad",
-                "test2.vcf.gz.tbi:md5,fea49a9f40baf32f545a7751e83349f5",
-                "multiqc.log:md5,a4724d0703c65afa594812ffbbe2cee6",
+                "indexed_merge.merged.vcf:md5,6581c4a89fb361215ad8aff2f3843232",
+                "toindex_gvcf_merge.merged.vcf:md5,209ae2d0776ff51dc30109afd6526e04",
+                "test.vcf.gz:md5,938164e10ebc6bd88019b94cd26e0ccd",
+                "test.vcf.gz.tbi:md5,02de86f613bbc3fc03a107cafd192ab6",
+                "test2.vcf.gz:md5,f38a6427d95fd7c8d807085028385bff",
+                "test2.vcf.gz.tbi:md5,c1ce758ac25c587a911fb76d4c516e2c",
+                "multiqc.log:md5,1fdca52b90840d58aac01d73bebb5f2f",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,2458fdbc4e37592ee1369405a45fff8f",
-                "multiqc_software_versions.txt:md5,7cd6280ad9aab78724d0729c9a3e22ef",
+                "multiqc_data.json:md5,c617148f9067c0795febffa5ee552538",
+                "multiqc_software_versions.txt:md5,7f6d72fabd37e3a29d3126d0ae19b572",
                 "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_report.html:md5,7a88b785de013b9be1e80d10599f6623",
-                "params_2024-12-11_13-01-24.json:md5,b230863e6e2b61cce98fb66078d01f59",
-                "pipeline_software_mqc_versions.yml:md5,1b2f9328e5885175a2b6f3a5cd03f323",
+                "multiqc_report.html:md5,0117b532709fb3d6db3f2bf3ce98d869",
+                "params_2024-12-17_14-11-52.json:md5,ebc58082cd28651ee330430ab83bb85b",
+                "vcftomat_software_mqc_versions.yml:md5,72c9c6ae7b6e16588f3707eb2b16fe82",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,3ca6e94f86c548be87dd5fcc391a2525",
                 "test.genome.g.vcf.gz.tbi:md5,e7611a7f7d2eb07d5adeb4d4569578ab",
                 "test2.genome.vcf.gz.tbi:md5,6fe54f8e8d38cbbc0046f4427b21e11a",
@@ -78,7 +78,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-11T13:02:46.414504"
+        "timestamp": "2024-12-17T14:13:06.635276"
     },
     "Params: default | input full-size - stub": {
         "content": [
@@ -97,7 +97,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "famosab/vcftomat": "v1.0.0"
+                    "qbic-pipelines/vcftomat": "v1.0.0"
                 }
             },
             [
@@ -114,7 +114,7 @@
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/pipeline_software_mqc_versions.yml",
+                "pipeline_info/vcftomat_software_mqc_versions.yml",
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.csi",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
@@ -137,8 +137,8 @@
                 "test2.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "test2.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "multiqc_report.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "params_2024-12-11_13-02-50.json:md5,9d3347ebf0840fd1553b6a3cf4bf5061",
-                "pipeline_software_mqc_versions.yml:md5,1b2f9328e5885175a2b6f3a5cd03f323",
+                "params_2024-12-17_14-13-10.json:md5,c79a1151b24fae7302b80db4a559a0f9",
+                "vcftomat_software_mqc_versions.yml:md5,72c9c6ae7b6e16588f3707eb2b16fe82",
                 "NA12878.chr22.1X.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test.genome.g.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -156,6 +156,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-11T13:03:31.768336"
+        "timestamp": "2024-12-17T14:13:44.791099"
     }
 }

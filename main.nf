@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    famosab/vcftomat
+    qbic-pipelines/vcftomat
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/famosab/vcftomat
+    Github : https://github.com/qbic-pipelines/vcftomat
 ----------------------------------------------------------------------------------------
 */
 
@@ -39,7 +39,7 @@ params.dict  = getGenomeAttribute('dict')
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow FAMOSAB_VCFTOMAT {
+workflow QBICPIPELINES_VCFTOMAT {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -88,7 +88,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    FAMOSAB_VCFTOMAT (
+    QBICPIPELINES_VCFTOMAT (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
@@ -101,7 +101,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        FAMOSAB_VCFTOMAT.out.multiqc_report
+        QBICPIPELINES_VCFTOMAT.out.multiqc_report
     )
 }
 
