@@ -39,7 +39,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run qbic-pipelines/vcftomat --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh38 -profile docker
+nextflow run qbic-pipelines/vcftomat --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh38 --rename true -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -69,11 +69,15 @@ nextflow run qbic-pipelines/vcftomat -profile docker -params-file params.yaml
 with:
 
 ```yaml title="params.yaml"
-input: './samplesheet.csv'
-outdir: './results/'
-genome: 'GATK.GRCh38'
-<...>
+input: "./samplesheet.csv"
+outdir: "./results/"
+genome: "GATK.GRCh38"
+rename: true
 ```
+
+<...>
+
+````
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
@@ -83,7 +87,7 @@ When you run the above command, Nextflow automatically pulls the pipeline code f
 
 ```bash
 nextflow pull qbic-pipelines/vcftomat
-```
+````
 
 ### Reproducibility
 
