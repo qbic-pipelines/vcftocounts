@@ -5,6 +5,7 @@
 */
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
+include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { VCF2MAT                } from '../modules/local/vcf2mat/main'
@@ -35,7 +36,17 @@ workflow VCFTOMAT {
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map{ it -> [ it[0] + [ name:it[1][0].baseName ], it[1] ] }
+        .map{ it ->
+            def name = it[1][0].baseName
+                name = name
+                    .replaceFirst(/\.g\.vcf$/, "")
+                    .replaceFirst(/\.genome\.vcf$/, "")
+                    .replaceFirst(/\.genome\.g\.vcf$/, "")
+                    .replaceFirst(/\.g$/, "")
+                    .replaceFirst(/\.genome$/, "")
+                    .replaceFirst(/\.vcf$/, "")
+            [ it[0] + [ name:name ], it[1] ]
+        }
         .branch{
                 has_index: !it[0].to_index
                 to_index: it[0].to_index
@@ -79,12 +90,24 @@ workflow VCFTOMAT {
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     //
+    // Rename samples in vcf with the filename
+    //
+    BCFTOOLS_REHEADER(
+        ch_vcf.map{ it -> [ it[0], it[1][0], [], [] ] },
+        [[],[]]
+    )
+
+    ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
+            .join(BCFTOOLS_REHEADER.out.index)
+            .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+    //
     // Merge multiple VCFs per sample with BCFTOOLS_MERGE
     //
 
     // Bring all vcfs from one sample into a channel
     // Branch based on the number of VCFs per sample
-    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+    (ch_single_vcf, ch_multiple_vcf) = ch_vcf_index_rh
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
             def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
