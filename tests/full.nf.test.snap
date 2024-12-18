@@ -1,9 +1,12 @@
 {
     "Params: default | input full-size": {
         "content": [
-            15,
+            22,
             {
                 "BCFTOOLS_MERGE": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_REHEADER": {
                     "bcftools": 1.2
                 },
                 "GATK4_GENOTYPEGVCFS": {
@@ -16,13 +19,25 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.0.0"
+                    "qbic-pipelines/vcftomat": "v1.1.0dev"
                 }
             },
             [
                 "bcftools",
-                "bcftools/indexed_merge.merged.vcf",
-                "bcftools/toindex_gvcf_merge.merged.vcf",
+                "bcftools/NA12878.chr22.1X.reheader.vcf.gz",
+                "bcftools/NA12878.chr22.1X.reheader.vcf.gz.tbi",
+                "bcftools/NA12878_chrM.reheader.vcf.gz",
+                "bcftools/NA12878_chrM.reheader.vcf.gz.tbi",
+                "bcftools/NA24385_sv.reheader.vcf.gz",
+                "bcftools/NA24385_sv.reheader.vcf.gz.tbi",
+                "bcftools/empty.reheader.vcf.gz",
+                "bcftools/empty.reheader.vcf.gz.tbi",
+                "bcftools/indexed_merge.merge.vcf",
+                "bcftools/test.reheader.vcf.gz",
+                "bcftools/test.reheader.vcf.gz.tbi",
+                "bcftools/test2.reheader.vcf.gz",
+                "bcftools/test2.reheader.vcf.gz.tbi",
+                "bcftools/toindex_gvcf_merge.merge.vcf",
                 "gatk4",
                 "gatk4/test.vcf.gz",
                 "gatk4/test.vcf.gz.tbi",
@@ -50,41 +65,56 @@
                 "vcf2mat/toindex_nomerge.csv"
             ],
             [
-                "indexed_merge.merged.vcf:md5,6581c4a89fb361215ad8aff2f3843232",
-                "toindex_gvcf_merge.merged.vcf:md5,209ae2d0776ff51dc30109afd6526e04",
-                "test.vcf.gz:md5,938164e10ebc6bd88019b94cd26e0ccd",
+                "NA12878.chr22.1X.reheader.vcf.gz:md5,cf5c30212a0eb8974bf40043c3f1881a",
+                "NA12878.chr22.1X.reheader.vcf.gz.tbi:md5,31b537eec86c4a23e6a2e2756600e50f",
+                "NA12878_chrM.reheader.vcf.gz:md5,5ce3fc18bca3c1a9a8f8c934084d84d3",
+                "NA12878_chrM.reheader.vcf.gz.tbi:md5,3905a9263b62cdafe98f09796b82d062",
+                "NA24385_sv.reheader.vcf.gz:md5,4a80cb30e045f413f1a93279a746e2f8",
+                "NA24385_sv.reheader.vcf.gz.tbi:md5,13ab6a3a0b067ac0679aadf0b0a4d5bb",
+                "empty.reheader.vcf.gz:md5,64ee940455c3a341f3124e7e9c272303",
+                "empty.reheader.vcf.gz.tbi:md5,e7180bb953d2bd657c420a5f76a7164d",
+                "indexed_merge.merge.vcf:md5,2d6c26f8d478e4c839483788a8c3981d",
+                "test.reheader.vcf.gz:md5,deb1bf8811f16d79de4702c8c053f358",
+                "test.reheader.vcf.gz.tbi:md5,347826e71be65533e1335a57d36dfb6d",
+                "test2.reheader.vcf.gz:md5,7e40ac47595cb8cfbe75f21f537b6a5f",
+                "test2.reheader.vcf.gz.tbi:md5,102f7253df16f49d07fdbea19848fc9c",
+                "toindex_gvcf_merge.merge.vcf:md5,bd6efafc35f2bdd1725b42424e17fb54",
+                "test.vcf.gz:md5,c491849f8bb362d0765993095e0f565f",
                 "test.vcf.gz.tbi:md5,02de86f613bbc3fc03a107cafd192ab6",
-                "test2.vcf.gz:md5,f38a6427d95fd7c8d807085028385bff",
+                "test2.vcf.gz:md5,7517bbef36c6c1056ec792e386202889",
                 "test2.vcf.gz.tbi:md5,c1ce758ac25c587a911fb76d4c516e2c",
-                "multiqc.log:md5,1fdca52b90840d58aac01d73bebb5f2f",
+                "multiqc.log:md5,80b331ba460da4405842063e9e296ba0",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,c617148f9067c0795febffa5ee552538",
-                "multiqc_software_versions.txt:md5,7f6d72fabd37e3a29d3126d0ae19b572",
+                "multiqc_data.json:md5,57b2f1c4d09f8b7904bebce9dab17fb3",
+                "multiqc_software_versions.txt:md5,b5633d92f2afa436963c75d063980658",
                 "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_report.html:md5,0117b532709fb3d6db3f2bf3ce98d869",
-                "params_2024-12-17_14-11-52.json:md5,ebc58082cd28651ee330430ab83bb85b",
-                "vcftomat_software_mqc_versions.yml:md5,72c9c6ae7b6e16588f3707eb2b16fe82",
+                "multiqc_report.html:md5,b2a6677f7816a3d0bdd1941650f31ad3",
+                "params_2024-12-18_15-12-47.json:md5,68f7cb3e124a5351a3d31d650a0a8323",
+                "vcftomat_software_mqc_versions.yml:md5,60aa72161364a931b1e5f21fbd2bd97b",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,3ca6e94f86c548be87dd5fcc391a2525",
                 "test.genome.g.vcf.gz.tbi:md5,e7611a7f7d2eb07d5adeb4d4569578ab",
                 "test2.genome.vcf.gz.tbi:md5,6fe54f8e8d38cbbc0046f4427b21e11a",
-                "empty.csv:md5,77f0670b6b6ac7830e02d4c0222075c5",
-                "indexed_merge.csv:md5,c79bcada2daab2953452c076920e1c00",
-                "toindex_gvcf_merge.csv:md5,22a6203ce9bdf4763f30c54c6e4d2b77",
-                "toindex_gvcf_nomerge.csv:md5,317e9254f321fa886a990221d261e3de",
-                "toindex_nomerge.csv:md5,765ece7265a0b6abac7df8d8632a1500"
+                "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
+                "indexed_merge.csv:md5,89bc796379470b8b04a57deb33d83573",
+                "toindex_gvcf_merge.csv:md5,247cc98d57572ffcffddde72213c5448",
+                "toindex_gvcf_nomerge.csv:md5,2e0afbf5b8ef81047899887a2a5e467b",
+                "toindex_nomerge.csv:md5,b6edb8617c729e610c60467f38c9ce60"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-17T14:13:06.635276"
+        "timestamp": "2024-12-18T15:14:53.434606"
     },
     "Params: default | input full-size - stub": {
         "content": [
-            15,
+            22,
             {
                 "BCFTOOLS_MERGE": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_REHEADER": {
                     "bcftools": 1.2
                 },
                 "GATK4_GENOTYPEGVCFS": {
@@ -97,13 +127,25 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.0.0"
+                    "qbic-pipelines/vcftomat": "v1.1.0dev"
                 }
             },
             [
                 "bcftools",
-                "bcftools/indexed_merge.merged.vcf",
-                "bcftools/toindex_gvcf_merge.merged.vcf",
+                "bcftools/NA12878.chr22.1X.reheader.vcf.gz",
+                "bcftools/NA12878.chr22.1X.reheader.vcf.gz.tbi",
+                "bcftools/NA12878_chrM.reheader.vcf.gz",
+                "bcftools/NA12878_chrM.reheader.vcf.gz.tbi",
+                "bcftools/NA24385_sv.reheader.vcf.gz",
+                "bcftools/NA24385_sv.reheader.vcf.gz.tbi",
+                "bcftools/empty.reheader.vcf.gz",
+                "bcftools/empty.reheader.vcf.gz.tbi",
+                "bcftools/indexed_merge.merge.vcf",
+                "bcftools/test.reheader.vcf.gz",
+                "bcftools/test.reheader.vcf.gz.tbi",
+                "bcftools/test2.reheader.vcf.gz",
+                "bcftools/test2.reheader.vcf.gz.tbi",
+                "bcftools/toindex_gvcf_merge.merge.vcf",
                 "gatk4",
                 "gatk4/test.vcf.gz",
                 "gatk4/test.vcf.gz.tbi",
@@ -130,15 +172,27 @@
                 "vcf2mat/toindex_nomerge.csv"
             ],
             [
-                "indexed_merge.merged.vcf:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "toindex_gvcf_merge.merged.vcf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "NA12878.chr22.1X.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "NA12878.chr22.1X.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "NA12878_chrM.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "NA12878_chrM.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "NA24385_sv.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "NA24385_sv.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "empty.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "empty.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "indexed_merge.merge.vcf:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "test.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "test.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "test2.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "test2.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "toindex_gvcf_merge.merge.vcf:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "test.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test2.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "test2.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "multiqc_report.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "params_2024-12-17_14-13-10.json:md5,c79a1151b24fae7302b80db4a559a0f9",
-                "vcftomat_software_mqc_versions.yml:md5,72c9c6ae7b6e16588f3707eb2b16fe82",
+                "params_2024-12-18_15-14-57.json:md5,e5b16224e9dbf6187133b645e6448f59",
+                "vcftomat_software_mqc_versions.yml:md5,60aa72161364a931b1e5f21fbd2bd97b",
                 "NA12878.chr22.1X.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "NA12878.chr22.1X.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "test.genome.g.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -156,6 +210,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-17T14:13:44.791099"
+        "timestamp": "2024-12-18T15:15:35.01977"
     }
 }

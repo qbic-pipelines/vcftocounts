@@ -14,6 +14,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 - [Tabix](#tabix) - Indexes (g.)vcf files
 - [GenotypeGVCFs](#genotypegvcfs) - Converts g.vcf files to vcf with GATK
+- [Rename Samples](#rename-samples) - Changes the sample name in the vcf file to the filename with bcftools/reheader
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
@@ -22,6 +23,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 ### Tabix
 
 ### GenotypeGVCFs
+
+### Rename Samples
 
 ### Merge VCFs
 
