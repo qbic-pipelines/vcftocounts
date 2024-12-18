@@ -17,9 +17,10 @@
 
 1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
-3. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
-4. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
-5. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
+3. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.
+4. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+5. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
+6. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
 ![](./docs/images/vcftomat.excalidraw.png)
 

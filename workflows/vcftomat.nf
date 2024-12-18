@@ -89,17 +89,24 @@ workflow VCFTOMAT {
 
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
-    //
-    // Rename samples in vcf with the filename
-    //
-    BCFTOOLS_REHEADER(
-        ch_vcf.map{ it -> [ it[0], it[1][0], [], [] ] },
-        [[],[]]
-    )
+    if (params.rename) {
+        //
+        // Rename samples in vcf with the filename
+        //
+        BCFTOOLS_REHEADER(
+            ch_vcf.map{ it -> [ it[0], it[1][0], [], [] ] },
+            [[],[]]
+        )
 
-    ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
-            .join(BCFTOOLS_REHEADER.out.index)
-            .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+        ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
+                .join(BCFTOOLS_REHEADER.out.index)
+                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+        ch_versions = ch_versions.mix(BCFTOOLS_REHEADER.out.versions)
+    } else {
+        ch_vcf_index_rh = ch_vcf
+    }
+
 
     //
     // Merge multiple VCFs per sample with BCFTOOLS_MERGE
