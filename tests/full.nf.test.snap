@@ -83,7 +83,6 @@
                 "versions.yml:md5,0567f354f7d4ddac23b392f94e760ea2",
                 "versions.yml:md5,c030f20e1b02bd49b0a4ec369f5b4429",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "vcftomat_software_mqc_versions.yml:md5,51047f681ed4f7798bcee140b2e0cf5e",
                 "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
                 "indexed_merge.csv:md5,b59aae2be818fd1ddc1fb3b9e8e8e89b",
                 "toindex_gvcf_merge.csv:md5,bb0cc37d7f55f611a8d0f11c4d80dece"
@@ -103,7 +102,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-20T12:00:54.273389"
+        "timestamp": "2024-12-20T12:11:20.624762"
     },
     "Params: default | input full-size - stub": {
         "content": [
@@ -189,7 +188,6 @@
                 "versions.yml:md5,8e4cc1068ff64a583811f3e3bd8a4771",
                 "versions.yml:md5,0567f354f7d4ddac23b392f94e760ea2",
                 "versions.yml:md5,c030f20e1b02bd49b0a4ec369f5b4429",
-                "vcftomat_software_mqc_versions.yml:md5,51047f681ed4f7798bcee140b2e0cf5e",
                 "empty.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "indexed_merge.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "toindex_gvcf_merge.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -212,6 +210,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-20T12:02:02.676757"
+        "timestamp": "2024-12-20T12:12:11.055567"
     }
 }
