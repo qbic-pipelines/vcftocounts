@@ -35,22 +35,19 @@
                 "vcf2mat/chr22.csv"
             ],
             [
-                "chr22.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr22.reheader.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "versions.yml:md5,c030f20e1b02bd49b0a4ec369f5b4429",
-                "multiqc_report.html:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "params_2024-12-19_15-39-33.json:md5,b3e9cb71a4533f106d39f72c9984f33f",
                 "vcftomat_software_mqc_versions.yml:md5,9d4f3db7e6b49762674ac987a92972ff",
-                "NA12878.chr22.1X.vcf.gz.csi:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "NA12878.chr22.1X.vcf.gz.tbi:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr22.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+            ],
+            [
+                "chr22.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-19T15:39:42.270438"
+        "timestamp": "2024-12-20T12:00:44.588683"
     },
     "Params: default": {
         "content": [
@@ -91,25 +88,19 @@
                 "vcf2mat/chr22.csv"
             ],
             [
-                "chr22.reheader.vcf.gz:md5,d5afeb142dc3f2e3c8fbcf0e4974bad3",
-                "chr22.reheader.vcf.gz.tbi:md5,fb142e40ff9b80b93693648d71063c29",
                 "versions.yml:md5,c030f20e1b02bd49b0a4ec369f5b4429",
-                "multiqc.log:md5,941569fc0b5accd766f5535cd3cbe2b0",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "multiqc_data.json:md5,fe9ef52366874454229c6d645c94d2db",
-                "multiqc_software_versions.txt:md5,f254d890cb0a89a8680cdb5338df18a0",
-                "multiqc_sources.txt:md5,d2a044df39ce3c6abe5cdc2d67473490",
-                "multiqc_report.html:md5,ea61552a0be078715db14fb1543300fe",
-                "params_2024-12-19_15-39-08.json:md5,fcec99b10d48968e113eddde9f7704dd",
                 "vcftomat_software_mqc_versions.yml:md5,9d4f3db7e6b49762674ac987a92972ff",
-                "NA12878.chr22.1X.vcf.gz.tbi:md5,3ca6e94f86c548be87dd5fcc391a2525",
                 "chr22.csv:md5,06c743150691cd38f4a2caf65ca6c115"
+            ],
+            [
+                "chr22.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
             "nextflow": "24.10.2"
         },
-        "timestamp": "2024-12-19T15:39:29.421673"
+        "timestamp": "2024-12-20T11:08:14.731594"
     }
 }
