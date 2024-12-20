@@ -35,7 +35,7 @@ jobs:
         with:
           head: ${{ github.sha }}
           base: origin/${{ github.base_ref }}
-          include: .github/include.yaml
+          include: .github/include.yml
 
       - name: print list of nf-test files
         run: |
