@@ -10,6 +10,7 @@
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
 [![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/qbic-pipelines/vcftomat)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/qbic-pipelines/vcftomat)
 
 ## Introduction
 
@@ -48,6 +49,7 @@ Now, you can run the pipeline using:
 
 ```bash
 nextflow run qbic-pipelines/vcftomat \
+nextflow run qbic-pipelines/vcftomat \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
    --genome GATK.GRCh38 \
@@ -59,6 +61,7 @@ nextflow run qbic-pipelines/vcftomat \
 
 ## Credits
 
+qbic-pipelines/vcftomat was originally written by Famke Bäuerle, Dorothy Ellis.
 qbic-pipelines/vcftomat was originally written by Famke Bäuerle, Dorothy Ellis.
 
 We thank the following people for their extensive assistance in the development of this pipeline:

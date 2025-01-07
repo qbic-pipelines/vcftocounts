@@ -7,6 +7,13 @@ lint:
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/awstest.yml
     - .github/workflows/awsfulltest.yml
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
   files_unchanged:
     - .github/CONTRIBUTING.md
     - .prettierignore
@@ -20,6 +27,7 @@ lint:
   included_configs: false
   actions_ci: false
   multiqc_config:
+    - report_comment
     - report_comment
   nextflow_config:
     - manifest.name
@@ -35,8 +43,10 @@ template:
   description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical
     analysis
   force: false
+  force: false
   is_nfcore: false
   name: vcftomat
+  org: qbic-pipelines
   org: qbic-pipelines
   outdir: .
   skip_features:
@@ -44,4 +54,4 @@ template:
     - codespaces
     - fastqc
     - adaptivecard
-  version: 1.1.0devdev
+  version: 1.1.0dev
