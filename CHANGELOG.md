@@ -13,7 +13,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
--[#5](https://github.com/qbic-pipelines/vcftomat/pull/5) - filename collision
+- [#5](https://github.com/qbic-pipelines/vcftomat/pull/5) - filename collision
+- [#9](https://github.com/qbic-pipelines/vcftomat/pull/9) - template update to 3.1.1
 
 ## v1.0.0 - Curie Purpureal - 16.12.2024
 
