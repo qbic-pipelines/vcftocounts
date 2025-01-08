@@ -74,12 +74,7 @@ with:
 input: "./samplesheet.csv"
 outdir: "./results/"
 genome: "GATK.GRCh38"
-rename: true
 ```
-
-<...>
-
-````
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
