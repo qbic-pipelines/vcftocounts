@@ -124,11 +124,7 @@
         },
         {
             "@id": "main.nf",
-            "@type": [
-                "File",
-                "SoftwareSourceCode",
-                "ComputationalWorkflow"
-            ],
+            "@type": ["File", "SoftwareSourceCode", "ComputationalWorkflow"],
             "creator": [
                 {
                     "@id": "https://orcid.org/0000-0003-1387-0251"
@@ -140,34 +136,22 @@
             "dateCreated": "",
             "dateModified": "2025-01-08T13:21:55Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
-            "keywords": [
-                "nf-core",
-                "nextflow"
-            ],
-            "license": [
-                "MIT"
-            ],
+            "keywords": ["nf-core", "nextflow"],
+            "license": ["MIT"],
             "maintainer": [
                 {
                     "@id": "https://orcid.org/0000-0003-1387-0251"
                 }
             ],
-            "name": [
-                "qbic-pipelines/vcftomat"
-            ],
+            "name": ["qbic-pipelines/vcftomat"],
             "programmingLanguage": {
                 "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow"
             },
             "sdPublisher": {
                 "@id": "https://nf-co.re/"
             },
-            "url": [
-                "https://github.com/qbic-pipelines/vcftomat",
-                "https://nf-co.re/qbic-pipelines/vcftomat/1.1.0/"
-            ],
-            "version": [
-                "1.1.0"
-            ]
+            "url": ["https://github.com/qbic-pipelines/vcftomat", "https://nf-co.re/qbic-pipelines/vcftomat/1.1.0/"],
+            "version": ["1.1.0"]
         },
         {
             "@id": "https://w3id.org/workflowhub/workflow-ro-crate#nextflow",
