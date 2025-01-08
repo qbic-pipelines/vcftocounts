@@ -6,14 +6,14 @@ This document describes the output produced by the pipeline. Most of the plots a
 
 The directories listed below will be created in the results directory after the pipeline has finished. All paths are relative to the top-level results directory.
 
-<!-- TODO nf-core: Write this documentation describing your workflow's output -->
-
 ## Pipeline overview
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
 - [Tabix](#tabix) - Indexes (g.)vcf files
 - [GenotypeGVCFs](#genotypegvcfs) - Converts g.vcf files to vcf with GATK
+- [Concatenate VCFs](#concatenate-vcfs) - Concatenates all vcfs that have the same id and the same label with bcftools/concat
+- [Rename Samples](#rename-samples) - Changes the sample name in the vcf file to the label with bcftools/reheader
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
@@ -21,11 +21,27 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 ### Tabix
 
+Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
+
 ### GenotypeGVCFs
+
+The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf files. The key difference between a regular VCF and a GVCF is that the GVCF has records for all sites, whether there is a variant call there or not.
+
+### Concatenate VCFs
+
+Some variant calling pipelines will return multiple (g)VCF files for one patient. The `concatenate` function of `bcftools` is used to add these VCFs to one VCF.
+
+### Rename Samples
+
+To make enable the comparison of the finalized CSV files, `bcftools reheader` can be enabled to rename the variant sample name from the generic name given by the variant caller to a custom label given with the samplesheet.
 
 ### Merge VCFs
 
+To enable comparison of different variant callers or variant calling pipelines, all VCFs that come from the same sample are merged based on the sample ID submitted by the user.
+
 ### Convert to matrix
+
+A custom R script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro).
 
 ### MultiQC
 

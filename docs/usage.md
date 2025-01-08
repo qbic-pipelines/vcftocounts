@@ -19,15 +19,17 @@ You will need to create a samplesheet with information about the samples you wou
 The `sample` identifiers have to be the same when the vcfs originate from the same bam but were yielded with different callers. The pipeline will merge all vcfs from the same sample into one vcf file but is also able to handle if there is only one vcf file for a sample (merging will then be skipped).
 
 ```csv title="samplesheet.csv"
-sample,gvcf,vcf_path,vcf_index_path
-SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
-SAMPLE-1,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
-SAMPLE-2,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
+sample,label,gvcf,vcf_path,vcf_index_path
+SAMPLE-1,pipelineA-callerA,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
+SAMPLE-1,pipelineB-callerA,false,path/to/vcf.gz,path/to/.vcf.gz.tbi
+SAMPLE-2,pipelineB-callerB,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
+SAMPLE-2,pipelineB-callerB,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
 ```
 
 | Column           | Description                                                                                                                                                                                                  |
 | ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | `sample`         | Custom sample name. This entry will be identical for vcfs that originate from the same bam but were yielded with different callers. Spaces in sample names are automatically converted to underscores (`_`). |
+| `label`          | Label for the vcf file. This is used to concatenate vcfs with the same label.                                                                                                                                |
 | `gvcf`           | Boolean whether the supplied sample is a gvcf (true) or a normal vcf (false).                                                                                                                                |
 | `vcf_path`       | Full path to VCF file, should have the extension ".g.vcf.gz", ".vcf.gz", ".g.vcf" or ".vcf".                                                                                                                 |
 | `vcf_index_path` | Full path to index of (g)VCF file. Optional. Should have extension ".tbi".                                                                                                                                   |
@@ -39,7 +41,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run qbic-pipelines/vcftomat --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh38 -profile docker
+nextflow run qbic-pipelines/vcftomat --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh38 --rename true -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -69,10 +71,9 @@ nextflow run qbic-pipelines/vcftomat -profile docker -params-file params.yaml
 with:
 
 ```yaml title="params.yaml"
-input: './samplesheet.csv'
-outdir: './results/'
-genome: 'GATK.GRCh38'
-<...>
+input: "./samplesheet.csv"
+outdir: "./results/"
+genome: "GATK.GRCh38"
 ```
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).

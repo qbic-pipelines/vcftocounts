@@ -5,6 +5,8 @@
 */
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
+include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
+include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { VCF2MAT                } from '../modules/local/vcf2mat/main'
@@ -34,19 +36,28 @@ workflow VCFTOMAT {
     //
     // add index to non-indexed VCFs
     //
-    (ch_has_index, ch_has_no_index) = ch_samplesheet.branch{
-            has_index: !it[0].to_index
-            to_index: it[0].to_index
-    }
+    (ch_has_index, ch_has_no_index) = ch_samplesheet
+        .map{ it ->
+            def name = it[1][0].baseName
+                name = name
+                    .replaceFirst(/\.g\.vcf$/, "")
+                    .replaceFirst(/\.genome\.vcf$/, "")
+                    .replaceFirst(/\.genome\.g\.vcf$/, "")
+                    .replaceFirst(/\.g$/, "")
+                    .replaceFirst(/\.genome$/, "")
+                    .replaceFirst(/\.vcf$/, "")
+            [ it[0] + [ name:name ], it[1] ]
+        }
+        .branch{
+                has_index: !it[0].to_index
+                to_index: it[0].to_index
+        }
 
-    // Remove empty index [] from channel = it[2] and add file name for joining
-    input_to_index = ch_has_no_index.map{ it -> [ it[0] + [name:it[1][0].baseName], it[1] ] }
-
-    TABIX_TABIX( input_to_index )
+    TABIX_TABIX( ch_has_no_index )
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
-    ch_indexed = input_to_index.join(
+    ch_indexed = ch_has_no_index.join(
         TABIX_TABIX.out.tbi
             .map{ it -> [ it[0], [it[1]] ] }
         ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
@@ -80,12 +91,63 @@ workflow VCFTOMAT {
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     //
-    // Merge multiple VCFs per sample with BCFTOOLS_MERGE
+    // Concatenate converted VCFs if the entries for "id" and "label" are the same
+    //
+    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+        .map { meta, files ->
+            // Assuming files is a list of all VCF and TBI files
+            def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
+            def tbis = files.findAll { it.name.endsWith('.vcf.gz.tbi') }
+            [ [meta.id, meta.label], meta, vcfs, tbis]
+        }
+        .groupTuple(by: 0)
+        .map { id_label, metas, vcfs, tbis ->
+            def meta = metas[0]
+            def vcf_count = vcfs.flatten().size()
+            meta.single_vcf = (vcf_count == 1)
+            [meta, vcfs.flatten(), tbis.flatten()]
+        }.branch {
+            single: it[0].single_vcf
+            multiple: !it[0].single_vcf
+        }
+
+    BCFTOOLS_CONCAT( ch_multiple_vcf )
+
+    ch_vcf_index = BCFTOOLS_CONCAT.out.vcf
+            .join(BCFTOOLS_CONCAT.out.tbi)
+
+    ch_vcf_concat = ch_single_vcf.mix(ch_vcf_index)
+                .map { meta, vcf, tbi
+                -> [ meta.findAll { it.key != 'name' }, [ vcf, tbi ] ] }
+
+    ch_versions = ch_versions.mix(BCFTOOLS_CONCAT.out.versions)
+
+    if (params.rename) {
+        //
+        // Rename samples in vcf with the label
+        //
+        BCFTOOLS_REHEADER(
+            ch_vcf_concat.map{ it -> [ it[0], it[1][0], [], [] ] },
+            [[],[]]
+        )
+
+        ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
+                .join(BCFTOOLS_REHEADER.out.index)
+                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+        ch_versions = ch_versions.mix(BCFTOOLS_REHEADER.out.versions)
+    } else {
+        ch_vcf_index_rh = ch_vcf_concat
+    }
+
+
+    //
+    // Merge multiple VCFs per sample (patient) with BCFTOOLS_MERGE
     //
 
     // Bring all vcfs from one sample into a channel
     // Branch based on the number of VCFs per sample
-    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+    (ch_single_id, ch_multiple_id) = ch_vcf_index_rh
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
             def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
@@ -96,23 +158,23 @@ workflow VCFTOMAT {
         .map { id, metas, vcfs, tbis ->
             def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
             def vcf_count = vcfs.flatten().size()
-            meta.single_vcf = (vcf_count == 1)
+            meta.single_id = (vcf_count == 1)
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
-            single: it[0].single_vcf
-            multiple: !it[0].single_vcf
+            single: it[0].single_id
+            multiple: !it[0].single_id
         }
 
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
     BCFTOOLS_MERGE(
-        ch_multiple_vcf,
+        ch_multiple_id,
         [[],[]], // fasta reference only needed for gvcf
         [[],[]], // fasta.fai reference only needed for gvcf
         [[],[]] // bed
     )
 
     // Merge the results back into a single channel
-    ch_merged_vcfs = ch_single_vcf.mix(BCFTOOLS_MERGE.out.vcf)
+    ch_merged_vcfs = ch_single_id.mix(BCFTOOLS_MERGE.out.vcf)
 
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 

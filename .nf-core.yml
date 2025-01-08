@@ -18,6 +18,7 @@ lint:
     - docs/images/nf-core-vcftomat_logo_dark.png
     - .github/ISSUE_TEMPLATE/bug_report.yml
   included_configs: false
+  actions_ci: false
   multiqc_config:
     - report_comment
   nextflow_config:
@@ -30,7 +31,7 @@ lint:
 nf_core_version: 3.1.0
 repository_type: pipeline
 template:
-  author: "Famke B\xE4uerle, Dorothy Ellis"
+  author: "Famke Bäuerle, Dorothy Ellis"
   description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical
     analysis
   force: false
@@ -43,4 +44,4 @@ template:
     - codespaces
     - fastqc
     - adaptivecard
-  version: 1.0.0dev
+  version: 1.1.0
