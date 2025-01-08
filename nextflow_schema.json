@@ -254,5 +254,13 @@
         {
             "$ref": "#/$defs/generic_options"
         }
-    ]
+    ],
+    "properties": {
+        "fai": {
+            "type": "string"
+        },
+        "dict": {
+            "type": "string"
+        }
+    }
 }
