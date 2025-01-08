@@ -22,7 +22,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.1.0dev"
+                    "qbic-pipelines/vcftomat": "v1.1.0"
                 }
             },
             [
@@ -127,7 +127,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.1.0dev"
+                    "qbic-pipelines/vcftomat": "v1.1.0"
                 }
             },
             [
