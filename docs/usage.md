@@ -84,7 +84,7 @@ When you run the above command, Nextflow automatically pulls the pipeline code f
 
 ```bash
 nextflow pull qbic-pipelines/vcftomat
-````
+```
 
 ### Reproducibility
 
