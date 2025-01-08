@@ -11,6 +11,9 @@ null/
 .nf-test*
 .nf-test/*
 
+.vscode
+.vscode/*
+
 tests/unmergedgvcfs
 tests/unmergedgvcfs/*
 tests/input-full-ncgm.csv
