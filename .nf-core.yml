@@ -1,26 +1,26 @@
 lint:
   actions_ci: false
   files_exist:
-  - CODE_OF_CONDUCT.md
-  - assets/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_dark.png
-  - .github/ISSUE_TEMPLATE/config.yml
-  - .github/workflows/awstest.yml
-  - .github/workflows/awsfulltest.yml
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_dark.png
+    - .github/ISSUE_TEMPLATE/config.yml
+    - .github/workflows/awstest.yml
+    - .github/workflows/awsfulltest.yml
   files_unchanged:
-  - .github/CONTRIBUTING.md
-  - .prettierignore
-  - .github/CONTRIBUTING.md
-  - .prettierignore
-  - CODE_OF_CONDUCT.md
-  - assets/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_light.png
-  - docs/images/nf-core-vcftomat_logo_dark.png
-  - .github/ISSUE_TEMPLATE/bug_report.yml
+    - .github/CONTRIBUTING.md
+    - .prettierignore
+    - .github/CONTRIBUTING.md
+    - .prettierignore
+    - CODE_OF_CONDUCT.md
+    - assets/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_light.png
+    - docs/images/nf-core-vcftomat_logo_dark.png
+    - .github/ISSUE_TEMPLATE/bug_report.yml
   included_configs: false
   multiqc_config:
-  - report_comment
+    - report_comment
   nextflow_config:
     - manifest.name
     - manifest.homePage
