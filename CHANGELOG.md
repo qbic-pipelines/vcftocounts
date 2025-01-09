@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- [#13](https://github.com/qbic-pipelines/vcftomat/pull/13) - template update to v3.1.1
+
 ## v1.1.0 - Newton Puccoon - 08.01.2025
 
 ### Added
@@ -24,3 +26,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## v1.0.0 - Curie Purpureal - 16.12.2024
 
 Initial release of qbic-pipelines/vcftomat, created with the [nf-core](https://nf-co.re/) template.
+
+### `Added`
+
+### `Fixed`
+
+### `Dependencies`
+
+### `Deprecated`
