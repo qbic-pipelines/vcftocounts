@@ -130,7 +130,7 @@ workflow VCFTOMAT {
         BCFTOOLS_REHEADER(
             // Create the sample files and add them to ch_vcf_concat
             ch_vcf_concat.map { meta, vcf_tbi ->
-                def sample_file = file("${workflow.workDir}/tmp/${meta.label}.txt")
+                def sample_file = file("${meta.label}.txt") //${workflow.workDir}/tmp/
                 sample_file.text = "${meta.label}"
                 [ meta, vcf_tbi[0], [], sample_file ]
             },
