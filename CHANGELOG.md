@@ -9,6 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Fixed
 
+- [#16](https://github.com/qbic-pipelines/vcftomat/pull/16) - Fix bcftools/reheader bug
+
 ## v1.1.0 - Newton Puccoon - 08.01.2025
 
 ### Added
