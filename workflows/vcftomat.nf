@@ -128,14 +128,18 @@ workflow VCFTOMAT {
         //
 
         // Create the sample files and add them to ch_vcf_concat
-        ch_vcf_concat_with_samples = ch_vcf_concat.map { meta, vcf_tbi ->
+        // ch_vcf_concat_with_samples = ch_vcf_concat.map { meta, vcf_tbi ->
+        //     def sample_file = file("${meta.label}.txt")
+        //     sample_file.text = "${meta.label}"
+        //     return [ meta, vcf_tbi[0], [], sample_file ]
+        // }
+
+        BCFTOOLS_REHEADER(
+            ch_vcf_concat.map { meta, vcf_tbi ->
             def sample_file = file("${meta.label}.txt")
             sample_file.text = "${meta.label}"
             return [ meta, vcf_tbi[0], [], sample_file ]
-        }
-
-        BCFTOOLS_REHEADER(
-            ch_vcf_concat_with_samples,
+        },
             [[],[]]
         )
 
