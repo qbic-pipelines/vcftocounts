@@ -8,6 +8,7 @@ include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
+include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { VCF2MAT                } from '../modules/local/vcf2mat/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
@@ -184,10 +185,24 @@ workflow VCFTOMAT {
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 
     //
+    // remove any IDs from the ID column of the VCF
+    //
+
+    BCFTOOLS_ANNOTATE(
+        ch_merged_vcfs.map{ it -> [it[0], it[1], it[2], [], []] },
+        [], 
+        []
+    )
+
+    ch_removedIDs_vcfs = ch_single_id.mix(BCFTOOLS_ANNOTATE.out.vcf)
+
+    ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
+
+    //
     // Convert VCFs to Count Matrices
     //
     VCF2MAT(
-        ch_merged_vcfs.map{ it -> [it[0], it[1]] },
+        ch_removedIDs_vcfs.map{ it -> [it[0], it[1]] }
     )
 
     ch_versions = ch_versions.mix(VCF2MAT.out.versions)
