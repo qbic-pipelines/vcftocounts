@@ -19,7 +19,7 @@ suppressMessages(library(Matrix, warn.conflicts = FALSE, quietly=TRUE))
 
 generateMatrixfromVCF <- function(VCF, ofile) {
     # Read in VCF file
-    vcfobj <- readVcf(VCF)
+    vcfobj <- readVcf(VCF, row.names=FALSE)
     # Convert genotype to SNP matrix
     genomat <- geno(vcfobj)$GT
 
