@@ -12,7 +12,7 @@
 
 ## Introduction
 
-**qbic-pipelines/vcftomat** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
+**qbic-pipelines/vcftomat** is a bioinformatics pipeline that ...
 
 1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
@@ -22,12 +22,17 @@
 6. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
 7. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
-![](./docs/images/vcftomat.excalidraw.png)
+<!-- TODO nf-core: Include a figure that guides the user through the major workflow steps. Many nf-core
+     workflows use the "tube map" design for that. See https://nf-co.re/docs/contributing/design_guidelines#examples for examples.   -->
+<!-- TODO nf-core: Fill in short bullet-pointed list of the default steps in the pipeline -->2. Present QC for raw reads ([`MultiQC`](http://multiqc.info/))
 
 ## Usage
 
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
+
+<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
+     Explain what rows and columns represent. For instance (please edit as appropriate):
 
 First, prepare a samplesheet with your input data that looks as follows:
 
@@ -45,11 +50,12 @@ Each row represents a VCF file coming from a sample. The `label` column enables 
 
 Now, you can run the pipeline using:
 
+<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+
 ```bash
 nextflow run qbic-pipelines/vcftomat \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --genome GATK.GRCh38 \
    --outdir <OUTDIR>
 ```
 
@@ -61,6 +67,8 @@ nextflow run qbic-pipelines/vcftomat \
 qbic-pipelines/vcftomat was originally written by Famke Bäuerle, Dorothy Ellis.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
+
+<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
 ## Contributions and Support
 
