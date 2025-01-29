@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
+- [#22](https://github.com/qbic-pipelines/vcftomat/pull/22) - Remove ID column entries from VCFs
+
 ### `Fixed`
 
 - [#15](https://github.com/qbic-pipelines/vcftomat/pull/15) - template update to v3.1.1

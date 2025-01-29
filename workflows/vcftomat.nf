@@ -190,7 +190,7 @@ workflow VCFTOMAT {
 
     BCFTOOLS_ANNOTATE(
         ch_merged_vcfs.map{ it -> [it[0], it[1], it[2], [], []] },
-        [], 
+        [],
         []
     )
 
