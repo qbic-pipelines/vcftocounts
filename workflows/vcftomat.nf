@@ -184,8 +184,6 @@ workflow VCFTOMAT {
 
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 
-    ch_merged_vcfs.view()
-
     //
     // remove any IDs from the ID column of the VCF
     //
