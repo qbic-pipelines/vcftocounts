@@ -11,7 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#15](https://github.com/qbic-pipelines/vcftomat/pull/15) - template update to v3.1.1
 - [#16](https://github.com/qbic-pipelines/vcftomat/pull/16) - Fix bcftools/reheader bug
-- [#1](https://github.com/qbic-pipelines/vcftomat/pull/1) - template update to v3.2.0
+- [#21](https://github.com/qbic-pipelines/vcftomat/pull/21) - template update to v3.2.0
 
 ## v1.1.0 - Newton Puccoon - 08.01.2025
 

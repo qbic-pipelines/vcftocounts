@@ -25,8 +25,11 @@ workflow VCFTOMAT {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
-    main:
+    fasta
+    fai
+    dict
 
+    main:
     ch_versions = Channel.empty()
     ch_multiqc_files = Channel.empty()
 
@@ -241,7 +244,9 @@ workflow VCFTOMAT {
         []
     )
 
-    emit:multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
+    emit:
+    csv            = VCF2MAT.out.csv             // channel: *.csv
+    multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 
 }
