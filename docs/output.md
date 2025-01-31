@@ -42,7 +42,7 @@ To enable comparison of different variant callers or variant calling pipelines, 
 
 ### Remove IDs
 
-Removes entries in the `ID` field of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the R script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
+Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the R script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
 
 ### Convert to matrix
 

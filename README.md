@@ -19,8 +19,9 @@
 3. Concatenates all vcfs that have the same id and the same label with `bcftools/concat` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 4. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.
 5. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
-6. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
-7. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
+6. Removes entries in the ID column with `bcftools/annotate` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - his can be turned off by adding `--removeIDs false` to the `nextflow run` command.
+7. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
+8. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
 ![](./docs/images/vcftomat.excalidraw.png)
 
