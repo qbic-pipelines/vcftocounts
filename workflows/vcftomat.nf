@@ -188,15 +188,21 @@ workflow VCFTOMAT {
     // remove any IDs from the ID column of the VCF
     //
 
-    BCFTOOLS_ANNOTATE(
-        ch_merged_vcfs.map{ it -> [it[0], it[1], [], [], []] },
-        [],
-        []
-    )
+    if (params.removeIDs) {
+        
+        BCFTOOLS_ANNOTATE(
+            ch_merged_vcfs.map{ it -> [it[0], it[1], [], [], []] },
+            [],
+            []
+        )
 
-    ch_removedIDs_vcfs = ch_single_id.mix(BCFTOOLS_ANNOTATE.out.vcf)
+        ch_removedIDs_vcfs = ch_single_id.mix(BCFTOOLS_ANNOTATE.out.vcf)
 
-    ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
+        ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
+    } else {
+        ch_removedIDs_vcfs = ch_merged_vcfs
+    }
+
 
     //
     // Convert VCFs to Count Matrices
