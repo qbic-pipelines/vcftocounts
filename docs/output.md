@@ -15,6 +15,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Concatenate VCFs](#concatenate-vcfs) - Concatenates all vcfs that have the same id and the same label with bcftools/concat
 - [Rename Samples](#rename-samples) - Changes the sample name in the vcf file to the label with bcftools/reheader
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
+- [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
@@ -33,11 +34,15 @@ Some variant calling pipelines will return multiple (g)VCF files for one patient
 
 ### Rename Samples
 
-To make enable the comparison of the finalized CSV files, `bcftools reheader` can be enabled to rename the variant sample name from the generic name given by the variant caller to a custom label given with the samplesheet.
+To make enable the comparison of the finalized CSV files, `bcftools reheader` can be enabled to rename the variant sample name from the generic name given by the variant caller to a custom label given with the samplesheet. Can be turned off with `--rename false`.
 
 ### Merge VCFs
 
 To enable comparison of different variant callers or variant calling pipelines, all VCFs that come from the same sample are merged based on the sample ID submitted by the user.
+
+### Remove IDs
+
+Removes entries in the `ID` field of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the R script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
 
 ### Convert to matrix
 
