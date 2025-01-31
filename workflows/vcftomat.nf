@@ -189,7 +189,7 @@ workflow VCFTOMAT {
     //
 
     if (params.removeIDs) {
-        
+
         BCFTOOLS_ANNOTATE(
             ch_merged_vcfs.map{ it -> [it[0], it[1], [], [], []] },
             [],
