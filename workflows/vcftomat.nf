@@ -7,6 +7,7 @@ include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
+include { ENSEMBLVEP_FILTERVEP   } from '../modules/nf-core/ensemblvep/filtervep/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { VCF2MAT                } from '../modules/local/vcf2mat/main'
@@ -145,6 +146,30 @@ workflow VCFTOMAT {
         ch_vcf_index_rh = ch_vcf_concat
     }
 
+    if (params.filter != null) {
+        //
+        // Filter VCFs for variants marked as HIGH Impact
+        //
+        ENSEMBLVEP_FILTERVEP(
+            ch_vcf_index_rh.map{ it -> [it[0], it[1][0]] },
+            [] // feature_file
+        )
+
+        ch_versions = ch_versions.mix(ENSEMBLVEP_FILTERVEP.out.versions)
+
+        TABIX_TABIX( ENSEMBLVEP_FILTERVEP.out.output )
+
+        ch_filtered_vcf = ENSEMBLVEP_FILTERVEP.out.output
+                .join(TABIX_TABIX.out.tbi)
+                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+        ch_versions = ch_versions.mix(TABIX_TABIX.out.versions)
+
+    } else {
+        ch_filtered_vcf = ch_vcf_index_rh
+    }
+
+
 
     //
     // Merge multiple VCFs per sample (patient) with BCFTOOLS_MERGE
@@ -152,7 +177,7 @@ workflow VCFTOMAT {
 
     // Bring all vcfs from one sample into a channel
     // Branch based on the number of VCFs per sample
-    (ch_single_id, ch_multiple_id) = ch_vcf_index_rh
+    (ch_single_id, ch_multiple_id) = ch_filtered_vcf
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
             def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
