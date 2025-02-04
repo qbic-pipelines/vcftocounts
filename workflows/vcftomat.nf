@@ -3,18 +3,19 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                       } from '../modules/nf-core/multiqc/main'
-include { GATK4_GENOTYPEGVCFS           } from '../modules/nf-core/gatk4/genotypegvcfs/main'
-include { BCFTOOLS_CONCAT               } from '../modules/nf-core/bcftools/concat/main'
-include { BCFTOOLS_REHEADER             } from '../modules/nf-core/bcftools/reheader/main'
-include { BCFTOOLS_VIEW                 } from '../modules/nf-core/bcftools/view/main'
-include { BCFTOOLS_MERGE                } from '../modules/nf-core/bcftools/merge/main'
-include { TABIX_TABIX as TABIX_INPUT    } from '../modules/nf-core/tabix/tabix/main'
-include { VCF2MAT                       } from '../modules/local/vcf2mat/main'
-include { paramsSummaryMap              } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc          } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText        } from '../subworkflows/local/utils_nfcore_vcftomat_pipeline'
+include { MULTIQC                } from '../modules/nf-core/multiqc/main'
+include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
+include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
+include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
+include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
+include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
+include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
+include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
+include { VCF2MAT                } from '../modules/local/vcf2mat/main'
+include { paramsSummaryMap       } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcftomat_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,12 +55,12 @@ workflow VCFTOMAT {
                 to_index: it[0].to_index
         }
 
-    TABIX_INPUT( ch_has_no_index )
+    TABIX_TABIX ( ch_has_no_index )
 
-    ch_versions = ch_versions.mix(TABIX_INPUT.out.versions.first())
+    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
     ch_indexed = ch_has_no_index.join(
-        TABIX_INPUT.out.tbi
+        TABIX_TABIX.out.tbi
             .map{ it -> [ it[0], [it[1]] ] }
         ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
 
@@ -205,10 +206,30 @@ workflow VCFTOMAT {
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 
     //
+    // remove any IDs from the ID column of the VCF
+    //
+
+    if (params.removeIDs) {
+
+        BCFTOOLS_ANNOTATE(
+            ch_merged_vcfs.map{ it -> [it[0], it[1], [], [], []] },
+            [],
+            []
+        )
+
+        ch_removedIDs_vcfs = ch_single_id.mix(BCFTOOLS_ANNOTATE.out.vcf)
+
+        ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
+    } else {
+        ch_removedIDs_vcfs = ch_merged_vcfs
+    }
+
+
+    //
     // Convert VCFs to Count Matrices
     //
     VCF2MAT(
-        ch_merged_vcfs.map{ it -> [it[0], it[1]] },
+        ch_removedIDs_vcfs.map{ it -> [it[0], it[1]] }
     )
 
     ch_versions = ch_versions.mix(VCF2MAT.out.versions)

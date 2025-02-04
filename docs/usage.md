@@ -41,7 +41,7 @@ An [example samplesheet](../assets/samplesheet.csv) has been provided with the p
 The typical command for running the pipeline is as follows:
 
 ```bash
-nextflow run qbic-pipelines/vcftomat --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh38 --rename true -profile docker
+nextflow run qbic-pipelines/vcftomat --input ./samplesheet.csv --outdir ./results --genome GATK.GRCh38 -profile docker
 ```
 
 This will launch the pipeline with the `docker` configuration profile. See below for more information about profiles.
@@ -77,6 +77,11 @@ genome: "GATK.GRCh38"
 ```
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
+
+### Options to customize pipeline behavior
+
+- Use `--rename false` if you do not want the sample names in the VCF files to be replaced by the `label` entry in the samplesheet.
+- Use `--removeIDs false` if you want to keep all entries in the `ID` column of the VCF files untouched.
 
 ### Updating the pipeline
 

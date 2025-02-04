@@ -32,6 +32,11 @@
                     "type": "string",
                     "description": "Add a filtering criterium suitable for bcftools/view. For example 'INFO/CSQ ~ \"HIGH\"'."
                 },
+                "removeIDs": {
+                    "type": "boolean",
+                    "default": true,
+                    "description": "Remove entries in the ID column of the VCF (to avoid vcf2mat using rsIDs)"
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",
