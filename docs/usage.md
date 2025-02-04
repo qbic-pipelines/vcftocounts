@@ -82,6 +82,7 @@ You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-c
 
 - Use `--rename false` if you do not want the sample names in the VCF files to be replaced by the `label` entry in the samplesheet.
 - Use `--removeIDs false` if you want to keep all entries in the `ID` column of the VCF files untouched.
+- Use `--filter <filterCriterium>` to filter your VCF files with `bcftools view -i` for specific patterns.
 
 ### Updating the pipeline
 

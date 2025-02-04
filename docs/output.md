@@ -14,6 +14,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [GenotypeGVCFs](#genotypegvcfs) - Converts g.vcf files to vcf with GATK
 - [Concatenate VCFs](#concatenate-vcfs) - Concatenates all vcfs that have the same id and the same label with bcftools/concat
 - [Rename Samples](#rename-samples) - Changes the sample name in the vcf file to the label with bcftools/reheader
+- [Filter VCFs](#filter-vcfs) - Filters the VCF based on a string given to the `filter` param with bcftools/view
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro
@@ -35,6 +36,13 @@ Some variant calling pipelines will return multiple (g)VCF files for one patient
 ### Rename Samples
 
 To make enable the comparison of the finalized CSV files, `bcftools reheader` can be enabled to rename the variant sample name from the generic name given by the variant caller to a custom label given with the samplesheet. Can be turned off with `--rename false`.
+
+- ### Filter VCFs
+
+VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Examples include:
+- Setting `--filter 'INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as high.
+- Setting `--filter 'INFO/CSQ ~ "MODERATE" || INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as moderate or high.
+- Setting `--filter 'INFO/CSQ ~ "missense_variant"'` will keep only variants with the consequence `missense_variant`.
 
 ### Merge VCFs
 

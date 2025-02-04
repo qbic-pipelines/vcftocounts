@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [#22](https://github.com/qbic-pipelines/vcftomat/pull/22) - Remove ID column entries from VCFs
+- [#23](https://github.com/qbic-pipelines/vcftomat/pull/23) - Add filtering of VEP annotated VCF files using bcftools/view
 
 ### `Fixed`
 
