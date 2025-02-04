@@ -92,10 +92,31 @@ workflow VCFTOMAT {
 
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
+    if (params.filter != null) {
+        //
+        // Filter VCFs for pattern given in params.filter
+        //
+        BCFTOOLS_VIEW (
+            ch_vcf.map{ it -> [it[0], it[1][0], it[1][1]] },
+            [], // regions
+            [], // targets
+            [] // samples
+        )
+
+        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
+
+        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
+                .join(BCFTOOLS_VIEW.out.tbi)
+                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+    } else {
+        ch_filtered_vcf = ch_vcf
+    }
+
     //
     // Concatenate converted VCFs if the entries for "id" and "label" are the same
     //
-    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
             def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
@@ -147,34 +168,13 @@ workflow VCFTOMAT {
         ch_vcf_index_rh = ch_vcf_concat
     }
 
-    if (params.filter != null) {
-        //
-        // Filter VCFs for pattern given in params.filter
-        //
-        BCFTOOLS_VIEW (
-            ch_vcf_index_rh.map{ it -> [it[0], it[1][0], it[1][1]] },
-            [], // regions
-            [], // targets
-            [] // samples
-        )
-
-        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
-
-        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
-                .join(BCFTOOLS_VIEW.out.tbi)
-                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
-
-    } else {
-        ch_filtered_vcf = ch_vcf_index_rh
-    }
-
     //
     // Merge multiple VCFs per sample (patient) with BCFTOOLS_MERGE
     //
 
     // Bring all vcfs from one sample into a channel
     // Branch based on the number of VCFs per sample
-    (ch_single_id, ch_multiple_id) = ch_filtered_vcf
+    (ch_single_id, ch_multiple_id) = ch_vcf_index_rh
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
             def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
