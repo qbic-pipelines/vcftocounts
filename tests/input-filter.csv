@@ -1,0 +1,2 @@
+sample,label,gvcf,vcf_path,vcf_index_path
+ann,ann,false,/Users/famke/01-japan-project/annotated/ERR031862.haplotypecaller.filtered_VEP.ann.vcf.gz
