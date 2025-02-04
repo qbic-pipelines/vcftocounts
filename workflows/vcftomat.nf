@@ -3,18 +3,18 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
-include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
-include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
-include { ENSEMBLVEP_FILTERVEP   } from '../modules/nf-core/ensemblvep/filtervep/main'
-include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
-include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
-include { VCF2MAT                } from '../modules/local/vcf2mat/main'
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcftomat_pipeline'
+include { MULTIQC                       } from '../modules/nf-core/multiqc/main'
+include { GATK4_GENOTYPEGVCFS           } from '../modules/nf-core/gatk4/genotypegvcfs/main'
+include { BCFTOOLS_CONCAT               } from '../modules/nf-core/bcftools/concat/main'
+include { BCFTOOLS_REHEADER             } from '../modules/nf-core/bcftools/reheader/main'
+include { BCFTOOLS_VIEW                 } from '../modules/nf-core/bcftools/view/main'
+include { BCFTOOLS_MERGE                } from '../modules/nf-core/bcftools/merge/main'
+include { TABIX_TABIX as TABIX_INPUT    } from '../modules/nf-core/tabix/tabix/main'
+include { VCF2MAT                       } from '../modules/local/vcf2mat/main'
+include { paramsSummaryMap              } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc          } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML        } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText        } from '../subworkflows/local/utils_nfcore_vcftomat_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -54,12 +54,12 @@ workflow VCFTOMAT {
                 to_index: it[0].to_index
         }
 
-    TABIX_TABIX( ch_has_no_index )
+    TABIX_INPUT( ch_has_no_index )
 
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
+    ch_versions = ch_versions.mix(TABIX_INPUT.out.versions.first())
 
     ch_indexed = ch_has_no_index.join(
-        TABIX_TABIX.out.tbi
+        TABIX_INPUT.out.tbi
             .map{ it -> [ it[0], [it[1]] ] }
         ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
 
@@ -148,28 +148,24 @@ workflow VCFTOMAT {
 
     if (params.filter != null) {
         //
-        // Filter VCFs for variants marked as HIGH Impact
+        // Filter VCFs for pattern given in params.filter
         //
-        ENSEMBLVEP_FILTERVEP(
-            ch_vcf_index_rh.map{ it -> [it[0], it[1][0]] },
-            [] // feature_file
+        BCFTOOLS_VIEW (
+            ch_vcf_index_rh.map{ it -> [it[0], it[1][0], it[1][1]] },
+            [], // regions
+            [], // targets
+            [] // samples
         )
 
-        ch_versions = ch_versions.mix(ENSEMBLVEP_FILTERVEP.out.versions)
+        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
 
-        TABIX_TABIX( ENSEMBLVEP_FILTERVEP.out.output )
-
-        ch_filtered_vcf = ENSEMBLVEP_FILTERVEP.out.output
-                .join(TABIX_TABIX.out.tbi)
+        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
+                .join(BCFTOOLS_VIEW.out.tbi)
                 .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
-
-        ch_versions = ch_versions.mix(TABIX_TABIX.out.versions)
 
     } else {
         ch_filtered_vcf = ch_vcf_index_rh
     }
-
-
 
     //
     // Merge multiple VCFs per sample (patient) with BCFTOOLS_MERGE
