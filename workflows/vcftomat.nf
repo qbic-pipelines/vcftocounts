@@ -6,6 +6,7 @@
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
+include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
@@ -38,17 +39,7 @@ workflow VCFTOMAT {
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map{ it ->
-            def name = it[1][0].baseName
-                name = name
-                    .replaceFirst(/\.g\.vcf$/, "")
-                    .replaceFirst(/\.genome\.vcf$/, "")
-                    .replaceFirst(/\.genome\.g\.vcf$/, "")
-                    .replaceFirst(/\.g$/, "")
-                    .replaceFirst(/\.genome$/, "")
-                    .replaceFirst(/\.vcf$/, "")
-            [ it[0] + [ name:name ], it[1] ]
-        }
+        .map{ it -> [ it[0], it[1] ] }
         .branch{
                 has_index: !it[0].to_index
                 to_index: it[0].to_index
@@ -102,14 +93,12 @@ workflow VCFTOMAT {
             [ [meta.id, meta.label], meta, vcfs, tbis]
         }
         .groupTuple(by: 0)
-        .map { id_label, metas, vcfs, tbis ->
-            def meta = metas[0]
-            def vcf_count = vcfs.flatten().size()
-            meta.single_vcf = (vcf_count == 1)
+        .map { _id, metas, vcfs, tbis ->
+            def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
-            single: it[0].single_vcf
-            multiple: !it[0].single_vcf
+            single:   it[1].size == 1
+            multiple: it[1].size > 1
         }
 
     BCFTOOLS_CONCAT( ch_multiple_vcf )
@@ -117,25 +106,27 @@ workflow VCFTOMAT {
     ch_vcf_index = BCFTOOLS_CONCAT.out.vcf
             .join(BCFTOOLS_CONCAT.out.tbi)
 
-    ch_vcf_concat = ch_single_vcf.mix(ch_vcf_index)
-                .map { meta, vcf, tbi
-                -> [ meta.findAll { it.key != 'name' }, [ vcf, tbi ] ] }
+    ch_vcf_concat = ch_single_vcf
+            .mix(ch_vcf_index)
+            .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
 
     ch_versions = ch_versions.mix(BCFTOOLS_CONCAT.out.versions)
 
     if (params.rename) {
-        //
+        //Create the sample files in tmp folder and add them to ch_vcf_concat
+        CREATE_SAMPLE_FILE(ch_vcf_concat.map{ it -> it[0] })
+
+        ch_vcf_sample = ch_vcf_concat
+            .join(CREATE_SAMPLE_FILE.out.samplefile)
+            .map { meta, vcf_tbi, samplefile -> [ meta, vcf_tbi[0], [], samplefile ] }
+        
+        ch_versions = ch_versions.mix(CREATE_SAMPLE_FILE.out.versions)
+
         // Rename samples in vcf with the label
-        //
         BCFTOOLS_REHEADER(
-            // Create the sample files in tmp folder and add them to ch_vcf_concat
-            ch_vcf_concat.map { meta, vcf_tbi ->
-                def sample_file = file("${workflow.workDir}/tmp/${meta.label}.txt")
-                sample_file.text = "${meta.label}"
-                [ meta, vcf_tbi[0], [], sample_file ]
-            },
+            ch_vcf_sample,
             [[],[]]
-        )
+       )
 
         ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
                 .join(BCFTOOLS_REHEADER.out.index)
@@ -156,19 +147,17 @@ workflow VCFTOMAT {
     (ch_single_id, ch_multiple_id) = ch_vcf_index_rh
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
-            def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
-            def tbis = files.findAll { it.name.endsWith('.vcf.gz.tbi') }
+            def vcfs = files.findAll { it.toString().endsWith('.vcf.gz') }
+            def tbis = files.findAll { it.toString().endsWith('.vcf.gz.tbi') }
             [meta.id, meta, vcfs, tbis]
         }
         .groupTuple(by: 0)
-        .map { id, metas, vcfs, tbis ->
+        .map { _id, metas, vcfs, tbis ->
             def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
-            def vcf_count = vcfs.flatten().size()
-            meta.single_id = (vcf_count == 1)
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
-            single: it[0].single_id
-            multiple: !it[0].single_id
+            single:   it[1].size == 1
+            multiple: it[1].size > 1
         }
 
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
