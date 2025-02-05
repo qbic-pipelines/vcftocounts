@@ -14,7 +14,7 @@ process CREATE_SAMPLE_FILE {
     def VERSION = '1.0.0'
     """
     echo "${prefix}" > ${prefix}.txt
-    
+
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
         create_sample_file: $VERSION

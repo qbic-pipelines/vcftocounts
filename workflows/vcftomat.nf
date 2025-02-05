@@ -119,14 +119,14 @@ workflow VCFTOMAT {
         ch_vcf_sample = ch_vcf_concat
             .join(CREATE_SAMPLE_FILE.out.samplefile)
             .map { meta, vcf_tbi, samplefile -> [ meta, vcf_tbi[0], [], samplefile ] }
-        
+
         ch_versions = ch_versions.mix(CREATE_SAMPLE_FILE.out.versions)
 
         // Rename samples in vcf with the label
         BCFTOOLS_REHEADER(
             ch_vcf_sample,
             [[],[]]
-       )
+        )
 
         ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
                 .join(BCFTOOLS_REHEADER.out.index)
