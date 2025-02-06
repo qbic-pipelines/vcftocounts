@@ -50,11 +50,6 @@ workflow VCFTOMAT {
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
-    // ch_indexed = ch_has_no_index.join(
-    //     TABIX_TABIX.out.tbi
-    //         .map{ it -> [ it[0], [it[1]] ] }
-    //     ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
-
     ch_indexed = ch_has_no_index.join(TABIX_TABIX.out.tbi)
 
     // Join both channels back together
