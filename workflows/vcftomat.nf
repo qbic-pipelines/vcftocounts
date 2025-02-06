@@ -11,7 +11,7 @@ include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/ma
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
-include { VCF2MAT                } from '../modules/local/vcf2mat/main'
+include { VCF2COUNTS             } from '../modules/local/vcf2counts/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -196,11 +196,11 @@ workflow VCFTOMAT {
     //
     // Convert VCFs to Count Matrices
     //
-    VCF2MAT(
+    VCF2COUNTS(
         ch_removedIDs_vcfs.map{ it -> [it[0], it[1]] }
     )
 
-    ch_versions = ch_versions.mix(VCF2MAT.out.versions)
+    ch_versions = ch_versions.mix(VCF2COUNTS.out.versions)
 
     //
     // Collate and save software versions
@@ -255,7 +255,7 @@ workflow VCFTOMAT {
     )
 
     emit:
-    csv            = VCF2MAT.out.csv             // channel: *.csv
+    csv            = VCF2COUNTS.out.csv             // channel: *.csv
     multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
     versions       = ch_versions                 // channel: [ path(versions.yml) ]
 
