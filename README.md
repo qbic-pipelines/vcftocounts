@@ -1,18 +1,18 @@
-# qbic-pipelines/vcftomat
+# qbic-pipelines/vcftocounts
 
-[![GitHub Actions CI Status](https://github.com/qbic-pipelines/vcftomat/actions/workflows/ci.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomat/actions/workflows/ci.yml)
-[![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftomat/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftomat/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.14616650-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.14616650)
+[![GitHub Actions CI Status](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/ci.yml/badge.svg)](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/ci.yml)
+[![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.14616650-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.14616650)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
 [![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
-[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/qbic-pipelines/vcftomat)
+[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/qbic-pipelines/vcftocounts)
 
 ## Introduction
 
-**qbic-pipelines/vcftomat** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
+**qbic-pipelines/vcftocounts** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
 1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
@@ -23,7 +23,7 @@
 7. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
 8. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
-![](./docs/images/vcftomat.excalidraw.png)
+![](./docs/images/vcftocounts.excalidraw.png)
 
 ## Usage
 
@@ -47,7 +47,7 @@ Each row represents a VCF file coming from a sample. The `label` column enables 
 Now, you can run the pipeline using:
 
 ```bash
-nextflow run qbic-pipelines/vcftomat \
+nextflow run qbic-pipelines/vcftocounts \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
    --genome GATK.GRCh38 \
@@ -59,7 +59,7 @@ nextflow run qbic-pipelines/vcftomat \
 
 ## Credits
 
-qbic-pipelines/vcftomat was originally written by Famke Bäuerle, Dorothy Ellis.
+qbic-pipelines/vcftocounts was originally written by Famke Bäuerle, Dorothy Ellis.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
@@ -69,7 +69,7 @@ If you would like to contribute to this pipeline, please see the [contributing g
 
 ## Citations
 
-If you use qbic-pipelines/vcftomat for your analysis, please cite it using the following doi: [10.5281/zenodo.14616650](https://doi.org/10.5281/zenodo.14616650)
+If you use qbic-pipelines/vcftocounts for your analysis, please cite it using the following doi: [10.5281/zenodo.14616650](https://doi.org/10.5281/zenodo.14616650)
 
 <!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 

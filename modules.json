@@ -1,6 +1,6 @@
 {
-    "name": "qbic-pipelines/vcftomat",
-    "homePage": "https://github.com/qbic-pipelines/vcftomat",
+    "name": "qbic-pipelines/vcftocounts",
+    "homePage": "https://github.com/qbic-pipelines/vcftocounts",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {

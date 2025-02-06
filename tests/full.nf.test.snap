@@ -22,7 +22,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.2.0dev"
+                    "qbic-pipelines/vcftocounts": "v1.2.0dev"
                 }
             },
             [
@@ -65,7 +65,7 @@
                 "multiqc/multiqc_data/multiqc_sources.txt",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/vcftomat_software_mqc_versions.yml",
+                "pipeline_info/vcftocounts_software_mqc_versions.yml",
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "tabix/NA12878_GIAB.chr22.vcf.gz.tbi",
@@ -127,7 +127,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftomat": "v1.2.0dev"
+                    "qbic-pipelines/vcftocounts": "v1.2.0dev"
                 }
             },
             [
@@ -166,7 +166,7 @@
                 "multiqc/multiqc_plots",
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
-                "pipeline_info/vcftomat_software_mqc_versions.yml",
+                "pipeline_info/vcftocounts_software_mqc_versions.yml",
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.csi",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
