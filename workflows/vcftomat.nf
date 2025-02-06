@@ -39,20 +39,23 @@ workflow VCFTOMAT {
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map{ it -> [ it[0], it[1] ] }
+        .map{ it -> [ it[0], it[1], it[2] ] }
         .branch{
-                has_index: !it[0].to_index
-                to_index: it[0].to_index
+                has_index: it[2]
+                to_index: !it[2]
+            [it[0], it[1]]
         }
 
     TABIX_TABIX( ch_has_no_index )
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
-    ch_indexed = ch_has_no_index.join(
-        TABIX_TABIX.out.tbi
-            .map{ it -> [ it[0], [it[1]] ] }
-        ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
+    // ch_indexed = ch_has_no_index.join(
+    //     TABIX_TABIX.out.tbi
+    //         .map{ it -> [ it[0], [it[1]] ] }
+    //     ).map { meta, vcf, tbi -> [ meta, [ vcf[0], tbi[0] ] ] }
+
+    ch_indexed = ch_has_no_index.join(TABIX_TABIX.out.tbi)
 
     // Join both channels back together
     ch_vcf_tbi = ch_has_index.mix(ch_indexed)
