@@ -66,7 +66,7 @@ workflow VCFTOMAT {
         }
 
     GATK4_GENOTYPEGVCFS(
-        ch_gvcf.map{ it -> [ it[0], it[1][0], it[1][1], [], [] ] },
+        ch_gvcf.map{ it -> [ it[0] + [ name: it[1][0].simpleName ], it[1][0], it[1][1], [], [] ] },
         fasta.map{ it -> [ [ id:it.baseName ], it ] },
         fai.map{ it -> [ [ id:it.baseName ], it ] },
         dict.map{ it -> [ [ id:it.baseName ], it ] },
