@@ -39,11 +39,11 @@ workflow VCFTOMAT {
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map{ it -> [ it[0], it[1], it[2] ] }
+        .map{ it -> [ it[0] + [ name: it[1].simpleName ], it[1], it[2] ] }
         .branch{
-                has_index: it[2]
-                to_index: !it[2]
-            [it[0], it[1]]
+            has_index: it[2]
+            to_index: !it[2]
+                [it[0], it[1]]
         }
 
     TABIX_TABIX( ch_has_no_index )
@@ -63,13 +63,14 @@ workflow VCFTOMAT {
     //
     // Convert gvcfs to vcfs
     //
-    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch {
+    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch{
             gvcf: it[0].gvcf
             vcf: !it[0].gvcf
         }
 
+
     GATK4_GENOTYPEGVCFS(
-        ch_gvcf.map{ it -> [ it[0] + [ name: it[1].simpleName ], it[1], it[2], [], [] ] },
+        ch_gvcf.map{ it -> [ it[0], it[1], it[2], [], [] ] },
         fasta.map{ it -> [ [ id:it.baseName ], it ] },
         fai.map{ it -> [ [ id:it.baseName ], it ] },
         dict.map{ it -> [ [ id:it.baseName ], it ] },
@@ -79,7 +80,6 @@ workflow VCFTOMAT {
 
     ch_vcf_index = GATK4_GENOTYPEGVCFS.out.vcf
             .join(GATK4_GENOTYPEGVCFS.out.tbi)
-            //.map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
 
     ch_vcf = ch_normal_vcf.mix(ch_vcf_index)
 
@@ -90,10 +90,7 @@ workflow VCFTOMAT {
     //
     (ch_single_vcf, ch_multiple_vcf) = ch_vcf
         .map { meta, vcf, tbi ->
-            // Assuming files is a list of all VCF and TBI files
-            def vcfs = vcf.findAll { it.name.endsWith('.vcf.gz') }
-            def tbis = tbi.findAll { it.name.endsWith('.vcf.gz.tbi') }
-            [ [meta.id, meta.label], meta, vcfs, tbis]
+            [ [meta.id, meta.label], meta, vcf, tbi]
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
@@ -111,7 +108,6 @@ workflow VCFTOMAT {
 
     ch_vcf_concat = ch_single_vcf
             .mix(ch_vcf_index)
-            //.map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
 
     ch_versions = ch_versions.mix(BCFTOOLS_CONCAT.out.versions)
 
@@ -121,7 +117,7 @@ workflow VCFTOMAT {
 
         ch_vcf_sample = ch_vcf_concat
             .join(CREATE_SAMPLE_FILE.out.samplefile)
-            .map { meta, vcf, tbi, samplefile -> [ meta, vcf, [], samplefile ] }
+            .map { meta, vcf, _tbi, samplefile -> [ meta, vcf, [], samplefile ] }
 
         ch_versions = ch_versions.mix(CREATE_SAMPLE_FILE.out.versions)
 
@@ -133,7 +129,6 @@ workflow VCFTOMAT {
 
         ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
                 .join(BCFTOOLS_REHEADER.out.index)
-                //.map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
 
         ch_versions = ch_versions.mix(BCFTOOLS_REHEADER.out.versions)
     } else {
@@ -149,10 +144,7 @@ workflow VCFTOMAT {
     // Branch based on the number of VCFs per sample
     (ch_single_id, ch_multiple_id) = ch_vcf_index_rh
         .map { meta, vcf, tbi ->
-            // Assuming files is a list of all VCF and TBI files
-            def vcfs = vcf.findAll { it.toString().endsWith('.vcf.gz') }
-            def tbis = tbi.findAll { it.toString().endsWith('.vcf.gz.tbi') }
-            [meta.id, meta, vcfs, tbis]
+            [meta.id, meta, vcf, tbi]
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
