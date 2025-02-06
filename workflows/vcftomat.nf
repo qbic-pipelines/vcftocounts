@@ -4,13 +4,13 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { MULTIQC                } from '../modules/nf-core/multiqc/main'
+include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
-include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { VCF2COUNTS             } from '../modules/local/vcf2counts/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
