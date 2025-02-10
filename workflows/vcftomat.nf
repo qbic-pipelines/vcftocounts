@@ -111,11 +111,7 @@ workflow VCFTOMAT {
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
-            // Check if all metas are the same
-            if (!metas.every { it == metas[0] }) {
-                error "Error: Not all meta maps are the same for ID ${_id}"
-            }
-            def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
+            def meta = metas[0].findAll { k, _v -> k != 'name' }  // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
             single:   it[1].size == 1
@@ -133,7 +129,7 @@ workflow VCFTOMAT {
     ch_versions = ch_versions.mix(BCFTOOLS_CONCAT.out.versions)
 
     if (params.rename) {
-        //Create the sample files in tmp folder and add them to ch_vcf_concat
+        // Create the sample file and add them to ch_vcf_concat
         CREATE_SAMPLE_FILE(ch_vcf_concat.map{ it -> it[0] })
 
         ch_vcf_sample = ch_vcf_concat
@@ -168,11 +164,7 @@ workflow VCFTOMAT {
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
-            // Check if all metas are the same
-            if (!metas.every { it == metas[0] }) {
-                error "Error: Not all meta maps are the same for ID ${_id}"
-            }
-            def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
+            def meta = metas[0].findAll { k, _v -> k != 'name' }  // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
             single:   it[1].size == 1
@@ -195,7 +187,6 @@ workflow VCFTOMAT {
     //
     // remove any IDs from the ID column of the VCF
     //
-
     if (params.removeIDs) {
 
         BCFTOOLS_ANNOTATE(
