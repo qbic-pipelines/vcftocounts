@@ -1,4 +1,4 @@
-process VCF2MAT {
+process VCF2COUNTS {
     tag "$meta.id"
     label 'process_single'
 

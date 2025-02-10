@@ -13,13 +13,15 @@ Initial release of (renamed) qbic-pipelines/vcftocounts.
 
 ### `Added`
 
-- [#22](https://github.com/qbic-pipelines/vcftocounts/pull/22) - Remove ID column entries from VCFs
+- [#22](https://github.com/qbic-pipelines/vcftomat/pull/22) - Remove ID column entries from VCFs
+- [#23](https://github.com/qbic-pipelines/vcftomat/pull/23) - Add filtering of VEP annotated VCF files using bcftools/view
 
 ### `Fixed`
 
-- [#15](https://github.com/qbic-pipelines/vcftocounts/pull/15) - template update to v3.1.1
-- [#16](https://github.com/qbic-pipelines/vcftocounts/pull/16) - Fix bcftools/reheader bug
-- [#21](https://github.com/qbic-pipelines/vcftocounts/pull/21) - template update to v3.2.0
+- [#15](https://github.com/qbic-pipelines/vcftomat/pull/15) - template update to v3.1.1
+- [#16](https://github.com/qbic-pipelines/vcftomat/pull/16) - Fix bcftools/reheader bug
+- [#21](https://github.com/qbic-pipelines/vcftomat/pull/21) - template update to v3.2.0
+- [#24](https://github.com/qbic-pipelines/vcftomat/pull/24) - Change branching logic to enable caching again + rename vcf2mat to vcf2counts (thank you @awgymer for helping)
 
 ## v1.1.0 - Newton Puccoon - 08.01.2025
 
