@@ -111,6 +111,10 @@ workflow VCFTOMAT {
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
+            // Check if all metas are the same
+            if (!metas.every { it == metas[0] }) {
+                error "Error: Not all meta maps are the same for ID ${_id}"
+            }
             def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
@@ -164,6 +168,10 @@ workflow VCFTOMAT {
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
+            // Check if all metas are the same
+            if (!metas.every { it == metas[0] }) {
+                error "Error: Not all meta maps are the same for ID ${_id}"
+            }
             def meta = metas[0]  // Take the first meta, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }.branch {
