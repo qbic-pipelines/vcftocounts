@@ -86,7 +86,7 @@ workflow VCFTOMAT {
         // Filter VCFs for pattern given in params.filter
         //
         BCFTOOLS_VIEW (
-            ch_vcf.map{ it -> [it[0], it[1][0], it[1][1]] },
+            ch_vcf,
             [], // regions
             [], // targets
             [] // samples
