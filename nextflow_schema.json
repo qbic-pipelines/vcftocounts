@@ -35,7 +35,7 @@
                 "removeIDs": {
                     "type": "boolean",
                     "default": true,
-                    "description": "Remove entries in the ID column of the VCF (to avoid vcf2mat using rsIDs)"
+                    "description": "Remove entries in the ID column of the VCF (to avoid vcf2counts using rsIDs)"
                 },
                 "outdir": {
                     "type": "string",
