@@ -28,6 +28,10 @@
                     "default": true,
                     "description": "Renaming the sample names within the VCF file to the VCF filename."
                 },
+                "filter": {
+                    "type": "string",
+                    "description": "Add a filtering criterium suitable for bcftools/view. For example 'INFO/CSQ ~ \"HIGH\"'."
+                },
                 "removeIDs": {
                     "type": "boolean",
                     "default": true,

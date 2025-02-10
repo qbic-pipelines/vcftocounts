@@ -7,3 +7,4 @@ empty,empty,false,https://github.com/nf-core/test-datasets/raw/refs/heads/module
 toindex_concat_merge,concat,false,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878_GIAB.chr22.vcf.gz,
 toindex_concat_merge,concat,false,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA12878.chr22.1X.vcf.gz,
 toindex_concat_merge,merge,false,https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/illumina/vcf/NA24385_sv.vcf.gz,
+chr21_ann_full,chr21_ann,false,tests/annotated.vcf.gz

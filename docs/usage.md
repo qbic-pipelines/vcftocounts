@@ -78,10 +78,20 @@ genome: "GATK.GRCh38"
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
-### Options to customize pipeline behavior
+### Renaming of sample names in VCFs and removal of rsIDs
 
 - Use `--rename false` if you do not want the sample names in the VCF files to be replaced by the `label` entry in the samplesheet.
 - Use `--removeIDs false` if you want to keep all entries in the `ID` column of the VCF files untouched.
+
+### Filter VCFs
+
+VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Use `--filter <filterCriterium>` to filter your VCF files with `bcftools view -i` for specific patterns.
+
+Notably, this enables filtering for variants with certain impact levels or consequences. Examples include:
+
+- Setting `--filter 'INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as high.
+- Setting `--filter 'INFO/CSQ ~ "MODERATE" || INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as moderate or high.
+- Setting `--filter 'INFO/CSQ ~ "missense_variant"'` will keep only variants with the consequence `missense_variant`.
 
 ### Updating the pipeline
 

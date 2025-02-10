@@ -7,6 +7,7 @@ include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
+include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
@@ -54,7 +55,7 @@ workflow VCFTOMAT {
                 to_index: it[0].to_index
         }
 
-    TABIX_TABIX( ch_has_no_index )
+    TABIX_TABIX ( ch_has_no_index )
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
@@ -91,10 +92,31 @@ workflow VCFTOMAT {
 
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
+    if (params.filter != null) {
+        //
+        // Filter VCFs for pattern given in params.filter
+        //
+        BCFTOOLS_VIEW (
+            ch_vcf.map{ it -> [it[0], it[1][0], it[1][1]] },
+            [], // regions
+            [], // targets
+            [] // samples
+        )
+
+        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
+
+        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
+                .join(BCFTOOLS_VIEW.out.tbi)
+                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+    } else {
+        ch_filtered_vcf = ch_vcf
+    }
+
     //
     // Concatenate converted VCFs if the entries for "id" and "label" are the same
     //
-    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf
         .map { meta, files ->
             // Assuming files is a list of all VCF and TBI files
             def vcfs = files.findAll { it.name.endsWith('.vcf.gz') }
@@ -145,7 +167,6 @@ workflow VCFTOMAT {
     } else {
         ch_vcf_index_rh = ch_vcf_concat
     }
-
 
     //
     // Merge multiple VCFs per sample (patient) with BCFTOOLS_MERGE

@@ -1,0 +1,2 @@
+sample,label,gvcf,vcf_path,vcf_index_path
+chr21_ann,chr21_ann,false,tests/annotated.vcf.gz
