@@ -24,7 +24,7 @@
 8. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
 9. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
-![](./docs/images/vcftocounts.excalidraw.png)
+![](./docs/images/vcftocounts-subway.excalidraw.png)
 
 ## Usage
 
