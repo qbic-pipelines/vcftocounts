@@ -78,7 +78,7 @@ genome: "GATK.GRCh38"
 
 You can also generate such `YAML`/`JSON` files via [nf-core/launch](https://nf-co.re/launch).
 
-### Options to customize pipeline behavior
+### Renaming of sample names in VCFs and removal of rsIDs
 
 - Use `--rename false` if you do not want the sample names in the VCF files to be replaced by the `label` entry in the samplesheet.
 - Use `--removeIDs false` if you want to keep all entries in the `ID` column of the VCF files untouched.
