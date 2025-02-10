@@ -31,11 +31,7 @@ The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf
 
 ### Filter VCFs
 
-VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Examples include:
-
-- Setting `--filter 'INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as high.
-- Setting `--filter 'INFO/CSQ ~ "MODERATE" || INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as moderate or high.
-- Setting `--filter 'INFO/CSQ ~ "missense_variant"'` will keep only variants with the consequence `missense_variant`.
+VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns.
 
 ### Concatenate VCFs
 
