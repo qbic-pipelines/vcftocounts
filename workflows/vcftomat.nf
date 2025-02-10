@@ -9,6 +9,7 @@ include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
+include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
 include { VCF2COUNTS             } from '../modules/local/vcf2counts/main'
@@ -46,7 +47,7 @@ workflow VCFTOMAT {
                 [it[0], it[1]]
         }
 
-    TABIX_TABIX( ch_has_no_index )
+    TABIX_TABIX ( ch_has_no_index )
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
@@ -79,6 +80,27 @@ workflow VCFTOMAT {
     ch_vcf = ch_normal_vcf.mix(ch_vcf_index)
 
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
+
+    if (params.filter != null) {
+        //
+        // Filter VCFs for pattern given in params.filter
+        //
+        BCFTOOLS_VIEW (
+            ch_vcf.map{ it -> [it[0], it[1][0], it[1][1]] },
+            [], // regions
+            [], // targets
+            [] // samples
+        )
+
+        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
+
+        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
+                .join(BCFTOOLS_VIEW.out.tbi)
+                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
+
+    } else {
+        ch_filtered_vcf = ch_vcf
+    }
 
     //
     // Concatenate converted VCFs if the entries for "id" and "label" are the same
@@ -129,7 +151,6 @@ workflow VCFTOMAT {
     } else {
         ch_vcf_index_rh = ch_vcf_concat
     }
-
 
     //
     // Merge multiple VCFs per sample (patient) with BCFTOOLS_MERGE
