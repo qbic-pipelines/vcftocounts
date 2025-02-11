@@ -1,4 +1,4 @@
-# qbic-pipelines/vcftomat: Output
+# qbic-pipelines/vcftocounts: Output
 
 ## Introduction
 

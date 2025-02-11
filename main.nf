@@ -1,9 +1,9 @@
 #!/usr/bin/env nextflow
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    qbic-pipelines/vcftomat
+    qbic-pipelines/vcftocounts
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    Github : https://github.com/qbic-pipelines/vcftomat
+    Github : https://github.com/qbic-pipelines/vcftocounts
 ----------------------------------------------------------------------------------------
 */
 
@@ -13,10 +13,10 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-include { VCFTOMAT  } from './workflows/vcftomat'
-include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_vcftomat_pipeline'
-include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_vcftomat_pipeline'
-include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcftomat_pipeline'
+include { VCFTOCOUNTS             } from './workflows/vcftocounts'
+include { PIPELINE_INITIALISATION } from './subworkflows/local/utils_nfcore_vcftocounts_pipeline'
+include { PIPELINE_COMPLETION     } from './subworkflows/local/utils_nfcore_vcftocounts_pipeline'
+include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcftocounts_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,7 +39,7 @@ params.dict  = getGenomeAttribute('dict')
 //
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
-workflow QBICPIPELINES_VCFTOMAT {
+workflow QBICPIPELINES_VCFTOCOUNTS {
 
     take:
     samplesheet // channel: samplesheet read in from --input
@@ -55,14 +55,14 @@ workflow QBICPIPELINES_VCFTOMAT {
     //
     // WORKFLOW: Run pipeline
     //
-    VCFTOMAT (
+    VCFTOCOUNTS (
         samplesheet,
         fasta,
         fai,
         dict
     )
     emit:
-    multiqc_report = VCFTOMAT.out.multiqc_report // channel: /path/to/multiqc_report.html
+    multiqc_report = VCFTOCOUNTS.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -88,7 +88,7 @@ workflow {
     //
     // WORKFLOW: Run main workflow
     //
-    QBICPIPELINES_VCFTOMAT (
+    QBICPIPELINES_VCFTOCOUNTS (
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
@@ -101,7 +101,7 @@ workflow {
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        QBICPIPELINES_VCFTOMAT.out.multiqc_report
+        QBICPIPELINES_VCFTOCOUNTS.out.multiqc_report
     )
 }
 

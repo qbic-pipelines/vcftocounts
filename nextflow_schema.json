@@ -1,7 +1,7 @@
 {
     "$schema": "https://json-schema.org/draft/2020-12/schema",
-    "$id": "https://raw.githubusercontent.com/qbic-pipelines/vcftomat/master/nextflow_schema.json",
-    "title": "qbic-pipelines/vcftomat pipeline parameters",
+    "$id": "https://raw.githubusercontent.com/qbic-pipelines/vcftocounts/master/nextflow_schema.json",
+    "title": "qbic-pipelines/vcftocounts pipeline parameters",
     "description": "Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical analysis",
     "type": "object",
     "$defs": {

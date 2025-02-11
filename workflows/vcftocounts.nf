@@ -16,7 +16,7 @@ include { VCF2COUNTS             } from '../modules/local/vcf2counts/main'
 include { paramsSummaryMap       } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcftomat_pipeline'
+include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcftocounts_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -24,7 +24,7 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcft
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-workflow VCFTOMAT {
+workflow VCFTOCOUNTS {
 
     take:
     ch_samplesheet // channel: samplesheet read in from --input
@@ -218,7 +218,7 @@ workflow VCFTOMAT {
     softwareVersionsToYAML(ch_versions)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name:  'vcftomat_software_'  + 'mqc_'  + 'versions.yml',
+            name:  'vcftocounts_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
             newLine: true
         ).set { ch_collated_versions }
