@@ -9,12 +9,13 @@ Initial release of (renamed) qbic-pipelines/vcftocounts.
 
 ### `Changed`
 
-- [#25](https://github.com/qbic-pipelines/vcftocounts/pull/25) - Rename pipeline to VCFTOCOUNTS + Peprare Release 2.0.0
+- [#25](https://github.com/qbic-pipelines/vcftocounts/pull/25) - Rename pipeline to vcftocounts + Prepare Release 2.0.0
+- [#28](https://github.com/qbic-pipelines/vcftocounts/pull/28) - Move test data to test-datasets, create filter nf-test
 
 ### `Added`
 
 - [#22](https://github.com/qbic-pipelines/vcftomat/pull/22) - Remove ID column entries from VCFs
-- [#23](https://github.com/qbic-pipelines/vcftomat/pull/23) - Add filtering of VEP annotated VCF files using bcftools/view
+- [#23](https://github.com/qbic-pipelines/vcftomat/pull/23) - Add filtering of VEP annotated VCF files using bcftools/view (no conda for NXF_VER < 24.10.2)
 
 ### `Fixed`
 

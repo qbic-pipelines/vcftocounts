@@ -1,11 +1,11 @@
 nextflow_pipeline {
 
-    name "Test pipeline with default settings"
+    name "Test pipeline with filter settings"
     script "../main.nf"
 
-    test("Params: default | input full-size") {
+    test("Params: filter | input filter test") {
 
-        config 'conf/test_full.config'
+        config 'conf/test_filter.config'
 
         when {
             params {
@@ -23,9 +23,7 @@ nextflow_pipeline {
                 include: ['**/*.vcf.gz', '**/*.vcf'],
                 ignore: ['**/concat.concat.vcf.gz',
                     '**/toindex_concat_merge.merge.vcf.gz',
-                    '**/concat.reheader.vcf.gz',
-                    '**/toindex_concat_merge.IDremoved.vcf.gz']
-                    )
+                    '**/concat.reheader.vcf.gz'])
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
@@ -44,11 +42,11 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: default | input full-size - stub") {
+    test("Params: filter | input filter test - stub") {
 
         options "-stub"
 
-        config 'conf/test_full.config'
+        config 'conf/test_filter.config'
 
         when {
             params {
