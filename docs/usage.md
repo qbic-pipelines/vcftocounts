@@ -93,6 +93,9 @@ Notably, this enables filtering for variants with certain impact levels or conse
 - Setting `--filter 'INFO/CSQ ~ "MODERATE" || INFO/CSQ ~ "HIGH"'` will keep only variants with the IMPACT marked as moderate or high.
 - Setting `--filter 'INFO/CSQ ~ "missense_variant"'` will keep only variants with the consequence `missense_variant`.
 
+> [!NOTE]
+> The filtering step only works with conda for nextflow versions above 24.10.2 (use docker or singularity if you want to use an older nextflow version)
+
 ### Updating the pipeline
 
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:
