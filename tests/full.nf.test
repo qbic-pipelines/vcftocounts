@@ -23,14 +23,16 @@ nextflow_pipeline {
                 include: ['**/*.vcf.gz', '**/*.vcf'],
                 ignore: ['**/concat.concat.vcf.gz',
                     '**/toindex_concat_merge.merge.vcf.gz',
-                    '**/concat.reheader.vcf.gz'])
+                    '**/concat.reheader.vcf.gz',
+                    '**/toindex_concat_merge.IDremoved.vcf.gz']
+                    )
             assertAll(
                 { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
                     // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
-                    removeNextflowVersion("$outputDir/pipeline_info/vcftomat_software_mqc_versions.yml"),
+                    removeNextflowVersion("$outputDir/pipeline_info/vcftocounts_software_mqc_versions.yml"),
                     // All stable path name, with a relative path
                     stable_name,
                     // All files with stable contents
@@ -67,7 +69,7 @@ nextflow_pipeline {
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
                     // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
-                    removeNextflowVersion("$outputDir/pipeline_info/vcftomat_software_mqc_versions.yml"),
+                    removeNextflowVersion("$outputDir/pipeline_info/vcftocounts_software_mqc_versions.yml"),
                     // All stable path name, with a relative path
                     stable_name,
                     // All files with stable contents

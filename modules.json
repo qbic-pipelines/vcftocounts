@@ -1,10 +1,15 @@
 {
-    "name": "qbic-pipelines/vcftomat",
-    "homePage": "https://github.com/qbic-pipelines/vcftomat",
+    "name": "qbic-pipelines/vcftocounts",
+    "homePage": "https://github.com/qbic-pipelines/vcftocounts",
     "repos": {
         "https://github.com/nf-core/modules.git": {
             "modules": {
                 "nf-core": {
+                    "bcftools/annotate": {
+                        "branch": "master",
+                        "git_sha": "104bb763c82e18cc3768abed10b251ebba321c0e",
+                        "installed_by": ["modules"]
+                    },
                     "bcftools/concat": {
                         "branch": "master",
                         "git_sha": "d1e0ec7670fa77905a378627232566ce54c3c26d",
@@ -16,6 +21,11 @@
                         "installed_by": ["modules"]
                     },
                     "bcftools/reheader": {
+                        "branch": "master",
+                        "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
+                        "installed_by": ["modules"]
+                    },
+                    "bcftools/view": {
                         "branch": "master",
                         "git_sha": "666652151335353eef2fcd58880bcef5bc2928e1",
                         "installed_by": ["modules"]

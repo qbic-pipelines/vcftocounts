@@ -1,9 +1,10 @@
 lint:
+  actions_ci: false
   files_exist:
     - CODE_OF_CONDUCT.md
-    - assets/nf-core-vcftomat_logo_light.png
-    - docs/images/nf-core-vcftomat_logo_light.png
-    - docs/images/nf-core-vcftomat_logo_dark.png
+    - assets/nf-core-vcftocounts_logo_light.png
+    - docs/images/nf-core-vcftocounts_logo_light.png
+    - docs/images/nf-core-vcftocounts_logo_dark.png
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/awstest.yml
     - .github/workflows/awsfulltest.yml
@@ -13,12 +14,11 @@ lint:
     - .github/CONTRIBUTING.md
     - .prettierignore
     - CODE_OF_CONDUCT.md
-    - assets/nf-core-vcftomat_logo_light.png
-    - docs/images/nf-core-vcftomat_logo_light.png
-    - docs/images/nf-core-vcftomat_logo_dark.png
+    - assets/nf-core-vcftocounts_logo_light.png
+    - docs/images/nf-core-vcftocounts_logo_light.png
+    - docs/images/nf-core-vcftocounts_logo_dark.png
     - .github/ISSUE_TEMPLATE/bug_report.yml
   included_configs: false
-  actions_ci: false
   multiqc_config:
     - report_comment
   nextflow_config:
@@ -28,7 +28,7 @@ lint:
     - validation.help.afterText
     - validation.summary.beforeText
     - validation.summary.afterText
-nf_core_version: 3.1.0
+nf_core_version: 3.2.0
 repository_type: pipeline
 template:
   author: "Famke Bäuerle, Dorothy Ellis"
@@ -36,7 +36,7 @@ template:
     analysis
   force: false
   is_nfcore: false
-  name: vcftomat
+  name: vcftocounts
   org: qbic-pipelines
   outdir: .
   skip_features:
@@ -44,4 +44,4 @@ template:
     - codespaces
     - fastqc
     - adaptivecard
-  version: 1.1.0
+  version: 2.0.0

@@ -1,0 +1,2 @@
+sample,label,gvcf,vcf_path,vcf_index_path
+chr21_ann_full,chr21_ann,false,https://github.com/qbic-pipelines/test-datasets/raw/refs/heads/main/annotated.vcf.gz,

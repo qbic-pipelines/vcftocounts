@@ -1,5 +1,5 @@
 //
-// Subworkflow with functionality specific to the qbic-pipelines/vcftomat pipeline
+// Subworkflow with functionality specific to the qbic-pipelines/vcftocounts pipeline
 //
 
 /*
@@ -74,14 +74,6 @@ workflow PIPELINE_INITIALISATION {
 
     Channel
         .fromList(samplesheetToList(params.input, "${projectDir}/assets/schema_input.json"))
-        .map {
-            meta, vcf_path, vcf_index_path ->
-                if (!vcf_index_path) {
-                    return [ meta + [ to_index:true ] , [ vcf_path ] ]
-                } else {
-                    return [ meta + [ to_index:false ] , [ vcf_path, vcf_index_path ] ]
-                }
-        }
         .set { ch_samplesheet }
 
     emit:
