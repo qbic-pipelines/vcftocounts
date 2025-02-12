@@ -15,7 +15,7 @@ Initial release of (renamed) qbic-pipelines/vcftocounts.
 ### `Added`
 
 - [#22](https://github.com/qbic-pipelines/vcftocounts/pull/22) - Remove ID column entries from VCFs
-- [#23](https://github.com/qbic-pipelines/vcftocounts/pull/23) - Add filtering of VEP annotated VCF files using bcftools/view (no conda for NXF_VER < 24.10.2)
+- [#23](https://github.com/qbic-pipelines/vcftocounts/pull/23) - Add filtering of VEP annotated VCF files using bcftools/view (no conda for NXF_VER <= 24.10.2)
 
 ### `Fixed`
 
