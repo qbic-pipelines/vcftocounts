@@ -28,7 +28,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.0"
+                    "qbic-pipelines/vcftocounts": "v2.0.1dev"
                 }
             },
             [
@@ -121,7 +121,7 @@
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_full.csv:md5,93e6547551246174f63a3c62f98ccc48",
+                "chr21_ann_full.csv:md5,e797160c3cae2431c11d0db9208555f9",
                 "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
                 "indexed_merge.csv:md5,4e9896dbd6e9b63e049a64cc6f5a42f9",
                 "toindex_gvcf_merge.csv:md5,bb0cc37d7f55f611a8d0f11c4d80dece"
@@ -146,7 +146,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-10T09:41:09.656822"
+        "timestamp": "2025-04-10T10:56:30.992517"
     },
     "Params: default | input full-size - stub": {
         "content": [
@@ -177,7 +177,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.0"
+                    "qbic-pipelines/vcftocounts": "v2.0.1dev"
                 }
             },
             [
@@ -295,6 +295,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-10T09:42:00.68185"
+        "timestamp": "2025-04-10T10:57:28.297432"
     }
 }
