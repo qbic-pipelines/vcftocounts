@@ -30,14 +30,16 @@ lint:
   - validation.summary.afterText
 nf_core_version: 3.2.0
 repository_type: pipeline
+
 template:
+  prefix: qbic-pipelines
+  org: qbic-pipelines
   author: "Famke Bäuerle, Dorothy Ellis"
   description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical
     analysis
   force: false
   is_nfcore: false
   name: vcftocounts
-  org: qbic-pipelines
   outdir: .
   skip_features:
   - gitpod
