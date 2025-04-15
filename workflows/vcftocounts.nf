@@ -100,7 +100,6 @@ workflow VCFTOCOUNTS {
 
         ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
                 .join(BCFTOOLS_VIEW.out.tbi)
-                .map { meta, vcf, tbi -> [ meta, [ vcf, tbi ] ] }
 
     } else {
         ch_filtered_vcf = ch_vcf
