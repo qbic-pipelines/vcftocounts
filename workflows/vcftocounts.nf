@@ -105,7 +105,7 @@ workflow VCFTOCOUNTS {
     //
     // Concatenate converted VCFs if the entries for "id" and "label" are the same
     //
-    (ch_single_vcf, ch_multiple_vcf) = ch_vcf
+    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf
         .map { meta, vcf, tbi ->
             [ [meta.id, meta.label], meta, vcf, tbi]
         }
