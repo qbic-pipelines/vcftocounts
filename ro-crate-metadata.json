@@ -21,8 +21,8 @@
         {
             "@id": "./",
             "@type": "Dataset",
-            "creativeWorkStatus": "Stable",
-            "datePublished": "2025-04-15T09:44:23+00:00",
+            "creativeWorkStatus": "InProgress",
+            "datePublished": "2025-04-15T13:25:04+00:00",
             "description": "# qbic-pipelines/vcftocounts\n\n[![GitHub Actions CI Status](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/ci.yml/badge.svg)](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/ci.yml)\n[![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.14616650-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.14616650)\n[![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)\n\n[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)\n[![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)\n[![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)\n[![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)\n[![Launch on Seqera Platform](https://img.shields.io/badge/Launch%20%F0%9F%9A%80-Seqera%20Platform-%234256e7)](https://cloud.seqera.io/launch?pipeline=https://github.com/qbic-pipelines/vcftocounts)\n\n## Introduction\n\n**qbic-pipelines/vcftocounts** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:\n\n1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))\n2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))\n3. Filters the VCF based on a string given to the `filter` param with `bcftools/view` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default.\n4. Concatenates all vcfs that have the same id and the same label with `bcftools/concat` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))\n5. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.\n6. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))\n7. Removes entries in the ID column with `bcftools/annotate` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - his can be turned off by adding `--removeIDs false` to the `nextflow run` command.\n8. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))\n9. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))\n\n![](./docs/images/vcftocounts-subway.excalidraw.png)\n\n## Usage\n\n> [!NOTE]\n> If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.\n\nFirst, prepare a samplesheet with your input data that looks as follows:\n\n`samplesheet.csv`:\n\n```csv\nsample,label,gvcf,vcf_path,vcf_index_path\nSAMPLE-1,pipelineA-callerA,false,path/to/vcf.gz,path/to/.vcf.gz.tbi\nSAMPLE-1,pipelineB-callerA,false,path/to/vcf.gz,path/to/.vcf.gz.tbi\nSAMPLE-2,pipelineB-callerB,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi\nSAMPLE-2,pipelineB-callerB,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi\n```\n\nEach row represents a VCF file coming from a sample. The `label` column enables concatenation of vcfs (for example when the pipeline produces different vcfs for chrM and chrY). The `gvcf` column indicates whether the file is a g.vcf file or not. The `vcf_path` and `vcf_index_path` columns contain the path to the VCF file and its index, respectively.\n\nNow, you can run the pipeline using:\n\n```bash\nnextflow run qbic-pipelines/vcftocounts \\\n   -profile <docker/singularity/.../institute> \\\n   --input samplesheet.csv \\\n   --genome GATK.GRCh38 \\\n   --outdir <OUTDIR>\n```\n\n> [!WARNING]\n> Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/usage/getting_started/configuration#custom-configuration-files).\n\n## Credits\n\nqbic-pipelines/vcftocounts was originally written by Famke B\u00e4uerle, Dorothy Ellis.\n\nWe thank the following people for their extensive assistance in the development of this pipeline:\n\n## Contributions and Support\n\nIf you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).\n\n## Citations\n\nIf you use qbic-pipelines/vcftocounts for your analysis, please cite it using the following doi: [10.5281/zenodo.14616650](https://doi.org/10.5281/zenodo.14616650)\n\n<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->\n\nAn extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.\n\nThis pipeline uses code and infrastructure developed and maintained by the [nf-core](https://nf-co.re) community, reused here under the [MIT license](https://github.com/nf-core/tools/blob/main/LICENSE).\n\n> **The nf-core framework for community-curated bioinformatics pipelines.**\n>\n> Philip Ewels, Alexander Peltzer, Sven Fillinger, Harshil Patel, Johannes Alneberg, Andreas Wilm, Maxime Ulysse Garcia, Paolo Di Tommaso & Sven Nahnsen.\n>\n> _Nat Biotechnol._ 2020 Feb 13. doi: [10.1038/s41587-020-0439-x](https://dx.doi.org/10.1038/s41587-020-0439-x).\n",
             "hasPart": [
                 {
@@ -102,7 +102,7 @@
             },
             "mentions": [
                 {
-                    "@id": "#92208da4-a39c-463c-9728-2030c0c93062"
+                    "@id": "#0a69c269-aa71-493a-8675-0f0bf0bbac87"
                 }
             ],
             "name": "qbic-pipelines/vcftocounts"
@@ -132,14 +132,14 @@
             "creator": [
                 "qbic",
                 {
-                    "@id": "https://orcid.org/0000-0003-1387-0251"
+                    "@id": "#45968370+famosab@users.noreply.github.com"
                 },
                 {
-                    "@id": "#45968370+famosab@users.noreply.github.com"
+                    "@id": "https://orcid.org/0000-0003-1387-0251"
                 }
             ],
             "dateCreated": "",
-            "dateModified": "2025-04-15T11:44:23Z",
+            "dateModified": "2025-04-15T15:25:04Z",
             "dct:conformsTo": "https://bioschemas.org/profiles/ComputationalWorkflow/1.0-RELEASE/",
             "keywords": [
                 "nf-core",
@@ -164,10 +164,10 @@
             },
             "url": [
                 "https://github.com/qbic-pipelines/vcftocounts",
-                "https://nf-co.re/qbic-pipelines/vcftocounts/2.0.1/"
+                "https://nf-co.re/qbic-pipelines/vcftocounts/dev/"
             ],
             "version": [
-                "2.0.1"
+                "2.0.2dev"
             ]
         },
         {
@@ -183,11 +183,11 @@
             "version": "!>=24.04.2"
         },
         {
-            "@id": "#92208da4-a39c-463c-9728-2030c0c93062",
+            "@id": "#0a69c269-aa71-493a-8675-0f0bf0bbac87",
             "@type": "TestSuite",
             "instance": [
                 {
-                    "@id": "#f684b92f-7c22-487d-b430-20fd1bc78ed2"
+                    "@id": "#09be11e9-c228-48c5-b7a1-cefba1528138"
                 }
             ],
             "mainEntity": {
@@ -196,7 +196,7 @@
             "name": "Test suite for qbic-pipelines/vcftocounts"
         },
         {
-            "@id": "#f684b92f-7c22-487d-b430-20fd1bc78ed2",
+            "@id": "#09be11e9-c228-48c5-b7a1-cefba1528138",
             "@type": "TestInstance",
             "name": "GitHub Actions workflow for testing qbic-pipelines/vcftocounts",
             "resource": "repos/qbic-pipelines/vcftocounts/actions/workflows/ci.yml",
@@ -330,16 +330,16 @@
             "url": "https://nf-co.re/"
         },
         {
-            "@id": "https://orcid.org/0000-0003-1387-0251",
-            "@type": "Person",
-            "email": "45968370+famosab@users.noreply.github.com",
-            "name": "Famke B\u00e4uerle"
-        },
-        {
             "@id": "#45968370+famosab@users.noreply.github.com",
             "@type": "Person",
             "email": "45968370+famosab@users.noreply.github.com",
             "name": "Famke Ba\u0308uerle"
+        },
+        {
+            "@id": "https://orcid.org/0000-0003-1387-0251",
+            "@type": "Person",
+            "email": "45968370+famosab@users.noreply.github.com",
+            "name": "Famke B\u00e4uerle"
         }
     ]
 }
