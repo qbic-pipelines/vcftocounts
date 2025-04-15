@@ -40,7 +40,11 @@ workflow VCFTOCOUNTS {
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map{ it -> [ it[0] + [ name: it[1].simpleName ], it[1], it[2] ] }
+        .map{ it ->
+            def nameParts = it[1].name.split(/\./).findAll { part -> !(part in ['g', 'vcf', 'gz']) }
+            def cleanedName = nameParts.join('.')
+            [ it[0] + [ name: cleanedName ], it[1], it[2] ]
+        }
         .branch{
             has_index: it[2]
             to_index: !it[2]
