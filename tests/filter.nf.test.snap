@@ -64,11 +64,11 @@
                 "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
                 "versions.yml:md5,3d4011c68f8fe5b9c63cc55f23613599",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_full.csv:md5,e797160c3cae2431c11d0db9208555f9"
+                "chr21_ann_full.csv:md5,f528ae08b4afe723bbb06d13178a114c"
             ],
             [
-                "chr21_ann_full.IDremoved.vcf.gz:md5,188c2be2f427d894e8bbf32911dcdb7e",
-                "chr21_ann.reheader.vcf.gz:md5,c507b1cbd540e8324f686618013ad137",
+                "chr21_ann_full.IDremoved.vcf.gz:md5,7c6bad1d3e68da93751a08db70e2d92f",
+                "chr21_ann.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
                 "chr21_ann_full.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035"
             ]
         ],
@@ -76,7 +76,7 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-10T10:54:30.320115"
+        "timestamp": "2025-04-15T10:06:08.641198"
     },
     "Params: filter | input filter test - stub": {
         "content": [
@@ -150,6 +150,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-10T10:54:55.972419"
+        "timestamp": "2025-04-15T10:06:24.16104"
     }
 }
