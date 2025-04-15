@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## `Fixed`
 
 - [#29](https://github.com/qbic-pipelines/vcftocounts/pull/29) - Use whole name instead of baseName for gvcf to vcf
+- [#30](https://github.com/qbic-pipelines/vcftocounts/pull/30) - Use filtered vcfs for subsequent processes
 - [#31](https://github.com/qbic-pipelines/vcftocounts/pull/31) - Prepare release 2.0.1
 
 ## v2.0.0 - Rad Sepia - 12.02.2025
