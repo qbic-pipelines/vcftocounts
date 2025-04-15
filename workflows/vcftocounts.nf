@@ -110,7 +110,7 @@ workflow VCFTOCOUNTS {
     //
     (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf
         .map { meta, vcf, tbi ->
-            [ [meta.id, meta.label], meta, vcf, tbi]
+            [ [meta.id, meta.label], meta, vcf, tbi ]
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
