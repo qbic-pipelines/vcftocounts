@@ -7,6 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## `Fixed`
 
+- [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
 
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
