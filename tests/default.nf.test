@@ -3,13 +3,12 @@ nextflow_pipeline {
     name "Test pipeline with default settings"
     script "../main.nf"
 
-    test("Params: default") {
-
-        config 'conf/test.config'
+    test("-profile test") {
 
         when {
             params {
                 outdir = "$outputDir"
+                input  = "${projectDir}/tests/input.csv"
             }
         }
 
@@ -19,9 +18,9 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
@@ -38,15 +37,14 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: default - stub") {
+    test("-profile test - stub") {
 
         options "-stub"
-
-        config 'conf/test.config'
 
         when {
             params {
                 outdir = "$outputDir"
+                input  = "${projectDir}/tests/input.csv"
             }
         }
 
@@ -56,9 +54,9 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),

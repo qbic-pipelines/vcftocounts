@@ -3,13 +3,19 @@ nextflow_pipeline {
     name "Test pipeline with filter settings"
     script "../main.nf"
 
-    test("Params: filter | input filter test") {
-
-        config 'conf/test_filter.config'
+    test("-profile test --filter 'INFO/CSQ ~ 'HIGH''") {
 
         when {
             params {
                 outdir = "$outputDir"
+                // Input data for filter test
+                input  = "${projectDir}/tests/input-filter.csv"
+                filter = 'INFO/CSQ ~ "HIGH"'
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
             }
         }
 
@@ -20,12 +26,12 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir,
-                include: ['**/*.vcf.gz', '**/*.vcf'],
+                include: ['**/*.vcf{,.gz}'],
                 ignore: ['**/concat.concat.vcf.gz',
                     '**/toindex_concat_merge.merge.vcf.gz',
                     '**/concat.reheader.vcf.gz'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
@@ -42,15 +48,21 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: filter | input filter test - stub") {
+    test("-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub") {
 
         options "-stub"
-
-        config 'conf/test_filter.config'
 
         when {
             params {
                 outdir = "$outputDir"
+                // Input data for filter test
+                input  = "${projectDir}/tests/input-filter.csv"
+                filter = 'INFO/CSQ ~ "HIGH"'
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
             }
         }
 
@@ -61,8 +73,8 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),

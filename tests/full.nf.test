@@ -3,13 +3,18 @@ nextflow_pipeline {
     name "Test pipeline with default settings"
     script "../main.nf"
 
-    test("Params: default | input full-size") {
-
-        config 'conf/test_full.config'
+    test("-profile test_full") {
 
         when {
             params {
                 outdir = "$outputDir"
+                // Input data for full size test
+                input  = "${projectDir}/tests/input-full.csv"
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
             }
         }
 
@@ -20,14 +25,14 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir,
-                include: ['**/*.vcf.gz', '**/*.vcf'],
+                include: ['**/*.vcf{,.gz}'],
                 ignore: ['**/concat.concat.vcf.gz',
                     '**/toindex_concat_merge.merge.vcf.gz',
                     '**/concat.reheader.vcf.gz',
                     '**/toindex_concat_merge.IDremoved.vcf.gz']
                     )
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
@@ -44,15 +49,20 @@ nextflow_pipeline {
         }
     }
 
-    test("Params: default | input full-size - stub") {
+    test("-profile test_full - stub") {
 
         options "-stub"
-
-        config 'conf/test_full.config'
 
         when {
             params {
                 outdir = "$outputDir"
+                // Input data for full size test
+                input  = "${projectDir}/tests/input-full.csv"
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
             }
         }
 
@@ -62,9 +72,9 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
