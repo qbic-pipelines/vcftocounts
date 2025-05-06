@@ -5,6 +5,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## v2.0.2dev
 
+### `Added`
+
+- [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test
+
 ## `Fixed`
 
 - [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
