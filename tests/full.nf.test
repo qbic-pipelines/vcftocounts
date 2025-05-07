@@ -2,14 +2,24 @@ nextflow_pipeline {
 
     name "Test pipeline with default settings"
     script "../main.nf"
+    tag "pipeline"
+    tag "pipeline_vcftocounts"
+    tag "cpu"
 
-    test("Params: default | input full-size") {
-
-        config 'conf/test_full.config'
+    test("-profile test_full") {
 
         when {
             params {
                 outdir = "$outputDir"
+                // Input data for full size test
+                input  = "${projectDir}/tests/input-full.csv"
+                removeIDs = true
+                rename = true
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
             }
         }
 
@@ -20,14 +30,23 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir,
-                include: ['**/*.vcf.gz', '**/*.vcf'],
-                ignore: ['**/concat.concat.vcf.gz',
-                    '**/toindex_concat_merge.merge.vcf.gz',
+                include: ['**/*.vcf{,.gz}'],
+                // merged and concatenated VCFs have no stable readsMD5
+                ignore: [
+                    '**/callerA.reheader.vcf.gz',
+                    '**/callerB.reheader.vcf.gz',
                     '**/concat.reheader.vcf.gz',
-                    '**/toindex_concat_merge.IDremoved.vcf.gz']
+                    '**/toindex_concat_merge.concat.concat.vcf.gz',
+                    '**/toindex_concat_merge.merge.vcf.gz',
+                    '**/toindex_concat_merge.IDremoved.vcf.gz'
+                    ]
                     )
+            // vcf_files_header: All files in ${params.outdir}
+            def vcf_files_summary = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'],
+                ignore: ['**/callerA.reheader.vcf.gz', '**/callerB.reheader.vcf.gz'])
+            def vcf_files_header = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
@@ -38,21 +57,29 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All vcf files
-                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 }
+                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
+                    // vcfs with unstable variantsMD5
+                    vcf_files_summary.collect{ file -> file.name + ":summary," + path(file.path).vcf.summary },
+                    vcf_files_header.collect{ file -> file.name + ":headerCols," + path(file.path).vcf.header.getColumnCount() }
                 ).match() }
             )
         }
     }
 
-    test("Params: default | input full-size - stub") {
+    test("-profile test_full - stub") {
 
         options "-stub"
-
-        config 'conf/test_full.config'
 
         when {
             params {
                 outdir = "$outputDir"
+                // Input data for full size test
+                input  = "${projectDir}/tests/input-full.csv"
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
             }
         }
 
@@ -62,9 +89,9 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
