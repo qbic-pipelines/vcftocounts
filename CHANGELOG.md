@@ -52,4 +52,12 @@ Initial release of (renamed) qbic-pipelines/vcftocounts.
 
 ## v1.0.0 - Curie Purpureal - 16.12.2024
 
-Initial release of qbic-pipelines/vcftomat, created with the [nf-core](https://nf-co.re/) template.
+Initial release of qbic-pipelines/vcftocounts, created with the [nf-core](https://nf-co.re/) template.
+
+### `Added`
+
+### `Fixed`
+
+### `Dependencies`
+
+### `Deprecated`

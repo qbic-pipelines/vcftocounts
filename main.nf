@@ -24,11 +24,10 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
+// TODO nf-core: Remove this line if you don't need a FASTA file
 //   This is an example of how to use getGenomeAttribute() to fetch parameters
 //   from igenomes.config using `--genome`
 params.fasta = getGenomeAttribute('fasta')
-params.fai   = getGenomeAttribute('fasta_fai')
-params.dict  = getGenomeAttribute('dict')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -45,12 +44,6 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
     samplesheet // channel: samplesheet read in from --input
 
     main:
-
-    // FASTA
-    fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
-    fai          = params.fai       ? Channel.fromPath(params.fai).collect()            : Channel.value([])
-    dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.value([])
-
 
     //
     // WORKFLOW: Run pipeline
