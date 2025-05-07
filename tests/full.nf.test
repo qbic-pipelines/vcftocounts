@@ -29,7 +29,7 @@ nextflow_pipeline {
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir,
                 include: ['**/*.vcf{,.gz}'],
-                ignore: ['**/concat.concat.vcf.gz',
+                ignore: ['**/*.concat.concat.vcf.gz',
                     '**/toindex_concat_merge.merge.vcf.gz',
                     '**/concat.reheader.vcf.gz',
                     '**/toindex_concat_merge.IDremoved.vcf.gz']
