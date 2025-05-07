@@ -28,11 +28,8 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir,
-                include: ['**/*.vcf{,.gz}'],
-                ignore: ['**/concat.concat.vcf.gz',
-                    '**/toindex_concat_merge.merge.vcf.gz',
-                    '**/concat.reheader.vcf.gz'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            def csv_files = getAllFilesFromDir(params.outdir, include: ['**/*.csv'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
@@ -45,7 +42,8 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All vcf files
-                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 }
+                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
+                    csv_files.collect{ file -> path(file.path).readLines() }
                 ).match() }
             )
         }
