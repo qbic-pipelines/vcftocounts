@@ -51,7 +51,6 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
     fai          = params.fai       ? Channel.fromPath(params.fai).collect()            : Channel.value([])
     dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.value([])
 
-
     //
     // WORKFLOW: Run pipeline
     //
