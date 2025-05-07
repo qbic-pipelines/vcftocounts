@@ -40,7 +40,9 @@ nextflow_pipeline {
                     ]
                     )
             // vcf_files_header: All files in ${params.outdir}
-            def vcf_files_header  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            def vcf_files_summary = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'],
+                ignore: ['**/callerA.reheader.vcf.gz', '**/callerB.reheader.vcf.gz'])
+            def vcf_files_header = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
@@ -55,7 +57,8 @@ nextflow_pipeline {
                     // All vcf files
                     vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
                     // vcfs with unstable variantsMD5
-                    vcf_files_header.collect{ file -> file.name + ":summary," + path(file.path).vcf.summary + ":headerCols," + path(file.path).vcf.header.getColumnCount() }
+                    vcf_files_summary.collect{ file -> file.name + ":summary," + path(file.path).vcf.summary },
+                    vcf_files_header.collect{ file -> file.name + ":headerCols," + path(file.path).vcf.header.getColumnCount() }
                 ).match() }
             )
         }
