@@ -10,8 +10,10 @@ nextflow_pipeline {
 
         when {
             params {
-                outdir = "$outputDir"
-                input  = "${projectDir}/tests/input.csv"
+                outdir    = "$outputDir"
+                input     = "${projectDir}/tests/input.csv"
+                removeIDs = true
+                rename    = true
             }
         }
 

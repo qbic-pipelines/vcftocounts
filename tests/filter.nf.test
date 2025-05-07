@@ -14,6 +14,8 @@ nextflow_pipeline {
                 // Input data for filter test
                 input  = "${projectDir}/tests/input-filter.csv"
                 filter = 'INFO/CSQ ~ "HIGH"'
+                removeIDs = true
+                rename = true
 
                 // Genome references
                 fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
