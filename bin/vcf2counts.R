@@ -1,11 +1,14 @@
 #!/usr/bin/env Rscript
 'VCF to count matrix converter
+
 Usage:
     vcf2counts.R --help
     vcf2counts.R --output=<ofile> VCF
+
 Options:
     -h, --help                  help screen
     -o, --output=<ofile>        output file name [default: mat.csv]
+
 Arguments:
     VCF                     input vcf file
 '->doc
@@ -36,5 +39,7 @@ generateMatrixfromVCF <- function(VCF, ofile) {
 }
 
 opt <- docopt(doc)
+
+set.seed(1234)
 
 generateMatrixfromVCF(opt$VCF, opt[["--output"]])

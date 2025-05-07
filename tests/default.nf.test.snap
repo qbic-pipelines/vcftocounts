@@ -121,7 +121,7 @@
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr22.csv:md5,e7980f307dbbb17f000b8c36dc47fdfb"
+                "chr22.csv:md5,06c743150691cd38f4a2caf65ca6c115"
             ],
             [
                 "chr22.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
@@ -132,6 +132,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-05-07T10:37:05.310116"
+        "timestamp": "2025-05-07T14:23:50.199755"
     }
 }
