@@ -22,7 +22,8 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
-            def test_csv   = getAllFilesFromDir(params.outdir, include: ['**/*.csv'])
+            // csv_files: All files in ${params.outdir}
+            def csv_files  = getAllFilesFromDir(params.outdir, include: ['**/*.csv'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
@@ -36,7 +37,8 @@ nextflow_pipeline {
                     stable_path,
                     // All vcf files
                     vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
-                    test_csv.collect{ file -> file.name + [ path(file.path).readLines() ] },
+                    // All csv files
+                    csv_files.collect{ file -> path(file.path).readLines() }
                 ).match() }
             )
         }
