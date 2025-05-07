@@ -2,6 +2,9 @@ nextflow_pipeline {
 
     name "Test pipeline with default settings"
     script "../main.nf"
+    tag "pipeline"
+    tag "pipeline_vcftocounts"
+    tag "cpu"
 
     test("-profile test_full") {
 

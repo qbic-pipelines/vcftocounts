@@ -1,5 +1,5 @@
 {
-    "Params: default - stub": {
+    "-profile test - stub": {
         "content": [
             7,
             {
@@ -19,7 +19,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.1"
+                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -62,9 +62,9 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-15T11:52:08.956194"
+        "timestamp": "2025-05-07T09:53:06.965445"
     },
-    "Params: default": {
+    "-profile test": {
         "content": [
             7,
             {
@@ -84,7 +84,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.1"
+                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -132,6 +132,6 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-15T11:51:52.387126"
+        "timestamp": "2025-05-07T09:52:47.221465"
     }
 }
