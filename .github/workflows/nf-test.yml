@@ -91,7 +91,7 @@ jobs:
           - isMaster: false
             profile: "singularity"
         NXF_VER:
-          - "24.10.2"
+          - "24.10.6"
           - "latest-everything"
     env:
       NXF_ANSI_LOG: false
