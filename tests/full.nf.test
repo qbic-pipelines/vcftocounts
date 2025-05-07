@@ -29,11 +29,18 @@ nextflow_pipeline {
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir,
                 include: ['**/*.vcf{,.gz}'],
-                ignore: ['**/*.concat.concat.vcf.gz',
-                    '**/toindex_concat_merge.merge.vcf.gz',
+                // merged and concatenated VCFs have no stable readsMD5
+                ignore: [
+                    '**/callerA.reheader.vcf.gz',
+                    '**/callerB.reheader.vcf.gz',
                     '**/concat.reheader.vcf.gz',
-                    '**/toindex_concat_merge.IDremoved.vcf.gz']
+                    '**/toindex_concat_merge.concat.concat.vcf.gz',
+                    '**/toindex_concat_merge.merge.vcf.gz',
+                    '**/toindex_concat_merge.IDremoved.vcf.gz'
+                    ]
                     )
+            // vcf_files_header: All files in ${params.outdir}
+            def vcf_files_header  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
@@ -46,7 +53,9 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All vcf files
-                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 }
+                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
+                    // vcfs with unstable variantsMD5
+                    vcf_files_header.collect{ file -> file.name + ":summary," + path(file.path).vcf.summary + ":headerCols," + path(file.path).vcf.header.getColumnCount() }
                 ).match() }
             )
         }

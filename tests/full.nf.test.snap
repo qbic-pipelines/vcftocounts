@@ -282,19 +282,36 @@
                 "toindex_gvcf_merge.IDremoved.vcf.gz:md5,6f6b4664d06ccb50ceead526cec7aa0d",
                 "indexed_merge.merge.vcf.gz:md5,5089e377e380c78d3ff29a8d36db14dd",
                 "toindex_gvcf_merge.merge.vcf.gz:md5,6f6b4664d06ccb50ceead526cec7aa0d",
-                "callerA.reheader.vcf.gz:md5,16b9e984ed9af8f4d147900f9b8e0bee",
-                "callerB.reheader.vcf.gz:md5,9faa7fb1a37a48c4444b498e39ca4c01",
                 "chr21_ann.reheader.vcf.gz:md5,c507b1cbd540e8324f686618013ad137",
                 "empty.reheader.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "merge.reheader.vcf.gz:md5,9faa7fb1a37a48c4444b498e39ca4c01",
                 "test.genome.normal.vcf.gz:md5,1ab95fbc5ec55b208f3001572bec54fa",
                 "test2.genome.normal.vcf.gz:md5,4046f52f4ea6616b7295c7f16b987710"
+            ],
+            [
+                "chr21_ann_full.IDremoved.vcf.gz:summary,VcfFile [chromosomes=[chr21], sampleCount=1, variantCount=5889, phased=false, phasedAutodetect=false]:headerCols,10",
+                "empty.IDremoved.vcf.gz:summary,VcfFile [chromosomes=[], sampleCount=1, variantCount=0, phased=true, phasedAutodetect=true]:headerCols,10",
+                "indexed_merge.IDremoved.vcf.gz:summary,VcfFile [chromosomes=[22, chrM], sampleCount=2, variantCount=32, phased=false, phasedAutodetect=false]:headerCols,11",
+                "toindex_concat_merge.IDremoved.vcf.gz:summary,VcfFile [chromosomes=[22, chr22], sampleCount=2, variantCount=988, phased=false, phasedAutodetect=false]:headerCols,11",
+                "toindex_gvcf_merge.IDremoved.vcf.gz:summary,VcfFile [chromosomes=[chr22], sampleCount=2, variantCount=7, phased=false, phasedAutodetect=false]:headerCols,11",
+                "toindex_concat_merge.concat.concat.vcf.gz:summary,VcfFile [chromosomes=[chr22], sampleCount=1, variantCount=984, phased=false, phasedAutodetect=true]:headerCols,10",
+                "indexed_merge.merge.vcf.gz:summary,VcfFile [chromosomes=[22, chrM], sampleCount=2, variantCount=32, phased=false, phasedAutodetect=false]:headerCols,11",
+                "toindex_concat_merge.merge.vcf.gz:summary,VcfFile [chromosomes=[22, chr22], sampleCount=2, variantCount=988, phased=false, phasedAutodetect=false]:headerCols,11",
+                "toindex_gvcf_merge.merge.vcf.gz:summary,VcfFile [chromosomes=[chr22], sampleCount=2, variantCount=7, phased=false, phasedAutodetect=false]:headerCols,11",
+                "callerA.reheader.vcf.gz:summary,VcfFile [chromosomes=[chrM], sampleCount=1, variantCount=28, phased=false, phasedAutodetect=false]:headerCols,10",
+                "callerB.reheader.vcf.gz:summary,VcfFile [chromosomes=[22], sampleCount=1, variantCount=4, phased=false, phasedAutodetect=false]:headerCols,10",
+                "chr21_ann.reheader.vcf.gz:summary,VcfFile [chromosomes=[chr21], sampleCount=1, variantCount=5889, phased=false, phasedAutodetect=false]:headerCols,10",
+                "concat.reheader.vcf.gz:summary,VcfFile [chromosomes=[chr22], sampleCount=1, variantCount=984, phased=false, phasedAutodetect=true]:headerCols,10",
+                "empty.reheader.vcf.gz:summary,VcfFile [chromosomes=[], sampleCount=1, variantCount=0, phased=true, phasedAutodetect=true]:headerCols,10",
+                "merge.reheader.vcf.gz:summary,VcfFile [chromosomes=[22], sampleCount=1, variantCount=4, phased=false, phasedAutodetect=false]:headerCols,10",
+                "test.genome.normal.vcf.gz:summary,VcfFile [chromosomes=[chr22], sampleCount=1, variantCount=5, phased=false, phasedAutodetect=false]:headerCols,10",
+                "test2.genome.normal.vcf.gz:summary,VcfFile [chromosomes=[chr22], sampleCount=1, variantCount=6, phased=false, phasedAutodetect=false]:headerCols,10"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
+            "nextflow": "24.10.6"
         },
-        "timestamp": "2025-05-07T10:31:12.54049"
+        "timestamp": "2025-05-07T11:30:42.652898998"
     }
 }
