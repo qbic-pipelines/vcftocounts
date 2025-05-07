@@ -1,5 +1,5 @@
 {
-    "Params: default | input full-size": {
+    "-profile test_full - stub": {
         "content": [
             41,
             {
@@ -28,157 +28,7 @@
                     "vcf2counts.R": "1.0.0"
                 },
                 "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.1"
-                }
-            },
-            [
-                "bcftools",
-                "bcftools/annotate",
-                "bcftools/annotate/chr21_ann.reheader.vcf.gz.csi",
-                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz",
-                "bcftools/annotate/empty.IDremoved.vcf.gz",
-                "bcftools/annotate/empty.reheader.vcf.gz.csi",
-                "bcftools/annotate/indexed_merge.IDremoved.vcf.gz",
-                "bcftools/annotate/indexed_merge.merge.vcf.gz.csi",
-                "bcftools/annotate/toindex_concat_merge.IDremoved.vcf.gz",
-                "bcftools/annotate/toindex_concat_merge.merge.vcf.gz.csi",
-                "bcftools/annotate/toindex_gvcf_merge.IDremoved.vcf.gz",
-                "bcftools/annotate/toindex_gvcf_merge.merge.vcf.gz.csi",
-                "bcftools/annotate/versions.yml",
-                "bcftools/concat",
-                "bcftools/concat/toindex_concat_merge.concat.concat.vcf.gz",
-                "bcftools/concat/toindex_concat_merge.concat.concat.vcf.gz.tbi",
-                "bcftools/concat/versions.yml",
-                "bcftools/merge",
-                "bcftools/merge/indexed_merge.merge.vcf.gz",
-                "bcftools/merge/indexed_merge.merge.vcf.gz.tbi",
-                "bcftools/merge/toindex_concat_merge.merge.vcf.gz",
-                "bcftools/merge/toindex_concat_merge.merge.vcf.gz.tbi",
-                "bcftools/merge/toindex_gvcf_merge.merge.vcf.gz",
-                "bcftools/merge/toindex_gvcf_merge.merge.vcf.gz.tbi",
-                "bcftools/merge/versions.yml",
-                "bcftools/reheader",
-                "bcftools/reheader/callerA.reheader.vcf.gz",
-                "bcftools/reheader/callerA.reheader.vcf.gz.tbi",
-                "bcftools/reheader/callerB.reheader.vcf.gz",
-                "bcftools/reheader/callerB.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann.reheader.vcf.gz.tbi",
-                "bcftools/reheader/concat.reheader.vcf.gz",
-                "bcftools/reheader/concat.reheader.vcf.gz.tbi",
-                "bcftools/reheader/empty.reheader.vcf.gz",
-                "bcftools/reheader/empty.reheader.vcf.gz.tbi",
-                "bcftools/reheader/merge.reheader.vcf.gz",
-                "bcftools/reheader/merge.reheader.vcf.gz.tbi",
-                "bcftools/reheader/samplefiles",
-                "bcftools/reheader/samplefiles/callerA.txt",
-                "bcftools/reheader/samplefiles/callerB.txt",
-                "bcftools/reheader/samplefiles/chr21_ann.txt",
-                "bcftools/reheader/samplefiles/concat.txt",
-                "bcftools/reheader/samplefiles/empty.txt",
-                "bcftools/reheader/samplefiles/merge.txt",
-                "bcftools/reheader/samplefiles/versions.yml",
-                "bcftools/reheader/versions.yml",
-                "gatk4",
-                "gatk4/test.genome.normal.vcf.gz",
-                "gatk4/test.genome.normal.vcf.gz.tbi",
-                "gatk4/test2.genome.normal.vcf.gz",
-                "gatk4/test2.genome.normal.vcf.gz.tbi",
-                "multiqc",
-                "multiqc/multiqc_data",
-                "multiqc/multiqc_data/multiqc.log",
-                "multiqc/multiqc_data/multiqc_citations.txt",
-                "multiqc/multiqc_data/multiqc_data.json",
-                "multiqc/multiqc_data/multiqc_software_versions.txt",
-                "multiqc/multiqc_data/multiqc_sources.txt",
-                "multiqc/multiqc_report.html",
-                "pipeline_info",
-                "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/NA12878.chr22.1X.vcf.gz.tbi",
-                "tabix/NA12878_GIAB.chr22.vcf.gz.tbi",
-                "tabix/NA24385_sv.vcf.gz.tbi",
-                "tabix/annotated.vcf.gz.tbi",
-                "tabix/test.genome.g.vcf.gz.tbi",
-                "tabix/test2.genome.vcf.gz.tbi",
-                "vcf2counts",
-                "vcf2counts/chr21_ann_full.csv",
-                "vcf2counts/empty.csv",
-                "vcf2counts/indexed_merge.csv",
-                "vcf2counts/toindex_concat_merge.csv",
-                "vcf2counts/toindex_gvcf_merge.csv"
-            ],
-            [
-                "versions.yml:md5,74b0a613672a9941d2bb2a62c18406bb",
-                "versions.yml:md5,0223baa2a8c319efd0c1676ecb4f468d",
-                "versions.yml:md5,4dbe09811cc189e99a3866eedc2ee17a",
-                "callerA.txt:md5,60b11d1e255a060928c4d39364bd2208",
-                "callerB.txt:md5,b9cde70acab31f214a24a3aa0cd4ce72",
-                "chr21_ann.txt:md5,67a48a0a8902f9e8493f85a6de469ebb",
-                "concat.txt:md5,6a21cb02f698003fb22d6dfdc183adf2",
-                "empty.txt:md5,84b40460f8374ccbde4c353cc301f5fc",
-                "merge.txt:md5,448a611e90ae2754539592093324ff3c",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
-                "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_full.csv:md5,e797160c3cae2431c11d0db9208555f9",
-                "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
-                "indexed_merge.csv:md5,4e9896dbd6e9b63e049a64cc6f5a42f9",
-                "toindex_gvcf_merge.csv:md5,bb0cc37d7f55f611a8d0f11c4d80dece"
-            ],
-            [
-                "chr21_ann_full.IDremoved.vcf.gz:md5,188c2be2f427d894e8bbf32911dcdb7e",
-                "empty.IDremoved.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "indexed_merge.IDremoved.vcf.gz:md5,538316e36fb55218bbc7e5fc8bea7701",
-                "toindex_gvcf_merge.IDremoved.vcf.gz:md5,6f6b4664d06ccb50ceead526cec7aa0d",
-                "toindex_concat_merge.concat.concat.vcf.gz:md5,143e3f29fbd6b7b436ee2fbcafb4c642",
-                "indexed_merge.merge.vcf.gz:md5,5089e377e380c78d3ff29a8d36db14dd",
-                "toindex_gvcf_merge.merge.vcf.gz:md5,6f6b4664d06ccb50ceead526cec7aa0d",
-                "callerA.reheader.vcf.gz:md5,16b9e984ed9af8f4d147900f9b8e0bee",
-                "callerB.reheader.vcf.gz:md5,9faa7fb1a37a48c4444b498e39ca4c01",
-                "chr21_ann.reheader.vcf.gz:md5,c507b1cbd540e8324f686618013ad137",
-                "empty.reheader.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "merge.reheader.vcf.gz:md5,9faa7fb1a37a48c4444b498e39ca4c01",
-                "test.genome.normal.vcf.gz:md5,1ab95fbc5ec55b208f3001572bec54fa",
-                "test2.genome.normal.vcf.gz:md5,4046f52f4ea6616b7295c7f16b987710"
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-04-15T11:46:23.607065"
-    },
-    "Params: default | input full-size - stub": {
-        "content": [
-            41,
-            {
-                "BCFTOOLS_ANNOTATE": {
-                    "bcftools": 1.2
-                },
-                "BCFTOOLS_CONCAT": {
-                    "bcftools": 1.2
-                },
-                "BCFTOOLS_MERGE": {
-                    "bcftools": 1.2
-                },
-                "BCFTOOLS_REHEADER": {
-                    "bcftools": 1.2
-                },
-                "CREATE_SAMPLE_FILE": {
-                    "create_sample_file": "1.0.0"
-                },
-                "GATK4_GENOTYPEGVCFS": {
-                    "gatk4": "4.6.1.0"
-                },
-                "TABIX_TABIX": {
-                    "tabix": 1.2
-                },
-                "VCF2COUNTS": {
-                    "vcf2counts.R": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.1"
+                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -296,6 +146,156 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-04-15T11:47:18.510632"
+        "timestamp": "2025-05-07T09:56:46.365965"
+    },
+    "-profile test_full": {
+        "content": [
+            41,
+            {
+                "BCFTOOLS_ANNOTATE": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_CONCAT": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_MERGE": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_REHEADER": {
+                    "bcftools": 1.2
+                },
+                "CREATE_SAMPLE_FILE": {
+                    "create_sample_file": "1.0.0"
+                },
+                "GATK4_GENOTYPEGVCFS": {
+                    "gatk4": "4.6.1.0"
+                },
+                "TABIX_TABIX": {
+                    "tabix": 1.2
+                },
+                "VCF2COUNTS": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
+                }
+            },
+            [
+                "bcftools",
+                "bcftools/annotate",
+                "bcftools/annotate/chr21_ann.reheader.vcf.gz.csi",
+                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz",
+                "bcftools/annotate/empty.IDremoved.vcf.gz",
+                "bcftools/annotate/empty.reheader.vcf.gz.csi",
+                "bcftools/annotate/indexed_merge.IDremoved.vcf.gz",
+                "bcftools/annotate/indexed_merge.merge.vcf.gz.csi",
+                "bcftools/annotate/toindex_concat_merge.IDremoved.vcf.gz",
+                "bcftools/annotate/toindex_concat_merge.merge.vcf.gz.csi",
+                "bcftools/annotate/toindex_gvcf_merge.IDremoved.vcf.gz",
+                "bcftools/annotate/toindex_gvcf_merge.merge.vcf.gz.csi",
+                "bcftools/annotate/versions.yml",
+                "bcftools/concat",
+                "bcftools/concat/toindex_concat_merge.concat.concat.vcf.gz",
+                "bcftools/concat/toindex_concat_merge.concat.concat.vcf.gz.tbi",
+                "bcftools/concat/versions.yml",
+                "bcftools/merge",
+                "bcftools/merge/indexed_merge.merge.vcf.gz",
+                "bcftools/merge/indexed_merge.merge.vcf.gz.tbi",
+                "bcftools/merge/toindex_concat_merge.merge.vcf.gz",
+                "bcftools/merge/toindex_concat_merge.merge.vcf.gz.tbi",
+                "bcftools/merge/toindex_gvcf_merge.merge.vcf.gz",
+                "bcftools/merge/toindex_gvcf_merge.merge.vcf.gz.tbi",
+                "bcftools/merge/versions.yml",
+                "bcftools/reheader",
+                "bcftools/reheader/callerA.reheader.vcf.gz",
+                "bcftools/reheader/callerA.reheader.vcf.gz.tbi",
+                "bcftools/reheader/callerB.reheader.vcf.gz",
+                "bcftools/reheader/callerB.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr21_ann.reheader.vcf.gz",
+                "bcftools/reheader/chr21_ann.reheader.vcf.gz.tbi",
+                "bcftools/reheader/concat.reheader.vcf.gz",
+                "bcftools/reheader/concat.reheader.vcf.gz.tbi",
+                "bcftools/reheader/empty.reheader.vcf.gz",
+                "bcftools/reheader/empty.reheader.vcf.gz.tbi",
+                "bcftools/reheader/merge.reheader.vcf.gz",
+                "bcftools/reheader/merge.reheader.vcf.gz.tbi",
+                "bcftools/reheader/samplefiles",
+                "bcftools/reheader/samplefiles/callerA.txt",
+                "bcftools/reheader/samplefiles/callerB.txt",
+                "bcftools/reheader/samplefiles/chr21_ann.txt",
+                "bcftools/reheader/samplefiles/concat.txt",
+                "bcftools/reheader/samplefiles/empty.txt",
+                "bcftools/reheader/samplefiles/merge.txt",
+                "bcftools/reheader/samplefiles/versions.yml",
+                "bcftools/reheader/versions.yml",
+                "gatk4",
+                "gatk4/test.genome.normal.vcf.gz",
+                "gatk4/test.genome.normal.vcf.gz.tbi",
+                "gatk4/test2.genome.normal.vcf.gz",
+                "gatk4/test2.genome.normal.vcf.gz.tbi",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pipeline_info",
+                "pipeline_info/vcftocounts_software_mqc_versions.yml",
+                "tabix",
+                "tabix/NA12878.chr22.1X.vcf.gz.tbi",
+                "tabix/NA12878_GIAB.chr22.vcf.gz.tbi",
+                "tabix/NA24385_sv.vcf.gz.tbi",
+                "tabix/annotated.vcf.gz.tbi",
+                "tabix/test.genome.g.vcf.gz.tbi",
+                "tabix/test2.genome.vcf.gz.tbi",
+                "vcf2counts",
+                "vcf2counts/chr21_ann_full.csv",
+                "vcf2counts/empty.csv",
+                "vcf2counts/indexed_merge.csv",
+                "vcf2counts/toindex_concat_merge.csv",
+                "vcf2counts/toindex_gvcf_merge.csv"
+            ],
+            [
+                "versions.yml:md5,74b0a613672a9941d2bb2a62c18406bb",
+                "versions.yml:md5,0223baa2a8c319efd0c1676ecb4f468d",
+                "versions.yml:md5,4dbe09811cc189e99a3866eedc2ee17a",
+                "callerA.txt:md5,60b11d1e255a060928c4d39364bd2208",
+                "callerB.txt:md5,b9cde70acab31f214a24a3aa0cd4ce72",
+                "chr21_ann.txt:md5,67a48a0a8902f9e8493f85a6de469ebb",
+                "concat.txt:md5,6a21cb02f698003fb22d6dfdc183adf2",
+                "empty.txt:md5,84b40460f8374ccbde4c353cc301f5fc",
+                "merge.txt:md5,448a611e90ae2754539592093324ff3c",
+                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
+                "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "chr21_ann_full.csv:md5,e797160c3cae2431c11d0db9208555f9",
+                "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
+                "indexed_merge.csv:md5,4e9896dbd6e9b63e049a64cc6f5a42f9",
+                "toindex_gvcf_merge.csv:md5,bb0cc37d7f55f611a8d0f11c4d80dece"
+            ],
+            [
+                "chr21_ann_full.IDremoved.vcf.gz:md5,188c2be2f427d894e8bbf32911dcdb7e",
+                "empty.IDremoved.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "indexed_merge.IDremoved.vcf.gz:md5,538316e36fb55218bbc7e5fc8bea7701",
+                "toindex_gvcf_merge.IDremoved.vcf.gz:md5,6f6b4664d06ccb50ceead526cec7aa0d",
+                "toindex_concat_merge.concat.concat.vcf.gz:md5,98c31d4d482e32b12ed0efbf17d9e039",
+                "indexed_merge.merge.vcf.gz:md5,5089e377e380c78d3ff29a8d36db14dd",
+                "toindex_gvcf_merge.merge.vcf.gz:md5,6f6b4664d06ccb50ceead526cec7aa0d",
+                "callerA.reheader.vcf.gz:md5,16b9e984ed9af8f4d147900f9b8e0bee",
+                "callerB.reheader.vcf.gz:md5,9faa7fb1a37a48c4444b498e39ca4c01",
+                "chr21_ann.reheader.vcf.gz:md5,c507b1cbd540e8324f686618013ad137",
+                "empty.reheader.vcf.gz:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "merge.reheader.vcf.gz:md5,9faa7fb1a37a48c4444b498e39ca4c01",
+                "test.genome.normal.vcf.gz:md5,1ab95fbc5ec55b208f3001572bec54fa",
+                "test2.genome.normal.vcf.gz:md5,4046f52f4ea6616b7295c7f16b987710"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.4"
+        },
+        "timestamp": "2025-05-07T09:55:49.186944"
     }
 }
