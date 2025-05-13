@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test
+- [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test and fix small channel issue
 
 ## `Fixed`
 
