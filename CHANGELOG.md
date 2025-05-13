@@ -9,14 +9,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test and fix small channel issue
 
-## `Fixed`
+### `Fixed`
 
 - [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
 - [#35](https://github.com/qbic-pipelines/vcftocounts/pull/35) - Template update to version 3.2.1
 
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
-## `Fixed`
+### `Fixed`
 
 - [#29](https://github.com/qbic-pipelines/vcftocounts/pull/29) - Use whole name instead of baseName for gvcf to vcf
 - [#30](https://github.com/qbic-pipelines/vcftocounts/pull/30) - Use filtered vcfs for subsequent processes
