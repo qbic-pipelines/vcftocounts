@@ -1,78 +1,4 @@
 {
-    "-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub": {
-        "content": [
-            7,
-            {
-                "BCFTOOLS_ANNOTATE": {
-                    "bcftools": 1.2
-                },
-                "BCFTOOLS_REHEADER": {
-                    "bcftools": 1.2
-                },
-                "BCFTOOLS_VIEW": {
-                    "bcftools": 1.2
-                },
-                "CREATE_SAMPLE_FILE": {
-                    "create_sample_file": "1.0.0"
-                },
-                "TABIX_TABIX": {
-                    "tabix": 1.2
-                },
-                "VCF2COUNTS": {
-                    "vcf2counts.R": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
-                }
-            },
-            [
-                "bcftools",
-                "bcftools/annotate",
-                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz",
-                "bcftools/annotate/versions.yml",
-                "bcftools/reheader",
-                "bcftools/reheader/chr21_ann.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann.reheader.vcf.gz.tbi",
-                "bcftools/reheader/samplefiles",
-                "bcftools/reheader/samplefiles/chr21_ann.txt",
-                "bcftools/reheader/samplefiles/versions.yml",
-                "bcftools/reheader/versions.yml",
-                "bcftools/view",
-                "bcftools/view/chr21_ann_full.filter.vcf.gz",
-                "bcftools/view/chr21_ann_full.filter.vcf.gz.tbi",
-                "bcftools/view/versions.yml",
-                "multiqc",
-                "multiqc/multiqc_data",
-                "multiqc/multiqc_plots",
-                "multiqc/multiqc_report.html",
-                "pipeline_info",
-                "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/annotated.vcf.gz.csi",
-                "tabix/annotated.vcf.gz.tbi",
-                "vcf2counts",
-                "vcf2counts/chr21_ann_full.csv"
-            ],
-            [
-                "versions.yml:md5,74b0a613672a9941d2bb2a62c18406bb",
-                "chr21_ann.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
-                "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
-                "versions.yml:md5,3d4011c68f8fe5b9c63cc55f23613599",
-                "chr21_ann_full.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
-            ],
-            [
-                "chr21_ann_full.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_full.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
-        },
-        "timestamp": "2025-05-13T12:28:48.008902"
-    },
     "-profile test --filter 'INFO/CSQ ~ 'HIGH''": {
         "content": [
             7,
@@ -163,5 +89,79 @@
             "nextflow": "24.10.4"
         },
         "timestamp": "2025-05-13T12:28:33.871411"
+    },
+    "-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub": {
+        "content": [
+            7,
+            {
+                "BCFTOOLS_ANNOTATE": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_REHEADER": {
+                    "bcftools": 1.2
+                },
+                "BCFTOOLS_VIEW": {
+                    "bcftools": 1.2
+                },
+                "CREATE_SAMPLE_FILE": {
+                    "create_sample_file": "1.0.0"
+                },
+                "TABIX_TABIX": {
+                    "tabix": 1.2
+                },
+                "VCF2COUNTS": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
+                }
+            },
+            [
+                "bcftools",
+                "bcftools/annotate",
+                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz",
+                "bcftools/annotate/versions.yml",
+                "bcftools/reheader",
+                "bcftools/reheader/chr21_ann.reheader.vcf.gz",
+                "bcftools/reheader/chr21_ann.reheader.vcf.gz.tbi",
+                "bcftools/reheader/samplefiles",
+                "bcftools/reheader/samplefiles/chr21_ann.txt",
+                "bcftools/reheader/samplefiles/versions.yml",
+                "bcftools/reheader/versions.yml",
+                "bcftools/view",
+                "bcftools/view/chr21_ann_full.filter.vcf.gz",
+                "bcftools/view/chr21_ann_full.filter.vcf.gz.tbi",
+                "bcftools/view/versions.yml",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_plots",
+                "multiqc/multiqc_report.html",
+                "pipeline_info",
+                "pipeline_info/vcftocounts_software_mqc_versions.yml",
+                "tabix",
+                "tabix/annotated.vcf.gz.csi",
+                "tabix/annotated.vcf.gz.tbi",
+                "vcf2counts",
+                "vcf2counts/chr21_ann_full.csv"
+            ],
+            [
+                "versions.yml:md5,74b0a613672a9941d2bb2a62c18406bb",
+                "chr21_ann.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
+                "versions.yml:md5,e516c8ae57ef27b417031a3d10715b00",
+                "versions.yml:md5,3d4011c68f8fe5b9c63cc55f23613599",
+                "chr21_ann_full.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+            ],
+            [
+                "chr21_ann_full.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr21_ann.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr21_ann_full.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "24.10.4"
+        },
+        "timestamp": "2025-05-13T12:28:48.008902"
     }
 }
