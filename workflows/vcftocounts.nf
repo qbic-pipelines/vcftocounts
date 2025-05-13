@@ -198,7 +198,8 @@ workflow VCFTOCOUNTS {
             []
         )
 
-        ch_removedIDs_vcfs = ch_single_id.mix(BCFTOOLS_ANNOTATE.out.vcf)
+        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf
+                .join(BCFTOOLS_ANNOTATE.out.tbi)
 
         ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
     } else {
