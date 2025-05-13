@@ -1,7 +1,7 @@
 {
     "-profile test_full - stub": {
         "content": [
-            41,
+            39,
             {
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.2
@@ -146,11 +146,11 @@
             "nf-test": "0.9.2",
             "nextflow": "24.10.4"
         },
-        "timestamp": "2025-05-07T09:56:46.365965"
+        "timestamp": "2025-05-13T12:31:22.333048"
     },
     "-profile test_full": {
         "content": [
-            41,
+            39,
             {
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.2
@@ -327,8 +327,8 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.6"
+            "nextflow": "24.10.4"
         },
-        "timestamp": "2025-05-07T11:52:02.117793194"
+        "timestamp": "2025-05-13T12:30:34.465407"
     }
 }
