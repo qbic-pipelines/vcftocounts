@@ -33,6 +33,7 @@ nextflow_pipeline {
                 include: ['**/*.vcf{,.gz}'],
                 // merged and concatenated VCFs have no stable readsMD5
                 ignore: [
+                    '**/callerA.reheader.vcf.gz',
                     '**/callerB.reheader.vcf.gz',
                     '**/concat.reheader.vcf.gz',
                     '**/toindex_concat_merge.concat.concat.vcf.gz',

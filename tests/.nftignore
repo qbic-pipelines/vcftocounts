@@ -1,3 +1,4 @@
+**/*.vcf.{gz,gz.tbi,gz.csi}
 tabix/*.vcf.{gz,gz.tbi,gz.csi}
 gatk/*.vcf.{gz,gz.tbi,gz.csi}
 bcftools/annotate/*.vcf.{gz,gz.tbi,gz.csi}
