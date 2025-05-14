@@ -1,9 +1,10 @@
-**/*.vcf.{gz,gz.tbi,gz.csi}
 tabix/*.vcf.{gz,gz.tbi,gz.csi}
-gatk/*.vcf.{gz,gz.tbi}
-bcftools/concat/*.vcf.{gz,gz.tbi}
-bcftools/reheader/*.vcf.{gz,gz.tbi}
-bcftools/merge/*.vcf.{gz,gz.tbi}
+gatk/*.vcf.{gz,gz.tbi,gz.csi}
+bcftools/annotate/*.vcf.{gz,gz.tbi,gz.csi}
+bcftools/concat/*.vcf.{gz,gz.tbi,gz.csi}
+bcftools/merge/*.vcf.{gz,gz.tbi,gz.csi}
+bcftools/reheader/*.vcf.{gz,gz.tbi,gz.csi}
+bcftools/view/*.vcf.{gz,gz.tbi,gz.csi}
 pipeline_info/*.{html,json,txt}
 multiqc/multiqc_data/multiqc.log
 multiqc/multiqc_data/multiqc_data.json

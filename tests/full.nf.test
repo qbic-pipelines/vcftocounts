@@ -32,14 +32,13 @@ nextflow_pipeline {
             def vcf_files  = getAllFilesFromDir(params.outdir,
                 include: ['**/*.vcf{,.gz}'],
                 // merged and concatenated VCFs have no stable readsMD5
-                // ignore: [
-                //     '**/callerA.reheader.vcf.gz',
-                //     '**/callerB.reheader.vcf.gz',
-                //     '**/concat.reheader.vcf.gz',
-                //     '**/toindex_concat_merge.concat.concat.vcf.gz',
-                //     '**/toindex_concat_merge.merge.vcf.gz',
-                //     '**/toindex_concat_merge.IDremoved.vcf.gz'
-                //     ]
+                ignore: [
+                    '**/callerB.reheader.vcf.gz',
+                    '**/concat.reheader.vcf.gz',
+                    '**/toindex_concat_merge.concat.concat.vcf.gz',
+                    '**/toindex_concat_merge.merge.vcf.gz',
+                    '**/toindex_concat_merge.IDremoved.vcf.gz'
+                    ]
                     )
             // vcf_files_header: All files in ${params.outdir}
             def vcf_files_summary = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'],
