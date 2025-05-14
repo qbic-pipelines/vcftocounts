@@ -1,15 +1,19 @@
 nextflow_pipeline {
 
-    name "Test pipeline with default settings"
+    name "Test pipeline"
     script "../main.nf"
+    tag "pipeline"
+    tag "pipeline_vcftocounts"
+    tag "cpu"
 
-    test("Params: default") {
-
-        config 'conf/test.config'
+    test("-profile test") {
 
         when {
             params {
-                outdir = "$outputDir"
+                outdir    = "$outputDir"
+                input     = "${projectDir}/tests/input.csv"
+                removeIDs = true
+                rename    = true
             }
         }
 
@@ -19,9 +23,10 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            def csv_files = getAllFilesFromDir(params.outdir, include: ['**/*.csv'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
@@ -32,21 +37,21 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All vcf files
-                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 }
+                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
+                    csv_files.collect{ file -> path(file.path).readLines()[0..10] }
                 ).match() }
             )
         }
     }
 
-    test("Params: default - stub") {
+    test("-profile test - stub") {
 
         options "-stub"
-
-        config 'conf/test.config'
 
         when {
             params {
                 outdir = "$outputDir"
+                input  = "${projectDir}/tests/input.csv"
             }
         }
 
@@ -56,9 +61,9 @@ nextflow_pipeline {
             // stable_path: All files in ${params.outdir}/ with stable content
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
-            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf.gz', '**/*.vcf'])
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            assert workflow.success
             assertAll(
-                { assert workflow.success},
                 { assert snapshot(
                     // Number of successful tasks
                     workflow.trace.succeeded().size(),
