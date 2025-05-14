@@ -15,6 +15,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#35](https://github.com/qbic-pipelines/vcftocounts/pull/35) - Template update to version 3.2.1
 - [#36](https://github.com/qbic-pipelines/vcftocounts/pull/36) - Update all nf-core modules
 
+### `Dependencies`
+
+| Dependency | Old version | New version |
+| ---------- | ----------- | ----------- |
+| BCFtools   | 1.2         | 1.21        |
+| Tabix      | 1.2         | 1.21        |
+| MultiQC    | 1.27        | 1.28        |
+
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
 ### `Fixed`
