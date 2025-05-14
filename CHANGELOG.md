@@ -13,6 +13,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
 - [#35](https://github.com/qbic-pipelines/vcftocounts/pull/35) - Template update to version 3.2.1
+- [#36](https://github.com/qbic-pipelines/vcftocounts/pull/36) - Update all nf-core modules
 
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
