@@ -4,7 +4,8 @@
 [![GitHub Actions Linting Status](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/linting.yml/badge.svg)](https://github.com/qbic-pipelines/vcftocounts/actions/workflows/linting.yml)[![Cite with Zenodo](http://img.shields.io/badge/DOI-10.5281/zenodo.14616650-1073c8?labelColor=000000)](https://doi.org/10.5281/zenodo.14616650)
 [![nf-test](https://img.shields.io/badge/unit_tests-nf--test-337ab7.svg)](https://www.nf-test.com)
 
-[![Nextflow](https://img.shields.io/badge/nextflow%20DSL2-%E2%89%A524.04.2-23aa62.svg)](https://www.nextflow.io/)
+[![Nextflow](https://img.shields.io/badge/version-%E2%89%A524.04.2-green?style=flat&logo=nextflow&logoColor=white&color=%230DC09D&link=https%3A%2F%2Fnextflow.io)](https://www.nextflow.io/)
+[![nf-core template version](https://img.shields.io/badge/nf--core_template-3.3.1-green?style=flat&logo=nfcore&logoColor=white&color=%2324B064&link=https%3A%2F%2Fnf-co.re)](https://github.com/nf-core/tools/releases/tag/3.3.1)
 [![run with conda](http://img.shields.io/badge/run%20with-conda-3EB049?labelColor=000000&logo=anaconda)](https://docs.conda.io/en/latest/)
 [![run with docker](https://img.shields.io/badge/run%20with-docker-0db7ed?labelColor=000000&logo=docker)](https://www.docker.com/)
 [![run with singularity](https://img.shields.io/badge/run%20with-singularity-1d355c.svg?labelColor=000000)](https://sylabs.io/docs/)
@@ -31,6 +32,9 @@
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/usage/installation) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/usage/introduction#how-to-run-a-pipeline) with `-profile test` before running the workflow on actual data.
 
+<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
+     Explain what rows and columns represent. For instance (please edit as appropriate):
+
 First, prepare a samplesheet with your input data that looks as follows:
 
 `samplesheet.csv`:
@@ -47,11 +51,12 @@ Each row represents a VCF file coming from a sample. The `label` column enables 
 
 Now, you can run the pipeline using:
 
+<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
+
 ```bash
 nextflow run qbic-pipelines/vcftocounts \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
-   --genome GATK.GRCh38 \
    --outdir <OUTDIR>
 ```
 
@@ -63,6 +68,8 @@ nextflow run qbic-pipelines/vcftocounts \
 qbic-pipelines/vcftocounts was originally written by Famke Bäuerle, Dorothy Ellis.
 
 We thank the following people for their extensive assistance in the development of this pipeline:
+
+<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
 
 ## Contributions and Support
 

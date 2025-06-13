@@ -14,6 +14,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
 - [#35](https://github.com/qbic-pipelines/vcftocounts/pull/35) - Template update to version 3.2.1
 - [#36](https://github.com/qbic-pipelines/vcftocounts/pull/36) - Update all nf-core modules
+- [#38](https://github.com/qbic-pipelines/vcftocounts/pull/38) - Template update to version 3.3.1
 
 ### `Dependencies`
 
@@ -66,4 +67,12 @@ Initial release of (renamed) qbic-pipelines/vcftocounts.
 
 ## v1.0.0 - Curie Purpureal - 16.12.2024
 
-Initial release of qbic-pipelines/vcftomat, created with the [nf-core](https://nf-co.re/) template.
+Initial release of qbic-pipelines/vcftocounts, created with the [nf-core](https://nf-co.re/) template.
+
+### `Added`
+
+### `Fixed`
+
+### `Dependencies`
+
+### `Deprecated`
