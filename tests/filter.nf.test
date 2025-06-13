@@ -51,6 +51,51 @@ nextflow_pipeline {
         }
     }
 
+    test("-profile test --subset 0.005") {
+
+        when {
+            params {
+                outdir = "$outputDir"
+                // Input data for subset test
+                input  = "${projectDir}/tests/input-filter.csv"
+                subset = 0.005
+                removeIDs = true
+                rename = true
+
+                // Genome references
+                fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
+                fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
+                dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
+            }
+        }
+
+        then {
+            // stable_name: All files + folders in ${params.outdir}/ with a stable name
+            def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
+            // stable_path: All files in ${params.outdir}/ with stable content
+            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            // vcf_files: All files in ${params.outdir}
+            def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            def csv_files = getAllFilesFromDir(params.outdir, include: ['**/*.csv'])
+            assert workflow.success
+            assertAll(
+                { assert snapshot(
+                    // Number of successful tasks
+                    workflow.trace.succeeded().size(),
+                    // pipeline versions.yml file for multiqc from which Nextflow version is removed because we tests pipelines on multiple Nextflow versions
+                    removeNextflowVersion("$outputDir/pipeline_info/vcftocounts_software_mqc_versions.yml"),
+                    // All stable path name, with a relative path
+                    stable_name,
+                    // All files with stable contents
+                    stable_path,
+                    // All vcf files
+                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
+                    csv_files.collect{ file -> file.name + ":numVariants=" + (path(file.path).readLines().size() - 1) }
+                ).match() }
+            )
+        }
+    }
+
     test("-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub") {
 
         options "-stub"
