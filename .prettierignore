@@ -11,3 +11,4 @@ testing*
 bin/
 ro-crate-metadata.json
 assets/slackreport.json
+assets/adaptivecard.json
