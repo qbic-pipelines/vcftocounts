@@ -1,117 +1,4 @@
 {
-    "-profile test --filter 'INFO/CSQ ~ 'HIGH''": {
-        "content": [
-            12,
-            {
-                "BCFTOOLS_ANNOTATE": {
-                    "bcftools": 1.21
-                },
-                "BCFTOOLS_MERGE": {
-                    "bcftools": 1.21
-                },
-                "BCFTOOLS_REHEADER": {
-                    "bcftools": 1.21
-                },
-                "BCFTOOLS_VIEW": {
-                    "bcftools": 1.21
-                },
-                "CREATE_SAMPLE_FILE": {
-                    "create_sample_file": "1.0.0"
-                },
-                "TABIX_TABIX": {
-                    "tabix": 1.21
-                },
-                "VCF2COUNTS": {
-                    "vcf2counts.R": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
-                }
-            },
-            [
-                "bcftools",
-                "bcftools/annotate",
-                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz",
-                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz.tbi",
-                "bcftools/annotate/versions.yml",
-                "bcftools/merge",
-                "bcftools/merge/chr21_ann_full.merge.vcf.gz",
-                "bcftools/merge/chr21_ann_full.merge.vcf.gz.tbi",
-                "bcftools/merge/versions.yml",
-                "bcftools/reheader",
-                "bcftools/reheader/chr21_ann_full",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerA.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerA.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerB.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerB.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann_full/versions.yml",
-                "bcftools/reheader/samplefiles",
-                "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
-                "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
-                "bcftools/reheader/samplefiles/versions.yml",
-                "bcftools/view",
-                "bcftools/view/chr21_ann_callerA",
-                "bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz",
-                "bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
-                "bcftools/view/chr21_ann_callerA/versions.yml",
-                "bcftools/view/chr21_ann_callerB",
-                "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz",
-                "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
-                "bcftools/view/chr21_ann_callerB/versions.yml",
-                "multiqc",
-                "multiqc/multiqc_data",
-                "multiqc/multiqc_data/multiqc.log",
-                "multiqc/multiqc_data/multiqc_citations.txt",
-                "multiqc/multiqc_data/multiqc_data.json",
-                "multiqc/multiqc_data/multiqc_software_versions.txt",
-                "multiqc/multiqc_data/multiqc_sources.txt",
-                "multiqc/multiqc_report.html",
-                "pipeline_info",
-                "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/annotated.vcf.gz.tbi",
-                "vcf2counts",
-                "vcf2counts/chr21_ann_full.csv"
-            ],
-            [
-                "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
-                "versions.yml:md5,429703c7a1b835b7e3cc81f91a87a167",
-                "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
-                "chr21_ann_callerA.txt:md5,53d75ae10df3e0af2f8e2172826ed179",
-                "chr21_ann_callerB.txt:md5,c72e9e92762ccaf4b20f7e92126e7aef",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
-                "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
-                "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_full.csv:md5,fcc24dc4637679c9b8489da8a4b789e4"
-            ],
-            [
-                "chr21_ann_full.IDremoved.vcf.gz:md5,2b75dcfffa100d95308752e44aa704c8",
-                "chr21_ann_full.merge.vcf.gz:md5,7a68fafa5dd5bddc2547f1163bcbb68a",
-                "chr21_ann_full.chr21_ann_callerA.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
-                "chr21_ann_full.chr21_ann_callerB.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
-                "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
-                "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035"
-            ],
-            [
-                [
-                    "\"\",\"chr21_ann_callerA\",\"chr21_ann_callerB\"",
-                    "\"chr21:10462834_A/G\",1,1",
-                    "\"chr21:10569701_C/T\",1,1",
-                    "\"chr21:10605416_G/T\",1,1",
-                    "\"chr21:30541662_AG/A\",2,2",
-                    "\"chr21:33576378_G/GA\",2,2",
-                    "\"chr21:33576390_GA/G\",2,2",
-                    "\"chr21:42383199_C/CTA\",1,1"
-                ]
-            ]
-        ],
-        "meta": {
-            "nf-test": "0.9.2",
-            "nextflow": "25.04.3"
-        },
-        "timestamp": "2025-06-13T12:11:29.834942976"
-    },
     "-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub": {
         "content": [
             12,
@@ -144,20 +31,20 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz",
-                "bcftools/annotate/chr21_ann_full.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz",
+                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz.tbi",
                 "bcftools/annotate/versions.yml",
                 "bcftools/merge",
-                "bcftools/merge/chr21_ann_full.merge.vcf.gz",
-                "bcftools/merge/chr21_ann_full.merge.vcf.gz.tbi",
+                "bcftools/merge/chr21_ann_sample.merge.vcf.gz",
+                "bcftools/merge/chr21_ann_sample.merge.vcf.gz.tbi",
                 "bcftools/merge/versions.yml",
                 "bcftools/reheader",
-                "bcftools/reheader/chr21_ann_full",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerA.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerA.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerB.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_full/chr21_ann_full.chr21_ann_callerB.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann_full/versions.yml",
+                "bcftools/reheader/chr21_ann_sample",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr21_ann_sample/versions.yml",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
                 "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
@@ -181,7 +68,7 @@
                 "tabix/annotated.vcf.gz.csi",
                 "tabix/annotated.vcf.gz.tbi",
                 "vcf2counts",
-                "vcf2counts/chr21_ann_full.csv"
+                "vcf2counts/chr21_ann_sample.csv"
             ],
             [
                 "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
@@ -192,13 +79,13 @@
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
-                "chr21_ann_full.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                "chr21_ann_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             [
-                "chr21_ann_full.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_full.merge.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_full.chr21_ann_callerA.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_full.chr21_ann_callerB.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr21_ann_sample.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr21_ann_sample.merge.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
@@ -207,6 +94,119 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.3"
         },
-        "timestamp": "2025-06-13T12:11:43.960386655"
+        "timestamp": "2025-06-13T15:00:45.84005744"
+    },
+    "-profile test --filter 'INFO/CSQ ~ 'HIGH''": {
+        "content": [
+            12,
+            {
+                "BCFTOOLS_ANNOTATE": {
+                    "bcftools": 1.21
+                },
+                "BCFTOOLS_MERGE": {
+                    "bcftools": 1.21
+                },
+                "BCFTOOLS_REHEADER": {
+                    "bcftools": 1.21
+                },
+                "BCFTOOLS_VIEW": {
+                    "bcftools": 1.21
+                },
+                "CREATE_SAMPLE_FILE": {
+                    "create_sample_file": "1.0.0"
+                },
+                "TABIX_TABIX": {
+                    "tabix": 1.21
+                },
+                "VCF2COUNTS": {
+                    "vcf2counts.R": "1.0.0"
+                },
+                "Workflow": {
+                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
+                }
+            },
+            [
+                "bcftools",
+                "bcftools/annotate",
+                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz",
+                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/versions.yml",
+                "bcftools/merge",
+                "bcftools/merge/chr21_ann_sample.merge.vcf.gz",
+                "bcftools/merge/chr21_ann_sample.merge.vcf.gz.tbi",
+                "bcftools/merge/versions.yml",
+                "bcftools/reheader",
+                "bcftools/reheader/chr21_ann_sample",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz",
+                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr21_ann_sample/versions.yml",
+                "bcftools/reheader/samplefiles",
+                "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
+                "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
+                "bcftools/reheader/samplefiles/versions.yml",
+                "bcftools/view",
+                "bcftools/view/chr21_ann_callerA",
+                "bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz",
+                "bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
+                "bcftools/view/chr21_ann_callerA/versions.yml",
+                "bcftools/view/chr21_ann_callerB",
+                "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz",
+                "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
+                "bcftools/view/chr21_ann_callerB/versions.yml",
+                "multiqc",
+                "multiqc/multiqc_data",
+                "multiqc/multiqc_data/multiqc.log",
+                "multiqc/multiqc_data/multiqc_citations.txt",
+                "multiqc/multiqc_data/multiqc_data.json",
+                "multiqc/multiqc_data/multiqc_software_versions.txt",
+                "multiqc/multiqc_data/multiqc_sources.txt",
+                "multiqc/multiqc_report.html",
+                "pipeline_info",
+                "pipeline_info/vcftocounts_software_mqc_versions.yml",
+                "tabix",
+                "tabix/annotated.vcf.gz.tbi",
+                "vcf2counts",
+                "vcf2counts/chr21_ann_sample.csv"
+            ],
+            [
+                "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
+                "versions.yml:md5,429703c7a1b835b7e3cc81f91a87a167",
+                "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
+                "chr21_ann_callerA.txt:md5,53d75ae10df3e0af2f8e2172826ed179",
+                "chr21_ann_callerB.txt:md5,c72e9e92762ccaf4b20f7e92126e7aef",
+                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
+                "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
+                "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
+                "chr21_ann_sample.csv:md5,fcc24dc4637679c9b8489da8a4b789e4"
+            ],
+            [
+                "chr21_ann_sample.IDremoved.vcf.gz:md5,2b75dcfffa100d95308752e44aa704c8",
+                "chr21_ann_sample.merge.vcf.gz:md5,7a68fafa5dd5bddc2547f1163bcbb68a",
+                "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
+                "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
+                "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
+                "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035"
+            ],
+            [
+                [
+                    "\"\",\"chr21_ann_callerA\",\"chr21_ann_callerB\"",
+                    "\"chr21:10462834_A/G\",1,1",
+                    "\"chr21:10569701_C/T\",1,1",
+                    "\"chr21:10605416_G/T\",1,1",
+                    "\"chr21:30541662_AG/A\",2,2",
+                    "\"chr21:33576378_G/GA\",2,2",
+                    "\"chr21:33576390_GA/G\",2,2",
+                    "\"chr21:42383199_C/CTA\",1,1"
+                ]
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.3"
+        },
+        "timestamp": "2025-06-13T15:00:31.95746673"
     }
 }
