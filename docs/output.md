@@ -21,6 +21,8 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
+The `${meta.id}` is the sample id given in the samplesheet.
+
 ### Tabix
 
 Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
@@ -29,29 +31,43 @@ Tabix generated index files with `.tbi` extension for all `(g).vcf` files that a
 
 The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf files. The key difference between a regular VCF and a GVCF is that the GVCF has records for all sites, whether there is a variant call there or not.
 
+The output directory is called `gvcftovcf/{meta.label}`.
+
 ### Filter VCFs
 
 VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns.
+
+The output directory is called `bcftools/view/{meta.label}`.
 
 ### Concatenate VCFs
 
 Some variant calling pipelines will return multiple (g)VCF files for one patient. The `concatenate` function of `bcftools` is used to add these VCFs to one VCF.
 
+The output directory is called `bcftools/concat/`.
+
 ### Rename Samples
 
 To make enable the comparison of the finalized CSV files, `bcftools reheader` can be enabled to rename the variant sample name from the generic name given by the variant caller to a custom label given with the samplesheet. Can be turned off with `--rename false`.
+
+The output directory is called `bcftools/reheader/${meta.id}`.
 
 ### Merge VCFs
 
 To enable comparison of different variant callers or variant calling pipelines, all VCFs that come from the same sample are merged based on the sample ID submitted by the user.
 
+The output directory is called `bcftools/merge/`.
+
 ### Remove IDs
 
 Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the R script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
 
+The output directory is called `bcftools/annotate/`.
+
 ### Convert to matrix
 
 A custom R script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro).
+
+The output directory is called `vcf2counts/`.
 
 ### MultiQC
 

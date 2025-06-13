@@ -10,6 +10,7 @@ null/
 .nf-test
 .nf-test*
 .nf-test/*
+nf-*.tsv
 
 .vscode
 .vscode/*
