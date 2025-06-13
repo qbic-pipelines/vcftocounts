@@ -10,3 +10,4 @@ testing*
 *.pyc
 bin/
 ro-crate-metadata.json
+assets/slackreport.json
