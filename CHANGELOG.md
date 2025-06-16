@@ -8,13 +8,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### `Added`
 
 - [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test and fix small channel issue
+- [#39](https://github.com/qbic-pipelines/vcftocounts/pull/39) - Add random subsampling as alternative to filtering
 
 ### `Fixed`
 
 - [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
 - [#35](https://github.com/qbic-pipelines/vcftocounts/pull/35) - Template update to version 3.2.1
 - [#36](https://github.com/qbic-pipelines/vcftocounts/pull/36) - Update all nf-core modules
-- [#39](https://github.com/qbic-pipelines/vcftocounts/pull/39) - Add random subsampling as alternative to filtering
 
 ### `Dependencies`
 
