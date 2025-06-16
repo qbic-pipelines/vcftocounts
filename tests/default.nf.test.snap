@@ -123,7 +123,6 @@
                 "chr22.txt:md5,5ae68a67b70976ee95342a7451cb5af1",
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
-                "BETA-multiqc.parquet:md5,de22eaa740ca3bc1a66064652c80c694",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr22.csv:md5,e7980f307dbbb17f000b8c36dc47fdfb"
             ],

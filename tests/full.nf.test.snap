@@ -126,7 +126,6 @@
                 "merge.txt:md5,448a611e90ae2754539592093324ff3c",
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
-                "BETA-multiqc.parquet:md5,b6ce3ecc612c30a54d1ea5bf9a3065ad",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr21_ann_full.csv:md5,e797160c3cae2431c11d0db9208555f9",
                 "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
