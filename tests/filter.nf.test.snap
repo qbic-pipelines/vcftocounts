@@ -45,6 +45,7 @@
                 "bcftools/view/versions.yml",
                 "multiqc",
                 "multiqc/multiqc_data",
+                "multiqc/multiqc_data/BETA-multiqc.parquet",
                 "multiqc/multiqc_data/multiqc.log",
                 "multiqc/multiqc_data/multiqc_citations.txt",
                 "multiqc/multiqc_data/multiqc_data.json",
@@ -87,9 +88,9 @@
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
+            "nextflow": "25.04.3"
         },
-        "timestamp": "2025-05-14T13:24:58.71939"
+        "timestamp": "2025-06-16T10:51:27.657219336"
     },
     "-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub": {
         "content": [
