@@ -13,7 +13,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Tabix](#tabix) - Indexes (g.)vcf files
 - [GenotypeGVCFs](#genotypegvcfs) - Converts g.vcf files to vcf with GATK
 - [Filter VCFs](#filter-vcfs) - Filters the VCF based on a string given to the `filter` param with bcftools/view
-- [Subsample VCFs](#subsample-vcfs) - Keeps only a fraction of random variants based on the `subset` param
+- [Subset VCFs](#subsetvcfs) - Keeps only a fraction of random variants based on the `subset` param
 - [Concatenate VCFs](#concatenate-vcfs) - Concatenates all vcfs that have the same id and the same label with bcftools/concat
 - [Rename Samples](#rename-samples) - Changes the sample name in the vcf file to the label with bcftools/reheader
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
@@ -60,7 +60,7 @@ The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf
 
 VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns.
 
-### Filter VCFs
+### Subset VCFs
 
 <details markdown="1">
 <summary>Output files</summary>
