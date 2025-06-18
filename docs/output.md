@@ -23,8 +23,6 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 ### Tabix
 
-Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
-
 <details markdown="1">
 <summary>Output files</summary>
 
@@ -32,6 +30,8 @@ Tabix generated index files with `.tbi` extension for all `(g).vcf` files that a
   - `{filename}.vcf.gz.tbi`: tabix index of the vcf file.
 
 </details>
+
+Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
 
 ### GenotypeGVCFs
 
