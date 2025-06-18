@@ -21,12 +21,18 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
-The `${meta.id}` is the sample id given in the samplesheet.
 
 ### Tabix
 
 Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
 
+<details markdown="1">
+<summary>Output files</summary>
+
+- `tabix`
+  - `{filename}.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
 ### GenotypeGVCFs
 
 <details markdown="1">
@@ -71,7 +77,7 @@ Some variant calling pipelines will return multiple (g)VCF files for one patient
 <details markdown="1">
 <summary>Output files</summary>
 
-- `bcftools/reheader/${meta.id}/`
+- `bcftools/reheader/{sample}/`
   - `{sample}.{label}.reheader.vcf.gz`: vcf file with renamed sample {label}.
   - `{sample}.{label}.reheader.vcf.gz.tbi`: tabix index of the vcf file.
 
