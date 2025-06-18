@@ -17,7 +17,9 @@
 
 1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
-3. Filters the VCF based on a string given to the `filter` param with `bcftools/view` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default.
+3. Optional filtering of VCF files
+3.1 Filtering based on a string given to the `filter` param with `bcftools/view` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default.
+3.2 Filtering based on a random subset of variants... The `--subset` parameter specifies the fraction of variants to keep....
 4. Keeps only a fraction of random variants based on the `subset` param with a custom bash script using `bcftools/stats`, `view` and `sort` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default, should be used as alternative to filtering.
 5. Concatenates all vcfs that have the same id and the same label with `bcftools/concat` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 6. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.
