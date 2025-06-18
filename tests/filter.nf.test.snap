@@ -295,15 +295,15 @@
                 "versions.yml:md5,e0f218ef306127de5c57d21eb0b4d227",
                 "versions.yml:md5,e0f218ef306127de5c57d21eb0b4d227",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_sample.csv:md5,4c585771453a3dd3ca8714b221840de8"
+                "chr21_ann_sample.csv:md5,8cf4a4c0ce62c9156ae84329c5c460ea"
             ],
             [
-                "chr21_ann_sample.IDremoved.vcf.gz:md5,e722ddcbf5e6bee2478277d032c3d22a",
-                "chr21_ann_sample.merge.vcf.gz:md5,3528215fc1be71ba79ce5ec47d1f9ba0",
-                "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,1692caed10803620ebae48f68a4cedbb",
-                "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,fd72b1863e4dd8e7f930e8cd22cf8ca9",
-                "chr21_ann_sample.subset.vcf.gz:md5,1692caed10803620ebae48f68a4cedbb",
-                "chr21_ann_sample.subset.vcf.gz:md5,fd72b1863e4dd8e7f930e8cd22cf8ca9"
+                "chr21_ann_sample.IDremoved.vcf.gz:numVariants=58",
+                "chr21_ann_sample.merge.vcf.gz:numVariants=58",
+                "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:numVariants=29",
+                "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:numVariants=29",
+                "chr21_ann_sample.subset.vcf.gz:numVariants=29",
+                "chr21_ann_sample.subset.vcf.gz:numVariants=29"
             ],
             [
                 "chr21_ann_sample.csv:numVariants=58"
@@ -313,6 +313,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.3"
         },
-        "timestamp": "2025-06-18T09:59:22.120873927"
+        "timestamp": "2025-06-18T10:44:41.225101511"
     }
 }

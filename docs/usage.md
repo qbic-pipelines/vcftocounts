@@ -102,7 +102,6 @@ VCF files can be randomly subsampled to keep only a specific fraction of variant
 
 You can determine appropriate fractions by comparing the number of filtered variants with the total number of variants. This can be done with a script that collects the number of variants by using `bcftools stats` from both files and dividing them. The more VCF files you use to compare the more robust the fraction becomes. (We compared f.ex. around 90 files and landed at an average fraction of 0.00175 when using `--filter 'INFO/CSQ ~ "HIGH"'`).
 
-
 ### Updating the pipeline
 
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:

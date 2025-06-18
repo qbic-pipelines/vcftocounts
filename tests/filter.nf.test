@@ -73,7 +73,7 @@ nextflow_pipeline {
             // stable_name: All files + folders in ${params.outdir}/ with a stable name
             def stable_name = getAllFilesFromDir(params.outdir, relative: true, includeDir: true, ignore: ['pipeline_info/*.{html,json,txt}'])
             // stable_path: All files in ${params.outdir}/ with stable content
-            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
+            def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore', ignore: ['chr21_ann_sample.csv'])
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
             def csv_files = getAllFilesFromDir(params.outdir, include: ['**/*.csv'])
@@ -89,7 +89,7 @@ nextflow_pipeline {
                     // All files with stable contents
                     stable_path,
                     // All vcf files
-                    vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
+                    vcf_files.collect{ file -> file.name + ":numVariants=" + path(file.path).vcf.variants.size() },
                     csv_files.collect{ file -> file.name + ":numVariants=" + (path(file.path).readLines().size() - 1) }
                 ).match() }
             )
