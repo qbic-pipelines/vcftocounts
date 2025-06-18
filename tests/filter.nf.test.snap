@@ -294,8 +294,7 @@
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,e0f218ef306127de5c57d21eb0b4d227",
                 "versions.yml:md5,e0f218ef306127de5c57d21eb0b4d227",
-                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_sample.csv:md5,8cf4a4c0ce62c9156ae84329c5c460ea"
+                "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f"
             ],
             [
                 "chr21_ann_sample.IDremoved.vcf.gz:numVariants=58",
