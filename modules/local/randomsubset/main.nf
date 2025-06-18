@@ -23,10 +23,10 @@ process RANDOMSUBSET {
     def args = task.ext.args ?: ''
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    randomsubset.sh ${vcf} ${prefix}.vcf ${fraction} 
+    randomsubset.sh ${vcf} ${prefix}.vcf ${fraction}
 
     bgzip ${prefix}.vcf
-    tabix -p vcf ${prefix}.vcf.gz 
+    tabix -p vcf ${prefix}.vcf.gz
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":

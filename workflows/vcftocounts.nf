@@ -113,7 +113,7 @@ workflow VCFTOCOUNTS {
         )
 
         ch_versions = ch_versions.mix(RANDOMSUBSET.out.versions)
-        
+
         ch_filtered_vcf = RANDOMSUBSET.out.vcf
                 .join(RANDOMSUBSET.out.tbi)
     }
