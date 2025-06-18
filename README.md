@@ -18,15 +18,14 @@
 1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
 3. Optional filtering of VCF files
-3.1 Filtering based on a string given to the `filter` param with `bcftools/view` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default.
-3.2 Filtering based on a random subset of variants... The `--subset` parameter specifies the fraction of variants to keep....
-4. Keeps only a fraction of random variants based on the `subset` param with a custom bash script using `bcftools/stats`, `view` and `sort` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default, should be used as alternative to filtering.
-5. Concatenates all vcfs that have the same id and the same label with `bcftools/concat` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
-6. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.
-7. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
-8. Removes entries in the ID column with `bcftools/annotate` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - his can be turned off by adding `--removeIDs false` to the `nextflow run` command.
-9. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
-10. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
+   3.1 Filtering based on a string given to the `filter` param with `bcftools/view` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default.
+   3.2 Keeping only a fraction of random variants based on the `subset` param with a custom bash script using `bcftools/stats`, `view` and `sort` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default, should be used as alternative to filtering.
+4. Concatenates all vcfs that have the same id and the same label with `bcftools/concat` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+5. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.
+6. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
+7. Removes entries in the ID column with `bcftools/annotate` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - his can be turned off by adding `--removeIDs false` to the `nextflow run` command.
+8. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
+9. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
 ![](./docs/images/vcftocounts-subway.excalidraw.png)
 
