@@ -25,16 +25,17 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr22.IDremoved.vcf.gz",
-                "bcftools/annotate/chr22.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz",
+                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz.tbi",
                 "bcftools/annotate/versions.yml",
                 "bcftools/reheader",
-                "bcftools/reheader/chr22.reheader.vcf.gz",
-                "bcftools/reheader/chr22.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr22_sample",
+                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz",
+                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr22_sample/versions.yml",
                 "bcftools/reheader/samplefiles",
-                "bcftools/reheader/samplefiles/chr22.txt",
+                "bcftools/reheader/samplefiles/chr22_label.txt",
                 "bcftools/reheader/samplefiles/versions.yml",
-                "bcftools/reheader/versions.yml",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_plots",
@@ -45,25 +46,25 @@
                 "tabix/NA12878.chr22.1X.vcf.gz.csi",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "vcf2counts",
-                "vcf2counts/chr22.csv"
+                "vcf2counts/chr22_sample.csv"
             ],
             [
                 "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
-                "chr22.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
-                "chr22.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                "chr22_label.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
+                "chr22_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             [
-                "chr22.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr22.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                "chr22_sample.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
         "meta": {
             "nf-test": "0.9.2",
-            "nextflow": "24.10.4"
+            "nextflow": "25.04.3"
         },
-        "timestamp": "2025-05-14T13:25:28.765066"
+        "timestamp": "2025-06-13T14:58:31.890894061"
     },
     "-profile test": {
         "content": [
@@ -91,17 +92,17 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr22.IDremoved.vcf.gz",
-                "bcftools/annotate/chr22.IDremoved.vcf.gz.tbi",
-                "bcftools/annotate/chr22.reheader.vcf.gz.csi",
+                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz",
+                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz.tbi",
                 "bcftools/annotate/versions.yml",
                 "bcftools/reheader",
-                "bcftools/reheader/chr22.reheader.vcf.gz",
-                "bcftools/reheader/chr22.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr22_sample",
+                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz",
+                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
+                "bcftools/reheader/chr22_sample/versions.yml",
                 "bcftools/reheader/samplefiles",
-                "bcftools/reheader/samplefiles/chr22.txt",
+                "bcftools/reheader/samplefiles/chr22_label.txt",
                 "bcftools/reheader/samplefiles/versions.yml",
-                "bcftools/reheader/versions.yml",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/BETA-multiqc.parquet",
@@ -116,23 +117,23 @@
                 "tabix",
                 "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "vcf2counts",
-                "vcf2counts/chr22.csv"
+                "vcf2counts/chr22_sample.csv"
             ],
             [
                 "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
-                "chr22.txt:md5,5ae68a67b70976ee95342a7451cb5af1",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
+                "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
+                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr22.csv:md5,e7980f307dbbb17f000b8c36dc47fdfb"
+                "chr22_sample.csv:md5,0c4027524d1fa8acbfd429fdc0962eed"
             ],
             [
-                "chr22.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
-                "chr22.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
+                "chr22_sample.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
+                "chr22_sample.chr22_label.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
             ],
             [
                 [
-                    "\"\",\"chr22\"",
+                    "\"\",\"chr22_label\"",
                     "\"chr22:16570065_A/G\",0",
                     "\"chr22:16570067_A/C\",0",
                     "\"chr22:16570176_C/A\",0",

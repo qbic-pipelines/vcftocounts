@@ -23,33 +23,103 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 
 ### Tabix
 
+<details markdown="1">
+<summary>Output files</summary>
+
+- `tabix`
+  - `{filename}.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
+
 Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
 
 ### GenotypeGVCFs
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `gvcftovcf/{meta.label}/`
+  - `{filename}.normal.vcf.gz`: normal vcf file based on gvcf input.
+  - `{filename}.normal.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
 
 The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf files. The key difference between a regular VCF and a GVCF is that the GVCF has records for all sites, whether there is a variant call there or not.
 
 ### Filter VCFs
 
+<details markdown="1">
+<summary>Output files</summary>
+
+- `bcftools/view/{meta.label}/`
+  - `{filename}.filter.vcf.gz`: vcf file with filtered variants.
+  - `{filename}.filter.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
+
 VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns.
 
 ### Concatenate VCFs
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `bcftools/concat/`
+  - `{sample}.{label}.concat.vcf.gz`: vcf file containing all variants from files with same {sample} and {label}.
+  - `{sample}.{label}.concat.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
 
 Some variant calling pipelines will return multiple (g)VCF files for one patient. The `concatenate` function of `bcftools` is used to add these VCFs to one VCF.
 
 ### Rename Samples
 
+<details markdown="1">
+<summary>Output files</summary>
+
+- `bcftools/reheader/{sample}/`
+  - `{sample}.{label}.reheader.vcf.gz`: vcf file with renamed sample {label}.
+  - `{sample}.{label}.reheader.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
+
 To make enable the comparison of the finalized CSV files, `bcftools reheader` can be enabled to rename the variant sample name from the generic name given by the variant caller to a custom label given with the samplesheet. Can be turned off with `--rename false`.
 
 ### Merge VCFs
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `bcftools/merge/`
+  - `{sample}.merge.vcf.gz`: merged vcf file with multiple samples (one per pipeline/caller).
+  - `{sample}.merge.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
 
 To enable comparison of different variant callers or variant calling pipelines, all VCFs that come from the same sample are merged based on the sample ID submitted by the user.
 
 ### Remove IDs
 
+<details markdown="1">
+<summary>Output files</summary>
+
+- `bcftools/annotate/`
+  - `{sample}.IDremoved.vcf.gz`: vcf file without rsIDs as variant names.
+  - `{sample}.IDremoved.vcf.gz.tbi`: tabix index of the vcf file.
+
+</details>
+
 Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the R script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
 
 ### Convert to matrix
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `vcf2counts/`
+  - `{sample}.csv`: csv file containing the variants, one column per {label}
+
+</details>
 
 A custom R script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro).
 
