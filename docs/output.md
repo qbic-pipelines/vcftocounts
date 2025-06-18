@@ -21,7 +21,6 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
-
 ### Tabix
 
 Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
