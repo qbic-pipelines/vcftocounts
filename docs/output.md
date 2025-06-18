@@ -33,6 +33,7 @@ Tabix generated index files with `.tbi` extension for all `(g).vcf` files that a
   - `{filename}.vcf.gz.tbi`: tabix index of the vcf file.
 
 </details>
+
 ### GenotypeGVCFs
 
 <details markdown="1">
