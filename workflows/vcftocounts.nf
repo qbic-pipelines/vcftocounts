@@ -90,15 +90,18 @@ workflow VCFTOCOUNTS {
     if (params.filter != null) {
         BEFORE_FILTER_STATS (
             ch_vcf,
-            [], [], [], [], []
+            [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
         )
 
         ch_vcf_counted = ch_vcf.join( BEFORE_FILTER_STATS.out.stats )
-                .map { meta, vcf, tbi, stats_txt ->
-                    // Extract the number of variants from the stats file (no fraction)
-                    def numVar = "awk -F'\\t' '\$3==\"number of records:\" {print int(\$4)}' ${stats_txt}".execute().text.trim()
-                    [ meta + [numVarBefore: numVar], vcf, tbi ]
-                }
+            .map { meta, vcf, tbi, stats_file ->
+                // Read the file as a string
+                def statsText = stats_file.text
+                // Use a regex to find the line and extract the number
+                def matcher = statsText =~ /number of records:\s*(\d+)/
+                def numVar = matcher.find() ? matcher.group(1) : null
+                [ meta + [numVarBefore: numVar], vcf, tbi ]
+            }
 
         //
         // Filter VCFs for pattern given in params.filter
@@ -118,15 +121,32 @@ workflow VCFTOCOUNTS {
 
         AFTER_FILTER_STATS (
             ch_filtered_vcf,
-            [], [], [], [], []
+            [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
         )
 
         ch_filtered_vcf_counted = ch_filtered_vcf.join( AFTER_FILTER_STATS.out.stats )
-            .map { meta, vcf, tbi, stats_txt ->
-                // Extract the number of variants from the stats file (no fraction)
-                def numVar = "awk -F'\\t' '\$3==\"number of records:\" {print int(\$4)}' ${stats_txt}".execute().text.trim()
+            .map { meta, vcf, tbi, stats_file ->
+                // Read the file as a string
+                def statsText = stats_file.text
+                // Use a regex to find the line and extract the number
+                def matcher = statsText =~ /number of records:\s*(\d+)/
+                def numVar = matcher.find() ? matcher.group(1) : null
                 [ meta + [numVarAfter: numVar], vcf, tbi ]
             }
+
+        ch_filtered_vcf_counted.dump(tag: 'ch_filtered_vcf_counted')
+
+        ch_vcf.collectFile(keepHeader: true, skip: 1, sort: true, storeDir: "${params.outdir}/csv") { meta, _vcf, _tbi ->
+            def sample         = meta.id
+            def label          = meta.label
+            def numVarBefore   = meta.numVarBefore
+            def numVarAfter    = meta.numVarAfter
+       
+            def vcf_path   = "${params.outdir}/bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz"
+            def tbi_path   = "${params.outdir}/bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz.tbi"
+
+            ["filtered_info.csv", "sample,label,numVarBefore,numVarAfter,vcf,tbi\n${sample},${label},${numVarBefore},${numVarAfter},${vcf_path},${tbi_path}\n"]
+        }
 
     } else {
         ch_filtered_vcf_counted = ch_vcf
