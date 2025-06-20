@@ -102,6 +102,7 @@ workflow VCFTOCOUNTS {
 
         //
         // Filter VCFs for pattern given in params.filter
+        // Use meta.name for the VCF filename
         //
         BCFTOOLS_VIEW (
             ch_vcf_counted,
@@ -209,7 +210,10 @@ workflow VCFTOCOUNTS {
     )
 
     // Merge the results back into a single channel
-    ch_merged_vcfs = ch_single_id.mix(BCFTOOLS_MERGE.out.vcf)
+    ch_merged_vcfs = ch_single_id
+        .mix(BCFTOOLS_MERGE.out.vcf
+            .join(BCFTOOLS_MERGE.out.index)
+            )
 
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 
@@ -219,7 +223,7 @@ workflow VCFTOCOUNTS {
     if (params.removeIDs) {
 
         BCFTOOLS_ANNOTATE(
-            ch_merged_vcfs.map{ it -> [it[0], it[1], [], [], []] },
+            ch_merged_vcfs.map{ it -> [it[0], it[1], it[2], [], []] },
             [],
             []
         )
