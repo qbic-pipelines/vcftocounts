@@ -88,7 +88,7 @@ workflow VCFTOCOUNTS {
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     if (params.filter != null) {
-    
+
         BEFORE_FILTER_STATS (
             ch_vcf,
             [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]

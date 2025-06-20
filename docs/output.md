@@ -54,10 +54,15 @@ The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf
 - `bcftools/view/{meta.label}/`
   - `{filename}.filter.vcf.gz`: vcf file with filtered variants.
   - `{filename}.filter.vcf.gz.tbi`: tabix index of the vcf file.
+- `bcftools/view/csv/`
+  - `info_filtered_variants.csv`: table containing numbers of variants before and after filtering and the fraction.
+- `bcftools/stats/{meta.label}/`
+  - `{filename}.bcftools_stats.txt`: bcftools/stats output on vcf before filtering.
+  - `{filename}.filter.bcftools_stats.txt`: bcftools/stats output on vcf after filtering.
 
 </details>
 
-VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns.
+VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns. Running the filtering part also enables `bcftools/stats` which is used to compute the fraction of variants which are kept. These results are found in a csv file called `info_filtered_variants.csv`.
 
 ### Concatenate VCFs
 
