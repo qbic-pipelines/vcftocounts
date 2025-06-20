@@ -9,6 +9,8 @@ include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
+include { BCFTOOLS_STATS as BEFORE_FILTER_STATS } from '../modules/nf-core/bcftools/stats/main'
+include { BCFTOOLS_STATS as AFTER_FILTER_STATS  } from '../modules/nf-core/bcftools/stats/main'
 include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
@@ -86,11 +88,23 @@ workflow VCFTOCOUNTS {
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     if (params.filter != null) {
+        BEFORE_FILTER_STATS (
+            ch_vcf,
+            [], [], [], [], []
+        )
+
+        ch_vcf_counted = ch_vcf.join( BEFORE_FILTER_STATS.out.stats )
+                .map { meta, vcf, tbi, stats_txt ->
+                    // Extract the number of variants from the stats file (no fraction)
+                    def numVar = "awk -F'\\t' '\$3==\"number of records:\" {print int(\$4)}' ${stats_txt}".execute().text.trim()
+                    [ meta + [numVarBefore: numVar], vcf, tbi ]
+                }
+
         //
         // Filter VCFs for pattern given in params.filter
         //
         BCFTOOLS_VIEW (
-            ch_vcf,
+            ch_vcf_counted,
             [], // regions
             [], // targets
             [] // samples
@@ -101,14 +115,26 @@ workflow VCFTOCOUNTS {
         ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
                 .join(BCFTOOLS_VIEW.out.tbi)
 
+        AFTER_FILTER_STATS (
+            ch_filtered_vcf,
+            [], [], [], [], []
+        )
+
+        ch_filtered_vcf_counted = ch_filtered_vcf.join( AFTER_FILTER_STATS.out.stats )
+            .map { meta, vcf, tbi, stats_txt ->
+                // Extract the number of variants from the stats file (no fraction)
+                def numVar = "awk -F'\\t' '\$3==\"number of records:\" {print int(\$4)}' ${stats_txt}".execute().text.trim()
+                [ meta + [numVarAfter: numVar], vcf, tbi ]
+            }
+
     } else {
-        ch_filtered_vcf = ch_vcf
+        ch_filtered_vcf_counted = ch_vcf
     }
 
     //
     // Concatenate converted VCFs if the entries for "id" and "label" are the same
     //
-    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf
+    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf_counted
         .map { meta, vcf, tbi ->
             [ [meta.id, meta.label], meta, vcf, tbi ]
         }
