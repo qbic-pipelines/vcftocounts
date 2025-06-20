@@ -34,8 +34,8 @@ repository_type: pipeline
 
 template:
   author: "Famke Bäuerle, Dorothy Ellis"
-  description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical
-    analysis
+  description: Nextflow pipeline to convert (g)vcfs to matrices suitable for
+    statistical analysis
   force: false
   is_nfcore: false
   name: vcftocounts
@@ -46,4 +46,4 @@ template:
     - codespaces
     - fastqc
     - adaptivecard
-  version: 2.0.2dev
+  version: 2.1.0dev

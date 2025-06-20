@@ -7,6 +7,7 @@ include { MULTIQC                } from '../modules/nf-core/multiqc/main'
 include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
 include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
+include { RANDOMSUBSET           } from '../modules/local/randomsubset/main'
 include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
 include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
@@ -102,7 +103,21 @@ workflow VCFTOCOUNTS {
         ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
                 .join(BCFTOOLS_VIEW.out.tbi)
 
-    } else {
+    } else if (params.subset != null) {
+        //
+        // Get a random subset of variants with given fraction of variants
+        //
+        RANDOMSUBSET(
+            ch_vcf.map{ it -> [it[0], it[1], it[2]] },
+            params.subset
+        )
+
+        ch_versions = ch_versions.mix(RANDOMSUBSET.out.versions)
+
+        ch_filtered_vcf = RANDOMSUBSET.out.vcf
+                .join(RANDOMSUBSET.out.tbi)
+    }
+    else {
         ch_filtered_vcf = ch_vcf
     }
 

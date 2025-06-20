@@ -32,6 +32,10 @@
                     "type": "string",
                     "description": "Add a filtering criterium suitable for bcftools/view. For example 'INFO/CSQ ~ \"HIGH\"'."
                 },
+                "subset": {
+                    "type": "number",
+                    "description": "Get a random subset of variants. Set this variable to the fraction you want to keep (f.ex. 0.5 if you want to keep half of the variants)."
+                },
                 "removeIDs": {
                     "type": "boolean",
                     "default": true,

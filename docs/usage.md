@@ -96,6 +96,12 @@ Notably, this enables filtering for variants with certain impact levels or conse
 > [!NOTE]
 > The filtering step only works with conda for nextflow versions above 24.10.2 (use docker or singularity if you want to use an older nextflow version)
 
+### Subset VCFs
+
+VCF files can be randomly subsetted to keep only a specific fraction of variants. This enables comparison to the filtered variants.
+
+You can determine appropriate fractions by comparing the number of filtered variants with the total number of variants. This can be done with a script that collects the number of variants by using `bcftools stats` from both files and dividing them. The more VCF files you use for comparison, the more robust the fraction becomes. (We compared around 90 files and obtained an average fraction of 0.00175 when using `--filter 'INFO/CSQ ~ "HIGH"'`).
+
 ### Updating the pipeline
 
 When you run the above command, Nextflow automatically pulls the pipeline code from GitHub and stores it as a cached version. When running the pipeline after this, it will always use the cached version if available - even if the pipeline has been updated since. To make sure that you're running the latest version of the pipeline, make sure that you regularly update the cached version of the pipeline:

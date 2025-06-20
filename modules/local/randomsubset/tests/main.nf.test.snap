@@ -1,0 +1,69 @@
+{
+    "sarscov2 - [vcf, tbi] - stub": {
+        "content": [
+            {
+                "0": [
+                    [
+                        {
+                            "id": "out",
+                            "single_end": false
+                        },
+                        "out.subset.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "1": [
+                    [
+                        {
+                            "id": "out",
+                            "single_end": false
+                        },
+                        "out.subset.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "2": [
+                    "versions.yml:md5,ee7626565a01c36b7fb7a05f41e0653e"
+                ],
+                "tbi": [
+                    [
+                        {
+                            "id": "out",
+                            "single_end": false
+                        },
+                        "out.subset.tbi:md5,d41d8cd98f00b204e9800998ecf8427e"
+                    ]
+                ],
+                "vcf": [
+                    [
+                        {
+                            "id": "out",
+                            "single_end": false
+                        },
+                        "out.subset.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                    ]
+                ],
+                "versions": [
+                    "versions.yml:md5,ee7626565a01c36b7fb7a05f41e0653e"
+                ]
+            }
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.3"
+        },
+        "timestamp": "2025-06-18T10:53:32.966380045"
+    },
+    "sarscov2 - [vcf, tbi]": {
+        "content": [
+            "VcfFile [chromosomes=[MT192765.1], sampleCount=1, variantCount=4, phased=false, phasedAutodetect=false]",
+            "out.subset.vcf.gz.tbi",
+            [
+                "versions.yml:md5,ee7626565a01c36b7fb7a05f41e0653e"
+            ]
+        ],
+        "meta": {
+            "nf-test": "0.9.2",
+            "nextflow": "25.04.3"
+        },
+        "timestamp": "2025-06-18T10:53:26.441286474"
+    }
+}

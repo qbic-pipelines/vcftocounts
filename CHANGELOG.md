@@ -3,11 +3,12 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.0.2dev
+## v2.1.0dev
 
 ### `Added`
 
 - [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test and fix small channel issue
+- [#39](https://github.com/qbic-pipelines/vcftocounts/pull/39) - Add random subsampling as alternative to filtering
 
 ### `Fixed`
 

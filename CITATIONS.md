@@ -10,6 +10,18 @@
 
 ## Pipeline tools
 
+- [BCFTools](https://pubmed.ncbi.nlm.nih.gov/21903627/)
+
+  > Li H: A statistical framework for SNP calling, mutation discovery, association mapping and population genetical parameter estimation from sequencing data. Bioinformatics. 2011 Nov 1;27(21):2987-93. doi: 10.1093/bioinformatics/btr509. PubMed PMID: 21903627; PubMed Central PMCID: PMC3198575.
+
+- [GATK](https://pubmed.ncbi.nlm.nih.gov/20644199/)
+
+  > McKenna A, Hanna M, Banks E, et al.: The Genome Analysis Toolkit: a MapReduce framework for analyzing next-generation DNA sequencing data. Genome Res. 2010 Sep;20(9):1297-303. doi: 10.1101/gr.107524.110. Epub 2010 Jul 19. PubMed PMID: 20644199; PubMed Central PMCID: PMC2928508.
+
+- [Tabix](https://academic.oup.com/bioinformatics/article/27/5/718/262743)
+
+  > Li H, Tabix: fast retrieval of sequence features from generic TAB-delimited files, Bioinformatics, Volume 27, Issue 5, 1 March 2011, Pages 718–719, doi: 10.1093/bioinformatics/btq671. PubMed PMID: 21208982. PubMed Central PMCID: PMC3042176.
+
 - [MultiQC](https://pubmed.ncbi.nlm.nih.gov/27312411/)
 
 > Ewels P, Magnusson M, Lundin S, Käller M. MultiQC: summarize analysis results for multiple tools and samples in a single report. Bioinformatics. 2016 Oct 1;32(19):3047-8. doi: 10.1093/bioinformatics/btw354. Epub 2016 Jun 16. PubMed PMID: 27312411; PubMed Central PMCID: PMC5039924.
