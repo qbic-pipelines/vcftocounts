@@ -3,6 +3,9 @@
         "content": [
             16,
             {
+                "AFTER_FILTER_STATS": {
+                    "bcftools": 1.21
+                },
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.21
                 },
@@ -13,6 +16,9 @@
                     "bcftools": 1.21
                 },
                 "BCFTOOLS_VIEW": {
+                    "bcftools": 1.21
+                },
+                "BEFORE_FILTER_STATS": {
                     "bcftools": 1.21
                 },
                 "CREATE_SAMPLE_FILE": {
@@ -29,8 +35,6 @@
                 }
             },
             [
-                "after",
-                "after/chr21_ann_sample.bcftools_stats.txt",
                 "bcftools",
                 "bcftools/annotate",
                 "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz",
@@ -51,6 +55,15 @@
                 "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
                 "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
                 "bcftools/reheader/samplefiles/versions.yml",
+                "bcftools/stats",
+                "bcftools/stats/chr21_ann_callerA",
+                "bcftools/stats/chr21_ann_callerA/annotated.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerA/annotated.filter.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerA/versions.yml",
+                "bcftools/stats/chr21_ann_callerB",
+                "bcftools/stats/chr21_ann_callerB/annotated.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerB/annotated.filter.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerB/versions.yml",
                 "bcftools/view",
                 "bcftools/view/chr21_ann_callerA",
                 "bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz",
@@ -62,8 +75,6 @@
                 "bcftools/view/chr21_ann_callerB/versions.yml",
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
-                "before",
-                "before/chr21_ann_sample.bcftools_stats.txt",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/BETA-multiqc.parquet",
@@ -81,17 +92,21 @@
                 "vcf2counts/chr21_ann_sample.csv"
             ],
             [
-                "chr21_ann_sample.bcftools_stats.txt:md5,bb7fe74b4cfabbd4705b7e10eb66c130",
                 "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
                 "versions.yml:md5,429703c7a1b835b7e3cc81f91a87a167",
                 "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
                 "chr21_ann_callerA.txt:md5,53d75ae10df3e0af2f8e2172826ed179",
                 "chr21_ann_callerB.txt:md5,c72e9e92762ccaf4b20f7e92126e7aef",
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
+                "annotated.bcftools_stats.txt:md5,7fc99095b0a949be2153d96e57f0f5f7",
+                "annotated.filter.bcftools_stats.txt:md5,bb7fe74b4cfabbd4705b7e10eb66c130",
+                "versions.yml:md5,4a98ace2487c96936b18b7c16445cd7e",
+                "annotated.bcftools_stats.txt:md5,7fc99095b0a949be2153d96e57f0f5f7",
+                "annotated.filter.bcftools_stats.txt:md5,bb7fe74b4cfabbd4705b7e10eb66c130",
+                "versions.yml:md5,4a98ace2487c96936b18b7c16445cd7e",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
-                "chr21_ann_sample.bcftools_stats.txt:md5,7fc99095b0a949be2153d96e57f0f5f7",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr21_ann_sample.csv:md5,fcc24dc4637679c9b8489da8a4b789e4"
             ],
@@ -125,12 +140,15 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.3"
         },
-        "timestamp": "2025-06-20T15:39:45.439732269"
+        "timestamp": "2025-06-20T15:46:58.316871509"
     },
     "-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub": {
         "content": [
             16,
             {
+                "AFTER_FILTER_STATS": {
+                    "bcftools": 1.21
+                },
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.21
                 },
@@ -141,6 +159,9 @@
                     "bcftools": 1.21
                 },
                 "BCFTOOLS_VIEW": {
+                    "bcftools": 1.21
+                },
+                "BEFORE_FILTER_STATS": {
                     "bcftools": 1.21
                 },
                 "CREATE_SAMPLE_FILE": {
@@ -157,8 +178,6 @@
                 }
             },
             [
-                "after",
-                "after/chr21_ann_sample.bcftools_stats.txt",
                 "bcftools",
                 "bcftools/annotate",
                 "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz",
@@ -179,6 +198,15 @@
                 "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
                 "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
                 "bcftools/reheader/samplefiles/versions.yml",
+                "bcftools/stats",
+                "bcftools/stats/chr21_ann_callerA",
+                "bcftools/stats/chr21_ann_callerA/annotated.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerA/annotated.filter.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerA/versions.yml",
+                "bcftools/stats/chr21_ann_callerB",
+                "bcftools/stats/chr21_ann_callerB/annotated.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerB/annotated.filter.bcftools_stats.txt",
+                "bcftools/stats/chr21_ann_callerB/versions.yml",
                 "bcftools/view",
                 "bcftools/view/chr21_ann_callerA",
                 "bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz",
@@ -190,8 +218,6 @@
                 "bcftools/view/chr21_ann_callerB/versions.yml",
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
-                "before",
-                "before/chr21_ann_sample.bcftools_stats.txt",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_plots",
@@ -205,17 +231,21 @@
                 "vcf2counts/chr21_ann_sample.csv"
             ],
             [
-                "chr21_ann_sample.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "versions.yml:md5,c805d5803ca9daca8965aa71800cb41e",
                 "versions.yml:md5,429703c7a1b835b7e3cc81f91a87a167",
                 "versions.yml:md5,033f0e38ea7e11362d7c210db7aa3f4c",
                 "chr21_ann_callerA.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr21_ann_callerB.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
+                "annotated.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "annotated.filter.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "versions.yml:md5,4a98ace2487c96936b18b7c16445cd7e",
+                "annotated.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "annotated.filter.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "versions.yml:md5,4a98ace2487c96936b18b7c16445cd7e",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "info_filtered_variants.csv:md5,23f561e754c7ac127fcce400651818dd",
-                "chr21_ann_sample.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr21_ann_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             [
@@ -231,6 +261,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.3"
         },
-        "timestamp": "2025-06-20T15:40:00.868227978"
+        "timestamp": "2025-06-20T15:47:13.65620513"
     }
 }

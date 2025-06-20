@@ -88,10 +88,13 @@ workflow VCFTOCOUNTS {
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     if (params.filter != null) {
+    
         BEFORE_FILTER_STATS (
             ch_vcf,
             [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
         )
+
+        ch_versions = ch_versions.mix(BEFORE_FILTER_STATS.out.versions)
 
         ch_vcf_counted = ch_vcf.join( BEFORE_FILTER_STATS.out.stats )
             .map { meta, vcf, tbi, stats_file ->
@@ -123,6 +126,8 @@ workflow VCFTOCOUNTS {
             ch_filtered_vcf,
             [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
         )
+
+        ch_versions = ch_versions.mix(AFTER_FILTER_STATS.out.versions)
 
         ch_filtered_vcf_counted = ch_filtered_vcf.join( AFTER_FILTER_STATS.out.stats )
             .map { meta, vcf, tbi, stats_file ->
