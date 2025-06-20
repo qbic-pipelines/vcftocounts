@@ -60,10 +60,10 @@
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz",
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
                 "bcftools/view/chr21_ann_callerB/versions.yml",
+                "bcftools/view/csv",
+                "bcftools/view/csv/info_filtered_variants.csv",
                 "before",
                 "before/chr21_ann_sample.bcftools_stats.txt",
-                "csv",
-                "csv/filtered_info.csv",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_plots",
@@ -86,8 +86,8 @@
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
+                "info_filtered_variants.csv:md5,23f561e754c7ac127fcce400651818dd",
                 "chr21_ann_sample.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "filtered_info.csv:md5,5ec86adbbed9bde9a8a85143d75ad5a8",
                 "chr21_ann_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             [
@@ -103,7 +103,7 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.3"
         },
-        "timestamp": "2025-06-20T15:35:04.531889565"
+        "timestamp": "2025-06-20T15:40:00.868227978"
     },
     "-profile test --filter 'INFO/CSQ ~ 'HIGH''": {
         "content": [
@@ -166,10 +166,10 @@
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz",
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
                 "bcftools/view/chr21_ann_callerB/versions.yml",
+                "bcftools/view/csv",
+                "bcftools/view/csv/info_filtered_variants.csv",
                 "before",
                 "before/chr21_ann_sample.bcftools_stats.txt",
-                "csv",
-                "csv/filtered_info.csv",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/BETA-multiqc.parquet",
@@ -196,8 +196,8 @@
                 "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
                 "versions.yml:md5,1a5d1838e25d3d402a582af327aed061",
+                "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
                 "chr21_ann_sample.bcftools_stats.txt:md5,7fc99095b0a949be2153d96e57f0f5f7",
-                "filtered_info.csv:md5,5e305b44ea90a1e79e3171d9800bbf4d",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr21_ann_sample.csv:md5,fcc24dc4637679c9b8489da8a4b789e4"
             ],
@@ -212,8 +212,8 @@
             [
                 [
                     "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi",
-                    "chr21_ann_sample,chr21_ann_callerA,5889,7,0.0011886568177958906,/home/paifb01/japan/vcftocounts/.nf-test/tests/c6aacbb8b893dade34521cdc946b3cea/output/bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz,/home/paifb01/japan/vcftocounts/.nf-test/tests/c6aacbb8b893dade34521cdc946b3cea/output/bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
-                    "chr21_ann_sample,chr21_ann_callerB,5889,7,0.0011886568177958906,/home/paifb01/japan/vcftocounts/.nf-test/tests/c6aacbb8b893dade34521cdc946b3cea/output/bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz,/home/paifb01/japan/vcftocounts/.nf-test/tests/c6aacbb8b893dade34521cdc946b3cea/output/bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi"
+                    "chr21_ann_sample,chr21_ann_callerA,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
+                    "chr21_ann_sample,chr21_ann_callerB,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi"
                 ],
                 [
                     "\"\",\"chr21_ann_callerA\",\"chr21_ann_callerB\"",
@@ -231,6 +231,6 @@
             "nf-test": "0.9.2",
             "nextflow": "25.04.3"
         },
-        "timestamp": "2025-06-20T15:34:49.261761087"
+        "timestamp": "2025-06-20T15:39:45.439732269"
     }
 }

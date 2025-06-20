@@ -134,17 +134,16 @@ workflow VCFTOCOUNTS {
                 [ meta + [numVarAfter: numVar], vcf, tbi ]
             }
 
-        ch_filtered_vcf_counted.collectFile(keepHeader: true, skip: 1, sort: true, storeDir: "${params.outdir}/csv") { meta, _vcf, _tbi ->
+        ch_filtered_vcf_counted.collectFile(keepHeader: true, skip: 1, sort: true, storeDir: "${params.outdir}/bcftools/view/csv") { meta, _vcf, _tbi ->
             def sample       = meta.id
             def label        = meta.label
             def numVarBefore = meta.numVarBefore
             def numVarAfter  = meta.numVarAfter
             def fracFiltered = numVarBefore ? (numVarAfter.toFloat() / numVarBefore.toFloat()) : 0
-       
-            def vcf_path   = "${params.outdir}/bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz"
-            def tbi_path   = "${params.outdir}/bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz.tbi"
+            def vcf_path     = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz"
+            def tbi_path     = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz.tbi"
 
-            ["filtered_info.csv", "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi\n${sample},${label},${numVarBefore},${numVarAfter},${fracFiltered},${vcf_path},${tbi_path}\n"]
+            ["info_filtered_variants.csv", "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi\n${sample},${label},${numVarBefore},${numVarAfter},${fracFiltered},${vcf_path},${tbi_path}\n"]
         }
 
     } else {
