@@ -100,7 +100,7 @@ Notably, this enables filtering for variants with certain impact levels or conse
 
 VCF files can be randomly subsetted to keep only a specific fraction of variants. This enables comparison to the filtered variants.
 
-You can determine appropriate fractions by comparing the number of filtered variants with the total number of variants. This can be done with a script that collects the number of variants by using `bcftools stats` from both files and dividing them. The more VCF files you use to compare the more robust the fraction becomes. (We compared f.ex. around 90 files and landed at an average fraction of 0.00175 when using `--filter 'INFO/CSQ ~ "HIGH"'`).
+You can determine appropriate fractions by comparing the number of filtered variants with the total number of variants. This can be done with a script that collects the number of variants by using `bcftools stats` from both files and dividing them. The more VCF files you use for comparison, the more robust the fraction becomes. (We compared around 90 files and obtained an average fraction of 0.00175 when using `--filter 'INFO/CSQ ~ "HIGH"'`).
 
 ### Updating the pipeline
 
