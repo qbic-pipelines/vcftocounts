@@ -9,6 +9,8 @@ include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/
 include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
 include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
 include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
+include { BCFTOOLS_STATS as BEFORE_FILTER_STATS } from '../modules/nf-core/bcftools/stats/main'
+include { BCFTOOLS_STATS as AFTER_FILTER_STATS  } from '../modules/nf-core/bcftools/stats/main'
 include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
 include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
 include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
@@ -86,12 +88,30 @@ workflow VCFTOCOUNTS {
     ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     if (params.filter != null) {
+
+        BEFORE_FILTER_STATS (
+            ch_vcf,
+            [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
+        )
+
+        ch_versions = ch_versions.mix(BEFORE_FILTER_STATS.out.versions)
+
+        ch_vcf_counted = ch_vcf.join( BEFORE_FILTER_STATS.out.stats )
+            .map { meta, vcf, tbi, stats_file ->
+                // Read the file as a string
+                def statsText = stats_file.text
+                // Use a regex to find the line and extract the number
+                def matcher = statsText =~ /number of records:\s*(\d+)/
+                def numVar = matcher.find() ? matcher.group(1) : null
+                [ meta + [numVarBefore: numVar], vcf, tbi ]
+            }
+
         //
         // Filter VCFs for pattern given in params.filter
         // Use meta.name for the VCF filename
         //
         BCFTOOLS_VIEW (
-            ch_vcf,
+            ch_vcf_counted,
             [], // regions
             [], // targets
             [] // samples
@@ -102,14 +122,43 @@ workflow VCFTOCOUNTS {
         ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
                 .join(BCFTOOLS_VIEW.out.tbi)
 
+        AFTER_FILTER_STATS (
+            ch_filtered_vcf,
+            [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
+        )
+
+        ch_versions = ch_versions.mix(AFTER_FILTER_STATS.out.versions)
+
+        ch_filtered_vcf_counted = ch_filtered_vcf.join( AFTER_FILTER_STATS.out.stats )
+            .map { meta, vcf, tbi, stats_file ->
+                // Read the file as a string
+                def statsText = stats_file.text
+                // Use a regex to find the line and extract the number
+                def matcher = statsText =~ /number of records:\s*(\d+)/
+                def numVar = matcher.find() ? matcher.group(1) : null
+                [ meta + [numVarAfter: numVar], vcf, tbi ]
+            }
+
+        ch_filtered_vcf_counted.collectFile(keepHeader: true, skip: 1, sort: true, storeDir: "${params.outdir}/bcftools/view/csv") { meta, _vcf, _tbi ->
+            def sample       = meta.id
+            def label        = meta.label
+            def numVarBefore = meta.numVarBefore
+            def numVarAfter  = meta.numVarAfter
+            def fracFiltered = numVarBefore ? (numVarAfter.toFloat() / numVarBefore.toFloat()) : 0
+            def vcf_path     = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz"
+            def tbi_path     = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz.tbi"
+
+            ["info_filtered_variants.csv", "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi\n${sample},${label},${numVarBefore},${numVarAfter},${fracFiltered},${vcf_path},${tbi_path}\n"]
+        }
+
     } else {
-        ch_filtered_vcf = ch_vcf
+        ch_filtered_vcf_counted = ch_vcf
     }
 
     //
     // Concatenate converted VCFs if the entries for "id" and "label" are the same
     //
-    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf
+    (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf_counted
         .map { meta, vcf, tbi ->
             [ [meta.id, meta.label], meta, vcf, tbi ]
         }
