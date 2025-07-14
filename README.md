@@ -65,7 +65,6 @@ qbic-pipelines/vcftocounts was originally written by Famke Bäuerle, Dorothy Ell
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-
 ## Contributions and Support
 
 If you would like to contribute to this pipeline, please see the [contributing guidelines](.github/CONTRIBUTING.md).
