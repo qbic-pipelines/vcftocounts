@@ -62,7 +62,7 @@ The GATK GenotypeGVCFs module translates genotype (g) vcf files into classic vcf
 
 </details>
 
-VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will produces VCF files holding just the variants matching the specific patterns. Running the filtering part also enables `bcftools/stats` which is used to compute the fraction of variants which are kept. These results are found in a csv file called `info_filtered_variants.csv`.
+VEP annotated VCF files can be filtered for certain flags present after VEP annotation. Notably, this enables filtering for variants with certain impact levels or consequences. Filtering will extract variants that match the specific patterns. Running the filtering part also enables `bcftools/stats` which is used to compute the fraction of variants which are kept. These results are found in a CSV file called `info_filtered_variants.csv`.
 
 ### Concatenate VCFs
 
