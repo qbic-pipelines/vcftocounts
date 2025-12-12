@@ -1,13 +1,13 @@
 process CREATE_SAMPLE_FILE {
-    tag "$meta.id"
+    tag "${meta.id}"
     label 'process_single'
 
     input:
-    val(meta)
+    val meta
 
     output:
     tuple val(meta), path("*.txt"), emit: samplefile
-    path  "versions.yml"          , emit: versions
+    path "versions.yml",            emit: versions
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
@@ -17,7 +17,7 @@ process CREATE_SAMPLE_FILE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        create_sample_file: $VERSION
+        create_sample_file: ${VERSION}
     END_VERSIONS
     """
 
@@ -29,7 +29,7 @@ process CREATE_SAMPLE_FILE {
 
     cat <<-END_VERSIONS > versions.yml
     "${task.process}":
-        create_sample_file: $VERSION
+        create_sample_file: ${VERSION}
     END_VERSIONS
     """
 }

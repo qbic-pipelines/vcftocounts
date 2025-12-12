@@ -27,40 +27,6 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 params.dict  = getGenomeAttribute('dict')
 params.fasta = getGenomeAttribute('fasta')
 params.fai   = getGenomeAttribute('fai')
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    NAMED WORKFLOWS FOR PIPELINE
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
-
-//
-// WORKFLOW: Run main analysis pipeline depending on type of input
-//
-workflow QBICPIPELINES_VCFTOCOUNTS {
-    take:
-    samplesheet // channel: samplesheet read in from --input
-
-    main:
-
-    // FASTA
-    fasta = params.fasta ? channel.fromPath(params.fasta).collect() : channel.value([])
-    fai   = params.fai   ? channel.fromPath(params.fai).collect()   : channel.value([])
-    dict  = params.dict  ? channel.fromPath(params.dict).collect()  : channel.value([])
-
-    //
-    // WORKFLOW: Run pipeline
-    //
-    VCFTOCOUNTS(
-        samplesheet,
-        fasta,
-        fai,
-        dict,
-    )
-
-    emit:
-    multiqc_report = VCFTOCOUNTS.out.multiqc_report // channel: /path/to/multiqc_report.html
-}
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
@@ -101,4 +67,38 @@ workflow {
         params.hook_url,
         QBICPIPELINES_VCFTOCOUNTS.out.multiqc_report,
     )
+}
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    NAMED WORKFLOWS FOR PIPELINE
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
+
+//
+// WORKFLOW: Run main analysis pipeline depending on type of input
+//
+workflow QBICPIPELINES_VCFTOCOUNTS {
+    take:
+    samplesheet // channel: samplesheet read in from --input
+
+    main:
+
+    // FASTA
+    fasta = params.fasta ? channel.fromPath(params.fasta).collect() : channel.value([])
+    fai = params.fai ? channel.fromPath(params.fai).collect() : channel.value([])
+    dict = params.dict ? channel.fromPath(params.dict).collect() : channel.value([])
+
+    //
+    // WORKFLOW: Run pipeline
+    //
+    VCFTOCOUNTS(
+        samplesheet,
+        fasta,
+        fai,
+        dict,
+    )
+
+    emit:
+    multiqc_report = VCFTOCOUNTS.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
