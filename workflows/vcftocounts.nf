@@ -3,22 +3,22 @@
     IMPORT MODULES / SUBWORKFLOWS / FUNCTIONS
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
-include { MULTIQC                } from '../modules/nf-core/multiqc/main'
-include { TABIX_TABIX            } from '../modules/nf-core/tabix/tabix/main'
-include { GATK4_GENOTYPEGVCFS    } from '../modules/nf-core/gatk4/genotypegvcfs/main'
-include { BCFTOOLS_CONCAT        } from '../modules/nf-core/bcftools/concat/main'
-include { CREATE_SAMPLE_FILE     } from '../modules/local/createsamplefile/main'
-include { BCFTOOLS_REHEADER      } from '../modules/nf-core/bcftools/reheader/main'
-include { BCFTOOLS_STATS as BEFORE_FILTER_STATS } from '../modules/nf-core/bcftools/stats/main'
-include { BCFTOOLS_STATS as AFTER_FILTER_STATS  } from '../modules/nf-core/bcftools/stats/main'
-include { BCFTOOLS_VIEW          } from '../modules/nf-core/bcftools/view/main'
-include { BCFTOOLS_MERGE         } from '../modules/nf-core/bcftools/merge/main'
-include { BCFTOOLS_ANNOTATE      } from '../modules/nf-core/bcftools/annotate/main'
-include { VCF2COUNTS             } from '../modules/local/vcf2counts/main'
-include { paramsSummaryMap       } from 'plugin/nf-schema'
-include { paramsSummaryMultiqc   } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { softwareVersionsToYAML } from '../subworkflows/nf-core/utils_nfcore_pipeline'
-include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcftocounts_pipeline'
+include { MULTIQC                               } from '../modules/nf-core/multiqc'
+include { TABIX_TABIX                           } from '../modules/nf-core/tabix/tabix'
+include { GATK4_GENOTYPEGVCFS                   } from '../modules/nf-core/gatk4/genotypegvcfs'
+include { BCFTOOLS_CONCAT                       } from '../modules/nf-core/bcftools/concat'
+include { CREATE_SAMPLE_FILE                    } from '../modules/local/createsamplefile'
+include { BCFTOOLS_REHEADER                     } from '../modules/nf-core/bcftools/reheader'
+include { BCFTOOLS_STATS as BEFORE_FILTER_STATS } from '../modules/nf-core/bcftools/stats'
+include { BCFTOOLS_STATS as AFTER_FILTER_STATS  } from '../modules/nf-core/bcftools/stats'
+include { BCFTOOLS_VIEW                         } from '../modules/nf-core/bcftools/view'
+include { BCFTOOLS_MERGE                        } from '../modules/nf-core/bcftools/merge'
+include { BCFTOOLS_ANNOTATE                     } from '../modules/nf-core/bcftools/annotate'
+include { VCF2COUNTS                            } from '../modules/local/vcf2counts'
+include { paramsSummaryMap                      } from 'plugin/nf-schema'
+include { paramsSummaryMultiqc                  } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { softwareVersionsToYAML                } from '../subworkflows/nf-core/utils_nfcore_pipeline'
+include { methodsDescriptionText                } from '../subworkflows/local/utils_nfcore_vcftocounts_pipeline'
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -27,7 +27,6 @@ include { methodsDescriptionText } from '../subworkflows/local/utils_nfcore_vcft
 */
 
 workflow VCFTOCOUNTS {
-
     take:
     ch_samplesheet // channel: samplesheet read in from --input
     fasta
@@ -35,25 +34,25 @@ workflow VCFTOCOUNTS {
     dict
 
     main:
-    ch_versions = Channel.empty()
-    ch_multiqc_files = Channel.empty()
+    ch_versions = channel.empty()
+    ch_multiqc_files = channel.empty()
 
     //
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map{ it ->
+        .map { it ->
             def nameParts = it[1].name.split(/\./).findAll { part -> !(part in ['g', 'vcf', 'gz']) }
             def cleanedName = nameParts.join('.')
-            [ it[0] + [ name: cleanedName ], it[1], it[2] ]
+            [it[0] + [name: cleanedName], it[1], it[2]]
         }
-        .branch{
+        .branch {
             has_index: it[2]
             to_index: !it[2]
-                [it[0], it[1]]
+            [it[0], it[1]]
         }
 
-    TABIX_TABIX ( ch_has_no_index )
+    TABIX_TABIX(ch_has_no_index)
 
     ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
 
@@ -65,23 +64,22 @@ workflow VCFTOCOUNTS {
     //
     // Convert gvcfs to vcfs
     //
-    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch{
-            gvcf: it[0].gvcf
-            vcf: !it[0].gvcf
-        }
+    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch {
+        gvcf: it[0].gvcf
+        vcf: !it[0].gvcf
+    }
 
 
     GATK4_GENOTYPEGVCFS(
-        ch_gvcf.map{ it -> [ it[0], it[1], it[2], [], [] ] },
-        fasta.map{ it -> [ [ id:it.baseName ], it ] },
-        fai.map{ it -> [ [ id:it.baseName ], it ] },
-        dict.map{ it -> [ [ id:it.baseName ], it ] },
-        [[],[]], // dbsnp
-        [[],[]] // dbsnp_tbi
+        ch_gvcf.map { it -> [it[0], it[1], it[2], [], []] },
+        fasta.map { it -> [[id: it.baseName], it] },
+        fai.map { it -> [[id: it.baseName], it] },
+        dict.map { it -> [[id: it.baseName], it] },
+        [[], []],
+        [[], []],
     )
 
-    ch_vcf_index = GATK4_GENOTYPEGVCFS.out.vcf
-            .join(GATK4_GENOTYPEGVCFS.out.tbi)
+    ch_vcf_index = GATK4_GENOTYPEGVCFS.out.vcf.join(GATK4_GENOTYPEGVCFS.out.tbi)
 
     ch_vcf = ch_normal_vcf.mix(ch_vcf_index)
 
@@ -89,69 +87,78 @@ workflow VCFTOCOUNTS {
 
     if (params.filter != null) {
 
-        BEFORE_FILTER_STATS (
+        BEFORE_FILTER_STATS(
             ch_vcf,
-            [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
+            [[], []],
+            [[], []],
+            [[], []],
+            [[], []],
+            [[], []],
         )
 
         ch_versions = ch_versions.mix(BEFORE_FILTER_STATS.out.versions)
 
-        ch_vcf_counted = ch_vcf.join( BEFORE_FILTER_STATS.out.stats )
+        ch_vcf_counted = ch_vcf
+            .join(BEFORE_FILTER_STATS.out.stats)
             .map { meta, vcf, tbi, stats_file ->
                 // Read the file as a string
                 def statsText = stats_file.text
                 // Use a regex to find the line and extract the number
                 def matcher = statsText =~ /number of records:\s*(\d+)/
                 def numVar = matcher.find() ? matcher.group(1) : null
-                [ meta + [numVarBefore: numVar], vcf, tbi ]
+                [meta + [numVarBefore: numVar], vcf, tbi]
             }
 
         //
         // Filter VCFs for pattern given in params.filter
         // Use meta.name for the VCF filename
         //
-        BCFTOOLS_VIEW (
+        BCFTOOLS_VIEW(
             ch_vcf_counted,
-            [], // regions
-            [], // targets
-            [] // samples
+            [],
+            [],
+            [],
         )
 
         ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
 
-        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf
-                .join(BCFTOOLS_VIEW.out.tbi)
+        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf.join(BCFTOOLS_VIEW.out.tbi)
 
-        AFTER_FILTER_STATS (
+        AFTER_FILTER_STATS(
             ch_filtered_vcf,
-            [[],[]], [[],[]], [[],[]], [[],[]], [[],[]]
+            [[], []],
+            [[], []],
+            [[], []],
+            [[], []],
+            [[], []],
         )
 
         ch_versions = ch_versions.mix(AFTER_FILTER_STATS.out.versions)
 
-        ch_filtered_vcf_counted = ch_filtered_vcf.join( AFTER_FILTER_STATS.out.stats )
+        ch_filtered_vcf_counted = ch_filtered_vcf
+            .join(AFTER_FILTER_STATS.out.stats)
             .map { meta, vcf, tbi, stats_file ->
                 // Read the file as a string
                 def statsText = stats_file.text
                 // Use a regex to find the line and extract the number
                 def matcher = statsText =~ /number of records:\s*(\d+)/
                 def numVar = matcher.find() ? matcher.group(1) : null
-                [ meta + [numVarAfter: numVar], vcf, tbi ]
+                [meta + [numVarAfter: numVar], vcf, tbi]
             }
 
         ch_filtered_vcf_counted.collectFile(keepHeader: true, skip: 1, sort: true, storeDir: "${params.outdir}/bcftools/view/csv") { meta, _vcf, _tbi ->
-            def sample       = meta.id
-            def label        = meta.label
+            def sample = meta.id
+            def label = meta.label
             def numVarBefore = meta.numVarBefore
-            def numVarAfter  = meta.numVarAfter
+            def numVarAfter = meta.numVarAfter
             def fracFiltered = numVarBefore ? (numVarAfter.toFloat() / numVarBefore.toFloat()) : 0
-            def vcf_path     = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz"
-            def tbi_path     = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz.tbi"
+            def vcf_path = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz"
+            def tbi_path = "bcftools/view/${meta.label}/${meta.name}.filter.vcf.gz.tbi"
 
             ["info_filtered_variants.csv", "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi\n${sample},${label},${numVarBefore},${numVarAfter},${fracFiltered},${vcf_path},${tbi_path}\n"]
         }
-
-    } else {
+    }
+    else {
         ch_filtered_vcf_counted = ch_vcf
     }
 
@@ -160,48 +167,48 @@ workflow VCFTOCOUNTS {
     //
     (ch_single_vcf, ch_multiple_vcf) = ch_filtered_vcf_counted
         .map { meta, vcf, tbi ->
-            [ [meta.id, meta.label], meta, vcf, tbi ]
+            [[meta.id, meta.label], meta, vcf, tbi]
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
-            def meta = metas[0].findAll { k, _v -> k != 'name' }  // Take the first meta without filename, they should all be the same for a given ID
+            def meta = metas[0].findAll { k, _v -> k != 'name' }
+            // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
-        }.branch {
-            single:   it[1].size == 1
+        }
+        .branch {
+            single: it[1].size == 1
             multiple: it[1].size > 1
         }
 
-    BCFTOOLS_CONCAT( ch_multiple_vcf )
+    BCFTOOLS_CONCAT(ch_multiple_vcf)
 
-    ch_vcf_index = BCFTOOLS_CONCAT.out.vcf
-            .join(BCFTOOLS_CONCAT.out.tbi)
+    ch_vcf_index = BCFTOOLS_CONCAT.out.vcf.join(BCFTOOLS_CONCAT.out.tbi)
 
-    ch_vcf_concat = ch_single_vcf
-            .mix(ch_vcf_index)
+    ch_vcf_concat = ch_single_vcf.mix(ch_vcf_index)
 
     ch_versions = ch_versions.mix(BCFTOOLS_CONCAT.out.versions)
 
     if (params.rename) {
         // Create the sample file and add them to ch_vcf_concat
-        CREATE_SAMPLE_FILE(ch_vcf_concat.map{ it -> it[0] })
+        CREATE_SAMPLE_FILE(ch_vcf_concat.map { it -> it[0] })
 
         ch_vcf_sample = ch_vcf_concat
             .join(CREATE_SAMPLE_FILE.out.samplefile)
-            .map { meta, vcf, _tbi, samplefile -> [ meta, vcf, [], samplefile ] }
+            .map { meta, vcf, _tbi, samplefile -> [meta, vcf, [], samplefile] }
 
         ch_versions = ch_versions.mix(CREATE_SAMPLE_FILE.out.versions)
 
         // Rename samples in vcf with the label
         BCFTOOLS_REHEADER(
             ch_vcf_sample,
-            [[],[]]
+            [[], []],
         )
 
-        ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf
-                .join(BCFTOOLS_REHEADER.out.index)
+        ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf.join(BCFTOOLS_REHEADER.out.index)
 
         ch_versions = ch_versions.mix(BCFTOOLS_REHEADER.out.versions)
-    } else {
+    }
+    else {
         ch_vcf_index_rh = ch_vcf_concat
     }
 
@@ -217,26 +224,27 @@ workflow VCFTOCOUNTS {
         }
         .groupTuple(by: 0)
         .map { _id, metas, vcfs, tbis ->
-            def meta = metas[0].findAll { k, _v -> k != 'name' }  // Take the first meta without filename, they should all be the same for a given ID
+            def meta = metas[0].findAll { k, _v -> k != 'name' }
+            // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
-        }.branch {
-            single:   it[1].size == 1
+        }
+        .branch {
+            single: it[1].size == 1
             multiple: it[1].size > 1
         }
 
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
     BCFTOOLS_MERGE(
         ch_multiple_id,
-        [[],[]], // fasta reference only needed for gvcf
-        [[],[]], // fasta.fai reference only needed for gvcf
-        [[],[]] // bed
+        [[], []],
+        [[], []],
+        [[], []],
     )
 
     // Merge the results back into a single channel
-    ch_merged_vcfs = ch_single_id
-        .mix(BCFTOOLS_MERGE.out.vcf
-            .join(BCFTOOLS_MERGE.out.index)
-            )
+    ch_merged_vcfs = ch_single_id.mix(
+        BCFTOOLS_MERGE.out.vcf.join(BCFTOOLS_MERGE.out.index)
+    )
 
     ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
 
@@ -246,15 +254,16 @@ workflow VCFTOCOUNTS {
     if (params.removeIDs) {
 
         BCFTOOLS_ANNOTATE(
-            ch_merged_vcfs.map{ it -> [it[0], it[1], it[2], [], []] },
+            ch_merged_vcfs.map { it -> [it[0], it[1], it[2], [], []] },
             [],
-            []
+            [],
         )
 
         ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf
 
         ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
-    } else {
+    }
+    else {
         ch_removedIDs_vcfs = ch_merged_vcfs
     }
 
@@ -263,7 +272,7 @@ workflow VCFTOCOUNTS {
     // Convert VCFs to Count Matrices
     //
     VCF2COUNTS(
-        ch_removedIDs_vcfs.map{ it -> [it[0], it[1]] }
+        ch_removedIDs_vcfs.map { it -> [it[0], it[1]] }
     )
 
     ch_versions = ch_versions.mix(VCF2COUNTS.out.versions)
@@ -271,7 +280,7 @@ workflow VCFTOCOUNTS {
     //
     // Collate and save software versions
     //
-    def topic_versions = Channel.topic("versions")
+    def topic_versions = channel.topic("versions")
         .distinct()
         .branch { entry ->
             versions_file: entry instanceof Path
@@ -280,9 +289,9 @@ workflow VCFTOCOUNTS {
 
     def topic_versions_string = topic_versions.versions_tuple
         .map { process, tool, version ->
-            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+            [process[process.lastIndexOf(':') + 1..-1], "  ${tool}: ${version}"]
         }
-        .groupTuple(by:0)
+        .groupTuple(by: 0)
         .map { process, tool_versions ->
             tool_versions.unique().sort()
             "${process}:\n${tool_versions.join('\n')}"
@@ -292,61 +301,61 @@ workflow VCFTOCOUNTS {
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${params.outdir}/pipeline_info",
-            name:  'vcftocounts_software_'  + 'mqc_'  + 'versions.yml',
+            name: 'vcftocounts_software_' + 'mqc_' + 'versions.yml',
             sort: true,
-            newLine: true
-        ).set { ch_collated_versions }
+            newLine: true,
+        )
+        .set { ch_collated_versions }
 
 
     //
     // MODULE: MultiQC
     //
-    ch_multiqc_config        = channel.fromPath(
-        "$projectDir/assets/multiqc_config.yml", checkIfExists: true)
-    ch_multiqc_custom_config = params.multiqc_config ?
-        channel.fromPath(params.multiqc_config, checkIfExists: true) :
-        channel.empty()
-    ch_multiqc_logo          = params.multiqc_logo ?
-        channel.fromPath(params.multiqc_logo, checkIfExists: true) :
-        channel.empty()
+    ch_multiqc_config = channel.fromPath(
+        "${projectDir}/assets/multiqc_config.yml",
+        checkIfExists: true
+    )
+    ch_multiqc_custom_config = params.multiqc_config
+        ? channel.fromPath(params.multiqc_config, checkIfExists: true)
+        : channel.empty()
+    ch_multiqc_logo = params.multiqc_logo
+        ? channel.fromPath(params.multiqc_logo, checkIfExists: true)
+        : channel.empty()
 
-    summary_params      = paramsSummaryMap(
-        workflow, parameters_schema: "nextflow_schema.json")
+    summary_params = paramsSummaryMap(
+        workflow,
+        parameters_schema: "nextflow_schema.json"
+    )
     ch_workflow_summary = channel.value(paramsSummaryMultiqc(summary_params))
     ch_multiqc_files = ch_multiqc_files.mix(
-        ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml'))
-    ch_multiqc_custom_methods_description = params.multiqc_methods_description ?
-        file(params.multiqc_methods_description, checkIfExists: true) :
-        file("$projectDir/assets/methods_description_template.yml", checkIfExists: true)
-    ch_methods_description                = channel.value(
-        methodsDescriptionText(ch_multiqc_custom_methods_description))
+        ch_workflow_summary.collectFile(name: 'workflow_summary_mqc.yaml')
+    )
+    ch_multiqc_custom_methods_description = params.multiqc_methods_description
+        ? file(params.multiqc_methods_description, checkIfExists: true)
+        : file("${projectDir}/assets/methods_description_template.yml", checkIfExists: true)
+    ch_methods_description = channel.value(
+        methodsDescriptionText(ch_multiqc_custom_methods_description)
+    )
 
     ch_multiqc_files = ch_multiqc_files.mix(ch_collated_versions)
     ch_multiqc_files = ch_multiqc_files.mix(
         ch_methods_description.collectFile(
             name: 'methods_description_mqc.yaml',
-            sort: true
+            sort: true,
         )
     )
 
-    MULTIQC (
+    MULTIQC(
         ch_multiqc_files.collect(),
         ch_multiqc_config.toList(),
         ch_multiqc_custom_config.toList(),
         ch_multiqc_logo.toList(),
         [],
-        []
+        [],
     )
 
     emit:
-    csv            = VCF2COUNTS.out.csv             // channel: *.csv
+    csv            = VCF2COUNTS.out.csv // channel: *.csv
     multiqc_report = MULTIQC.out.report.toList() // channel: /path/to/multiqc_report.html
-    versions       = ch_versions                 // channel: [ path(versions.yml) ]
-
+    versions       = ch_versions // channel: [ path(versions.yml) ]
 }
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    THE END
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/

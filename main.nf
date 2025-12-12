@@ -24,10 +24,9 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 
-// TODO nf-core: Remove this line if you don't need a FASTA file
-//   This is an example of how to use getGenomeAttribute() to fetch parameters
-//   from igenomes.config using `--genome`
+params.dict  = getGenomeAttribute('dict')
 params.fasta = getGenomeAttribute('fasta')
+params.fai   = getGenomeAttribute('fai')
 
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
@@ -39,26 +38,26 @@ params.fasta = getGenomeAttribute('fasta')
 // WORKFLOW: Run main analysis pipeline depending on type of input
 //
 workflow QBICPIPELINES_VCFTOCOUNTS {
-
     take:
     samplesheet // channel: samplesheet read in from --input
 
     main:
 
     // FASTA
-    fasta        = params.fasta     ? Channel.fromPath(params.fasta).collect()          : Channel.value([])
-    fai          = params.fai       ? Channel.fromPath(params.fai).collect()            : Channel.value([])
-    dict         = params.dict      ? Channel.fromPath(params.dict).collect()           : Channel.value([])
+    fasta = params.fasta ? channel.fromPath(params.fasta).collect() : channel.value([])
+    fai   = params.fai   ? channel.fromPath(params.fai).collect()   : channel.value([])
+    dict  = params.dict  ? channel.fromPath(params.dict).collect()  : channel.value([])
 
     //
     // WORKFLOW: Run pipeline
     //
-    VCFTOCOUNTS (
+    VCFTOCOUNTS(
         samplesheet,
         fasta,
         fai,
-        dict
+        dict,
     )
+
     emit:
     multiqc_report = VCFTOCOUNTS.out.multiqc_report // channel: /path/to/multiqc_report.html
 }
@@ -69,12 +68,10 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
 */
 
 workflow {
-
-    main:
     //
     // SUBWORKFLOW: Run initialisation tasks
     //
-    PIPELINE_INITIALISATION (
+    PIPELINE_INITIALISATION(
         params.version,
         params.validate_params,
         params.monochrome_logs,
@@ -83,31 +80,25 @@ workflow {
         params.input,
         params.help,
         params.help_full,
-        params.show_hidden
+        params.show_hidden,
     )
 
     //
     // WORKFLOW: Run main workflow
     //
-    QBICPIPELINES_VCFTOCOUNTS (
+    QBICPIPELINES_VCFTOCOUNTS(
         PIPELINE_INITIALISATION.out.samplesheet
     )
     //
     // SUBWORKFLOW: Run completion tasks
     //
-    PIPELINE_COMPLETION (
+    PIPELINE_COMPLETION(
         params.email,
         params.email_on_fail,
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
         params.hook_url,
-        QBICPIPELINES_VCFTOCOUNTS.out.multiqc_report
+        QBICPIPELINES_VCFTOCOUNTS.out.multiqc_report,
     )
 }
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    THE END
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
