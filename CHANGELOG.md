@@ -18,7 +18,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#37](https://github.com/qbic-pipelines/vcftocounts/pull/37) - Fix output of filtering module to avoid overwriting
 - [#38](https://github.com/qbic-pipelines/vcftocounts/pull/38) - Template update to version 3.3.1 + update multiqc
 - [#41](https://github.com/qbic-pipelines/vcftocounts/pull/41) - Template update to version 3.3.2
-- [#43](https://github.com/qbic-pipelines/vcftocounts/pull/43) - Template update to version 3.5.1
+- [#42](https://github.com/qbic-pipelines/vcftocounts/pull/42) - Template update to version 3.5.1
 
 ### `Dependencies`
 
