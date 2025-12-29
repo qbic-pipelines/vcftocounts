@@ -27,6 +27,7 @@ include { getGenomeAttribute      } from './subworkflows/local/utils_nfcore_vcft
 params.dict  = getGenomeAttribute('dict')
 params.fasta = getGenomeAttribute('fasta')
 params.fai   = getGenomeAttribute('fai')
+
 /*
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
     RUN MAIN WORKFLOW
