@@ -1,4 +1,4 @@
-# qbic-pipelines/vcftomat: Citations
+# qbic-pipelines/vcftocounts: Citations
 
 ## [nf-core](https://pubmed.ncbi.nlm.nih.gov/32055031/)
 
