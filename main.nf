@@ -98,6 +98,10 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
         fasta,
         fai,
         dict,
+        params.multiqc_config,
+        params.multiqc_logo,
+        params.multiqc_methods_description,
+        params.outdir,
     )
 
     emit:
