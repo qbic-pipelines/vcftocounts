@@ -32,9 +32,6 @@
 > [!NOTE]
 > If you are new to Nextflow and nf-core, please refer to [this page](https://nf-co.re/docs/get_started/environment_setup/overview) on how to set-up Nextflow. Make sure to [test your setup](https://nf-co.re/docs/get_started/run-your-first-pipeline) with `-profile test` before running the workflow on actual data.
 
-<!-- TODO nf-core: Describe the minimum required steps to execute the pipeline, e.g. how to prepare samplesheets.
-     Explain what rows and columns represent. For instance (please edit as appropriate):
-
 First, prepare a samplesheet with your input data that looks as follows:
 
 `samplesheet.csv`:
@@ -51,12 +48,12 @@ Each row represents a VCF file coming from a sample. The `label` column enables 
 
 Now, you can run the pipeline using:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
 
 ```bash
 nextflow run qbic-pipelines/vcftocounts \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
+   --genome GATK.GRCh38 \
    --outdir <OUTDIR>
 ```
 
@@ -69,7 +66,7 @@ qbic-pipelines/vcftocounts was originally written by Famke Bäuerle, Dorothy Ell
 
 We thank the following people for their extensive assistance in the development of this pipeline:
 
-<!-- TODO nf-core: If applicable, make list of people who have also contributed -->
+Tazro Ohta, Sven Nahnsen, Sabrina Krakau
 
 ## Contributions and Support
 
@@ -78,8 +75,6 @@ If you would like to contribute to this pipeline, please see the [contributing g
 ## Citations
 
 If you use qbic-pipelines/vcftocounts for your analysis, please cite it using the following doi: [10.5281/zenodo.14616650](https://doi.org/10.5281/zenodo.14616650)
-
-<!-- TODO nf-core: Add bibliography of tools and data used in your pipeline -->
 
 An extensive list of references for the tools used by the pipeline can be found in the [`CITATIONS.md`](CITATIONS.md) file.
 
