@@ -65,7 +65,6 @@ workflow {
         params.plaintext_email,
         params.outdir,
         params.monochrome_logs,
-        params.hook_url,
         QBICPIPELINES_VCFTOCOUNTS.out.multiqc_report,
     )
 }
@@ -98,6 +97,10 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
         fasta,
         fai,
         dict,
+        params.multiqc_config,
+        params.multiqc_logo,
+        params.multiqc_methods_description,
+        params.outdir,
     )
 
     emit:
