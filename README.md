@@ -48,7 +48,6 @@ Each row represents a VCF file coming from a sample. The `label` column enables 
 
 Now, you can run the pipeline using:
 
-
 ```bash
 nextflow run qbic-pipelines/vcftocounts \
    -profile <docker/singularity/.../institute> \
