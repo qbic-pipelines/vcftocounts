@@ -227,8 +227,8 @@ workflow VCFTOCOUNTS {
 
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
     BCFTOOLS_MERGE(
-        ch_multiple_id,
-        [[], []],
+        ch_multiple_id.map { meta, vcfs, tbis -> [meta, vcfs, tbis, []] },
+        [[], [], []],
     )
 
     // Merge the results back into a single channel
