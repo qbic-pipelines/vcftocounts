@@ -7,7 +7,7 @@ process CREATE_SAMPLE_FILE {
 
     output:
     tuple val(meta), path("*.txt"), emit: samplefile
-    tuple val("${task.process}"), val('create_sample_file'), eval("echo 1.0.0"), topic: versions, emit: versions_create_sample_file                     
+    tuple val("${task.process}"), val('create_sample_file'), eval("echo 1.0.0"), topic: versions, emit: versions_create_sample_file
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
