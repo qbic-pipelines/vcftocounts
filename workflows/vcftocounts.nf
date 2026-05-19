@@ -38,29 +38,27 @@ workflow VCFTOCOUNTS {
     outdir
 
     main:
-    ch_versions = channel.empty()
     ch_multiqc_files = channel.empty()
 
     //
     // add index to non-indexed VCFs
     //
     (ch_has_index, ch_has_no_index) = ch_samplesheet
-        .map { it ->
-            def nameParts = it[1].name.split(/\./).findAll { part -> !(part in ['g', 'vcf', 'gz']) }
-            def cleanedName = nameParts.join('.')
-            [it[0] + [name: cleanedName], it[1], it[2]]
+        .map { meta, vcf, tbi ->
+            // Strip common VCF/GVCF and compression extensions reliably
+            def cleanedName = vcf.name.replaceFirst(/(\.g\.vcf\.gz|\.gvcf\.gz|\.vcf\.gz|\.g\.vcf|\.gvcf|\.vcf|\.gz)$/, '')
+            [meta + [name: cleanedName], vcf, tbi]
         }
-        .branch {
-            has_index: it[2]
-            to_index: !it[2]
-            [it[0], it[1]]
+        .branch { _meta, _vcf, tbi ->
+            has_index: tbi
+            to_index: !tbi
         }
 
-    TABIX_TABIX(ch_has_no_index)
+    TABIX_TABIX(ch_has_no_index.map { meta, vcf, _tbi -> [meta, vcf, [], []] })
 
-    ch_versions = ch_versions.mix(TABIX_TABIX.out.versions.first())
-
-    ch_indexed = ch_has_no_index.join(TABIX_TABIX.out.tbi)
+    ch_indexed = ch_has_no_index
+        .join(TABIX_TABIX.out.index)
+        .map { meta, vcf, _placeholder, tbi -> [meta, vcf, tbi] }
 
     // Join both channels back together
     ch_vcf_tbi = ch_has_index.mix(ch_indexed)
@@ -68,7 +66,7 @@ workflow VCFTOCOUNTS {
     //
     // Convert gvcfs to vcfs
     //
-    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch {
+    (ch_gvcf, ch_normal_vcf) = ch_vcf_tbi.branch { it ->
         gvcf: it[0].gvcf
         vcf: !it[0].gvcf
     }
@@ -87,7 +85,6 @@ workflow VCFTOCOUNTS {
 
     ch_vcf = ch_normal_vcf.mix(ch_vcf_index)
 
-    ch_versions = ch_versions.mix(GATK4_GENOTYPEGVCFS.out.versions)
 
     if (params.filter != null) {
 
@@ -99,8 +96,6 @@ workflow VCFTOCOUNTS {
             [[], []],
             [[], []],
         )
-
-        ch_versions = ch_versions.mix(BEFORE_FILTER_STATS.out.versions)
 
         ch_vcf_counted = ch_vcf
             .join(BEFORE_FILTER_STATS.out.stats)
@@ -124,8 +119,6 @@ workflow VCFTOCOUNTS {
             [],
         )
 
-        ch_versions = ch_versions.mix(BCFTOOLS_VIEW.out.versions)
-
         ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf.join(BCFTOOLS_VIEW.out.tbi)
 
         AFTER_FILTER_STATS(
@@ -136,8 +129,6 @@ workflow VCFTOCOUNTS {
             [[], []],
             [[], []],
         )
-
-        ch_versions = ch_versions.mix(AFTER_FILTER_STATS.out.versions)
 
         ch_filtered_vcf_counted = ch_filtered_vcf
             .join(AFTER_FILTER_STATS.out.stats)
@@ -179,7 +170,7 @@ workflow VCFTOCOUNTS {
             // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }
-        .branch {
+        .branch { it ->
             single: it[1].size == 1
             multiple: it[1].size > 1
         }
@@ -190,8 +181,6 @@ workflow VCFTOCOUNTS {
 
     ch_vcf_concat = ch_single_vcf.mix(ch_vcf_index)
 
-    ch_versions = ch_versions.mix(BCFTOOLS_CONCAT.out.versions)
-
     if (params.rename) {
         // Create the sample file and add them to ch_vcf_concat
         CREATE_SAMPLE_FILE(ch_vcf_concat.map { it -> it[0] })
@@ -200,8 +189,6 @@ workflow VCFTOCOUNTS {
             .join(CREATE_SAMPLE_FILE.out.samplefile)
             .map { meta, vcf, _tbi, samplefile -> [meta, vcf, [], samplefile] }
 
-        ch_versions = ch_versions.mix(CREATE_SAMPLE_FILE.out.versions)
-
         // Rename samples in vcf with the label
         BCFTOOLS_REHEADER(
             ch_vcf_sample,
@@ -209,8 +196,6 @@ workflow VCFTOCOUNTS {
         )
 
         ch_vcf_index_rh = BCFTOOLS_REHEADER.out.vcf.join(BCFTOOLS_REHEADER.out.index)
-
-        ch_versions = ch_versions.mix(BCFTOOLS_REHEADER.out.versions)
     }
     else {
         ch_vcf_index_rh = ch_vcf_concat
@@ -232,17 +217,15 @@ workflow VCFTOCOUNTS {
             // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }
-        .branch {
+        .branch { it ->
             single: it[1].size == 1
             multiple: it[1].size > 1
         }
 
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
     BCFTOOLS_MERGE(
-        ch_multiple_id,
-        [[], []],
-        [[], []],
-        [[], []],
+        ch_multiple_id.map { meta, vcfs, tbis -> [meta, vcfs, tbis, []] },
+        [[], [], []],
     )
 
     // Merge the results back into a single channel
@@ -250,22 +233,16 @@ workflow VCFTOCOUNTS {
         BCFTOOLS_MERGE.out.vcf.join(BCFTOOLS_MERGE.out.index)
     )
 
-    ch_versions = ch_versions.mix(BCFTOOLS_MERGE.out.versions)
-
     //
     // remove any IDs from the ID column of the VCF
     //
     if (params.removeIDs) {
 
         BCFTOOLS_ANNOTATE(
-            ch_merged_vcfs.map { it -> [it[0], it[1], it[2], [], []] },
-            [],
-            [],
+            ch_merged_vcfs.map { it -> [it[0], it[1], it[2], [], [], [], [], []] }
         )
 
         ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf
-
-        ch_versions = ch_versions.mix(BCFTOOLS_ANNOTATE.out.versions)
     }
     else {
         ch_removedIDs_vcfs = ch_merged_vcfs
@@ -279,8 +256,6 @@ workflow VCFTOCOUNTS {
         ch_removedIDs_vcfs.map { it -> [it[0], it[1]] }
     )
 
-    ch_versions = ch_versions.mix(VCF2COUNTS.out.versions)
-
     //
     // Collate and save software versions
     //
@@ -293,21 +268,21 @@ workflow VCFTOCOUNTS {
 
     def topic_versions_string = topic_versions.versions_tuple
         .map { process, tool, version ->
-            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
+            [process[process.lastIndexOf(':') + 1..-1], "  ${tool}: ${version}"]
         }
-        .groupTuple(by:0)
+        .groupTuple(by: 0)
         .map { process, tool_versions ->
             tool_versions.unique().sort()
             "${process}:\n${tool_versions.join('\n')}"
         }
 
-    def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+    def ch_collated_versions = softwareVersionsToYAML(topic_versions.versions_file)
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
-            name:  'vcftocounts_software_'  + 'mqc_'  + 'versions.yml',
+            name: 'vcftocounts_software_' + 'mqc_' + 'versions.yml',
             sort: true,
-            newLine: true
+            newLine: true,
         )
 
     //
@@ -336,13 +311,7 @@ workflow VCFTOCOUNTS {
             ]
         }
     )
+
     emit:
     multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
-    versions       = ch_versions                 // channel: [ path(versions.yml) ]
 }
-
-/*
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-    THE END
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-*/
