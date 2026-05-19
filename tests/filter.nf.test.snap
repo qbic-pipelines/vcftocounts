@@ -29,9 +29,6 @@
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -101,7 +98,7 @@
                 "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-05-19T10:54:47.354605",
+        "timestamp": "2026-05-19T11:12:58.667504",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -137,9 +134,6 @@
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -229,7 +223,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-19T10:53:48.476087",
+        "timestamp": "2026-05-19T11:12:01.125639",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

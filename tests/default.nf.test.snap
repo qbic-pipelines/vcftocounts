@@ -17,9 +17,6 @@
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -57,7 +54,7 @@
                 "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-05-19T10:54:27.381707",
+        "timestamp": "2026-05-19T11:12:25.135008",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -81,9 +78,6 @@
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
-                },
-                "Workflow": {
-                    "qbic-pipelines/vcftocounts": "v2.0.2dev"
                 }
             },
             [
@@ -139,7 +133,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-19T10:50:49.900481",
+        "timestamp": "2026-05-19T11:11:36.054687",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

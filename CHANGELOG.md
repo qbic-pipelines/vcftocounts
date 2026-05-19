@@ -3,7 +3,7 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## v2.0.2dev
+## v2.1.0 - Kelvin Teal - 20.05.2025
 
 ### `Added`
 
@@ -21,6 +21,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#42](https://github.com/qbic-pipelines/vcftocounts/pull/42) - Template update to version 3.5.1
 - [#44](https://github.com/qbic-pipelines/vcftocounts/pull/44) - Template update to version 4.0.2
 - [#45](https://github.com/qbic-pipelines/vcftocounts/pull/45) - Update all nf-core modules and subworkflows, remove nf-core test folders, swap to version topics
+- [#47](https://github.com/qbic-pipelines/vcftocounts/pull/47) - Prepare release, remove workflow version from snaps
 
 ### `Dependencies`
 
@@ -30,6 +31,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | GATK4      | 4.6.1.0     | 4.6.2.0     |
 | Tabix      | 1.2         | 1.21        |
 | MultiQC    | 1.27        | 1.34        |
+| nft-utils  | 0.0.3       | 0.0.9       |
+
+Bump minimum Nextflow version to 25.10.4.
 
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
