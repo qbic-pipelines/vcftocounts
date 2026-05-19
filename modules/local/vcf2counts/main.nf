@@ -12,34 +12,22 @@ process VCF2COUNTS {
 
     output:
     tuple val(meta), path("*.csv"), emit: csv
-    path "versions.yml",            emit: versions
+    tuple val("${task.process}"), val('vcf2counts'), eval("echo 1.0.0"), topic: versions, emit: versions_vcf2counts
 
     when:
     task.ext.when == null || task.ext.when
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def VERSION = '1.0.0'
     """
     vcf2counts.R \\
         --output ${prefix}.csv \\
         ${vcf}
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        vcf2counts.R: ${VERSION}
-    END_VERSIONS
     """
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def VERSION = '1.0.0'
     """
     touch ${prefix}.csv
-
-    cat <<-END_VERSIONS > versions.yml
-    "${task.process}":
-        vcf2counts.R: ${VERSION}
-    END_VERSIONS
     """
 }

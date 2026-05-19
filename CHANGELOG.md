@@ -19,15 +19,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#38](https://github.com/qbic-pipelines/vcftocounts/pull/38) - Template update to version 3.3.1 + update multiqc
 - [#41](https://github.com/qbic-pipelines/vcftocounts/pull/41) - Template update to version 3.3.2
 - [#42](https://github.com/qbic-pipelines/vcftocounts/pull/42) - Template update to version 3.5.1
+- [#44](https://github.com/qbic-pipelines/vcftocounts/pull/44) - Template update to version 4.0.2
+- [#45](https://github.com/qbic-pipelines/vcftocounts/pull/45) - Update all nf-core modules and subworkflows, remove nf-core test folders, swap to version topics
 - [#47](https://github.com/qbic-pipelines/vcftocounts/pull/47) - Prepare release, remove workflow version from snaps
 
 ### `Dependencies`
 
 | Dependency | Old version | New version |
 | ---------- | ----------- | ----------- |
-| BCFtools   | 1.2         | 1.21        |
+| BCFtools   | 1.2         | 1.23.1      |
+| GATK4      | 4.6.1.0     | 4.6.2.0     |
 | Tabix      | 1.2         | 1.21        |
-| MultiQC    | 1.27        | 1.32        |
+| MultiQC    | 1.27        | 1.34        |
 | nft-utils  | 0.0.3       | 0.0.9       |
 
 Bump minimum Nextflow version to 25.10.4.
