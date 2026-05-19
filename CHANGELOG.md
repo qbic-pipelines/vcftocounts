@@ -30,7 +30,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | MultiQC    | 1.27        | 1.32        |
 | nft-utils  | 0.0.3       | 0.0.9       |
 
-Bump Nextflow Version to 25.10.4.
+Bump minimum Nextflow version to 25.10.4.
 
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
