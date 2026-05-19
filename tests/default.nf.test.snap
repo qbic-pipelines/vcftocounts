@@ -16,7 +16,7 @@
                     "tabix": 1.21
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts.R": "1.0.0"
+                    "vcf2counts": "1.0.0"
                 },
                 "Workflow": {
                     "qbic-pipelines/vcftocounts": "v2.0.2dev"
@@ -33,7 +33,6 @@
                 "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
-                "bcftools/reheader/samplefiles/versions.yml",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/.stub",
@@ -49,7 +48,6 @@
             ],
             [
                 "chr22_label.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr22_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -59,7 +57,7 @@
                 "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-05-15T15:32:42.096384",
+        "timestamp": "2026-05-19T10:54:27.381707",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -82,7 +80,7 @@
                     "tabix": 1.21
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts.R": "1.0.0"
+                    "vcf2counts": "1.0.0"
                 },
                 "Workflow": {
                     "qbic-pipelines/vcftocounts": "v2.0.2dev"
@@ -99,7 +97,6 @@
                 "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
-                "bcftools/reheader/samplefiles/versions.yml",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/llms-full.txt",
@@ -119,7 +116,6 @@
             ],
             [
                 "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
-                "versions.yml:md5,4afe7b519f82d5d8c539950934477c1a",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr22_sample.csv:md5,0c4027524d1fa8acbfd429fdc0962eed"
             ],
@@ -143,7 +139,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-15T15:32:26.545874",
+        "timestamp": "2026-05-19T10:50:49.900481",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

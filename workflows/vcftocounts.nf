@@ -38,7 +38,6 @@ workflow VCFTOCOUNTS {
     outdir
 
     main:
-    ch_versions = channel.empty()
     ch_multiqc_files = channel.empty()
 
     //
@@ -190,8 +189,6 @@ workflow VCFTOCOUNTS {
             .join(CREATE_SAMPLE_FILE.out.samplefile)
             .map { meta, vcf, _tbi, samplefile -> [meta, vcf, [], samplefile] }
 
-        ch_versions = ch_versions.mix(CREATE_SAMPLE_FILE.out.versions)
-
         // Rename samples in vcf with the label
         BCFTOOLS_REHEADER(
             ch_vcf_sample,
@@ -259,8 +256,6 @@ workflow VCFTOCOUNTS {
         ch_removedIDs_vcfs.map { it -> [it[0], it[1]] }
     )
 
-    ch_versions = ch_versions.mix(VCF2COUNTS.out.versions)
-
     //
     // Collate and save software versions
     //
@@ -281,7 +276,7 @@ workflow VCFTOCOUNTS {
             "${process}:\n${tool_versions.join('\n')}"
         }
 
-    def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+    def ch_collated_versions = softwareVersionsToYAML(topic_versions.versions_file)
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
@@ -319,5 +314,4 @@ workflow VCFTOCOUNTS {
 
     emit:
     multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
-    versions       = ch_versions // channel: [ path(versions.yml) ]
 }

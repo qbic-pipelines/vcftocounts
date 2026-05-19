@@ -20,7 +20,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#41](https://github.com/qbic-pipelines/vcftocounts/pull/41) - Template update to version 3.3.2
 - [#42](https://github.com/qbic-pipelines/vcftocounts/pull/42) - Template update to version 3.5.1
 - [#44](https://github.com/qbic-pipelines/vcftocounts/pull/44) - Template update to version 4.0.2
-- [#45](https://github.com/qbic-pipelines/vcftocounts/pull/45) - Update all nf-core modules, remove test folders
+- [#45](https://github.com/qbic-pipelines/vcftocounts/pull/45) - Update all nf-core modules and subworkflows, remove nf-core test folders, swap to version topics
 
 ### `Dependencies`
 
