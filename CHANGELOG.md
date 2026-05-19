@@ -19,6 +19,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [#38](https://github.com/qbic-pipelines/vcftocounts/pull/38) - Template update to version 3.3.1 + update multiqc
 - [#41](https://github.com/qbic-pipelines/vcftocounts/pull/41) - Template update to version 3.3.2
 - [#42](https://github.com/qbic-pipelines/vcftocounts/pull/42) - Template update to version 3.5.1
+- [#47](https://github.com/qbic-pipelines/vcftocounts/pull/47) - Prepare release, remove workflow version from snaps
 
 ### `Dependencies`
 
