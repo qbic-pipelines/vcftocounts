@@ -7,9 +7,12 @@ testing/
 testing*
 *.pyc
 null/
+.lineage/
+
 .nf-test
 .nf-test*
 .nf-test/*
+nf-*.tsv
 
 .vscode
 .vscode/*
@@ -18,3 +21,6 @@ tests/unmergedgvcfs
 tests/unmergedgvcfs/*
 tests/input-full-ncgm.csv
 conf/test_full_ncgm.config
+
+modules/nf-core/**/tests
+subworkflows/nf-core/**/tests

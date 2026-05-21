@@ -40,4 +40,6 @@ generateMatrixfromVCF <- function(VCF, ofile) {
 
 opt <- docopt(doc)
 
+set.seed(1234)
+
 generateMatrixfromVCF(opt$VCF, opt[["--output"]])

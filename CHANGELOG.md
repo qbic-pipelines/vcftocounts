@@ -3,9 +3,41 @@
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## v2.1.0 - Kelvin Teal - 20.05.2025
+
+### `Added`
+
+- [#34](https://github.com/qbic-pipelines/vcftocounts/pull/34) - Swap CI tests to nf-test and fix small channel issue
+- [#40](https://github.com/qbic-pipelines/vcftocounts/pull/40) - Create csv containing info on filtered variants
+
+### `Fixed`
+
+- [#33](https://github.com/qbic-pipelines/vcftocounts/pull/33) - Back to dev 2.0.2dev
+- [#35](https://github.com/qbic-pipelines/vcftocounts/pull/35) - Template update to version 3.2.1
+- [#36](https://github.com/qbic-pipelines/vcftocounts/pull/36) - Update all nf-core modules
+- [#37](https://github.com/qbic-pipelines/vcftocounts/pull/37) - Fix output of filtering module to avoid overwriting
+- [#38](https://github.com/qbic-pipelines/vcftocounts/pull/38) - Template update to version 3.3.1 + update multiqc
+- [#41](https://github.com/qbic-pipelines/vcftocounts/pull/41) - Template update to version 3.3.2
+- [#42](https://github.com/qbic-pipelines/vcftocounts/pull/42) - Template update to version 3.5.1
+- [#44](https://github.com/qbic-pipelines/vcftocounts/pull/44) - Template update to version 4.0.2
+- [#45](https://github.com/qbic-pipelines/vcftocounts/pull/45) - Update all nf-core modules and subworkflows, remove nf-core test folders, swap to version topics
+- [#47](https://github.com/qbic-pipelines/vcftocounts/pull/47) - Prepare release, remove workflow version from snaps
+
+### `Dependencies`
+
+| Dependency | Old version | New version |
+| ---------- | ----------- | ----------- |
+| BCFtools   | 1.2         | 1.23.1      |
+| GATK4      | 4.6.1.0     | 4.6.2.0     |
+| Tabix      | 1.2         | 1.21        |
+| MultiQC    | 1.27        | 1.34        |
+| nft-utils  | 0.0.3       | 0.0.9       |
+
+Bump minimum Nextflow version to 25.10.4.
+
 ## v2.0.1 - Pipe Cerulean - 16.04.2025
 
-## `Fixed`
+### `Fixed`
 
 - [#29](https://github.com/qbic-pipelines/vcftocounts/pull/29) - Use whole name instead of baseName for gvcf to vcf
 - [#30](https://github.com/qbic-pipelines/vcftocounts/pull/30) - Use filtered vcfs for subsequent processes
@@ -46,4 +78,4 @@ Initial release of (renamed) qbic-pipelines/vcftocounts.
 
 ## v1.0.0 - Curie Purpureal - 16.12.2024
 
-Initial release of qbic-pipelines/vcftomat, created with the [nf-core](https://nf-co.re/) template.
+Initial release of qbic-pipelines/vcftocounts, created with the [nf-core](https://nf-co.re/) template.

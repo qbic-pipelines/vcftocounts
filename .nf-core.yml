@@ -8,6 +8,7 @@ lint:
     - .github/ISSUE_TEMPLATE/config.yml
     - .github/workflows/awstest.yml
     - .github/workflows/awsfulltest.yml
+    - .github/workflows/ci.yml
   files_unchanged:
     - .github/CONTRIBUTING.md
     - .prettierignore
@@ -18,7 +19,6 @@ lint:
     - docs/images/nf-core-vcftocounts_logo_light.png
     - docs/images/nf-core-vcftocounts_logo_dark.png
     - .github/ISSUE_TEMPLATE/bug_report.yml
-  included_configs: false
   multiqc_config:
     - report_comment
   nextflow_config:
@@ -28,21 +28,20 @@ lint:
     - validation.help.afterText
     - validation.summary.beforeText
     - validation.summary.afterText
-nf_core_version: 3.2.0
+nf_core_version: 4.0.2
 repository_type: pipeline
 
 template:
-  org: qbic-pipelines
   author: "Famke Bäuerle, Dorothy Ellis"
-  description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical
-    analysis
+  description: Nextflow pipeline to convert (g)vcfs to matrices suitable for statistical analysis
   force: false
   is_nfcore: false
   name: vcftocounts
+  org: qbic-pipelines
   outdir: .
   skip_features:
     - gitpod
     - codespaces
     - fastqc
     - adaptivecard
-  version: 2.0.1
+  version: 2.1.0
