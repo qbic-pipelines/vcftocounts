@@ -16,7 +16,7 @@ process DIVANALYSIS_PLOTS {
     container 'community.wave.seqera.io/library/r-base_r-data.table_r-dplyr_r-docopt_pruned:74bdd4f4331138b0'
 
     input:
-    tuple val(meta), path(rds)
+    tuple val(meta), path(null_rds), path(filtered_rds)
 
     output:
     tuple val(meta), path("*_mqc.png"), emit: plots
@@ -44,7 +44,8 @@ process DIVANALYSIS_PLOTS {
     def qHillNumber = meta.q ? "--q ${meta.q}" : ''
     """
     plots.R \\
-        --input ${rds} \\
+        --null ${null_rds} \\
+        --filtered ${filtered_rds} \\
         --output ${prefix} \\
         --outdir . \\
         ${evaluatePopulation} \\
