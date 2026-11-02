@@ -5,7 +5,7 @@ process VCF2COUNTS {
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
         ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/6c/6c2dd8fc4240adf343ad71f9c56158d87f28b2577f2a6e114b7ab8406f0c4672/data'
-        : 'community.wave.seqera.io/library/bioconductor-variantannotation_r-docopt_r-matrix:3cf2f20fdc477746'}"
+        : 'community.wave.seqera.io/library/python:3.14.8--7620d6d80d3ba0cb'}"
 
     input:
     tuple val(meta), path(vcf)
@@ -20,7 +20,7 @@ process VCF2COUNTS {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
-    vcf2counts.R \\
+    vcf2counts.py \\
         --output ${prefix}.csv \\
         ${vcf}
     """

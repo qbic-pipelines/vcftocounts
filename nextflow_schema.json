@@ -37,6 +37,18 @@
                     "default": true,
                     "description": "Remove entries in the ID column of the VCF (to avoid vcf2counts using rsIDs)"
                 },
+                "hill_max_variants": {
+                    "type": "integer",
+                    "default": 1000000,
+                    "description": "Cap on the number of variants each diversity-analysis Monte Carlo replicate resamples.",
+                    "help_text": "hill.R resamples `numvariants` variants per replicate. The pipeline currently builds a single count table that serves as both the filtered and the null arm, so `numvariants` becomes the whole table and every replicate resamples all of it, exhausting memory. This cap keeps the step tractable. Set to 0 (no cap) once a separate filtered arm is wired up."
+                },
+                "hill_cores": {
+                    "type": "integer",
+                    "default": 2,
+                    "description": "Number of workers for the diversity-analysis step.",
+                    "help_text": "hill.R forks its workers so they share the count table copy-on-write, but each worker still allocates its own resampled subsets and hillR intermediates. Keep this low on machines with less than 16GB of RAM."
+                },
                 "outdir": {
                     "type": "string",
                     "format": "directory-path",

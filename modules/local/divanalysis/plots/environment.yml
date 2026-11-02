@@ -1,0 +1,12 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - conda-forge::r-base=4.4.3
+  - conda-forge::r-data.table=1.18.6.1
+  - conda-forge::r-dplyr=1.2.1
+  - conda-forge::r-docopt=0.7.1
+  # Plotting-only dependencies, kept out of the hill/pipelinediff/pipecomp env so a
+  # change here cannot perturb the computation stages.
+  - conda-forge::r-ggplot2=4.0.0
+  - conda-forge::r-pals=1.10

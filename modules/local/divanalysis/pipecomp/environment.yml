@@ -1,0 +1,14 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - conda-forge::r-base=4.4.3
+  - conda-forge::r-data.table=1.18.6.1
+  - conda-forge::r-dplyr=1.2.1
+  - conda-forge::r-future=1.80.0
+  - conda-forge::r-future.apply=1.20.2
+  - conda-forge::r-hillr=0.5.2
+  - conda-forge::r-progressr=1.0.0
+  - conda-forge::r-purrr=1.2.2
+  - conda-forge::r-docopt=0.7.1
+  - conda-forge::r-qs=0.3.4
