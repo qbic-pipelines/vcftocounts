@@ -32,8 +32,9 @@
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "htslib",
-                "htslib/chr22_sample.vcf.gz",
-                "htslib/chr22_sample.vcf.gz.tbi",
+                "htslib/chr22_label",
+                "htslib/chr22_label/NA12878.chr22.1X.indexed.vcf.gz",
+                "htslib/chr22_label/NA12878.chr22.1X.indexed.vcf.gz.tbi",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/.stub",
@@ -54,10 +55,10 @@
             [
                 "chr22_sample.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr22_sample.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                "NA12878.chr22.1X.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-05T14:43:21.054252",
+        "timestamp": "2026-11-06T12:12:48.029132",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
