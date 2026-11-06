@@ -4,16 +4,17 @@
             6,
             {
                 "BCFTOOLS_ANNOTATE": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_REHEADER": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
                 },
-                "TABIX_TABIX": {
-                    "tabix": 1.21
+                "HTSLIB_BGZIPTABIX": {
+                    "htslib": 1.25,
+                    "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
@@ -30,6 +31,9 @@
                 "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
+                "htslib",
+                "htslib/chr22_sample.vcf.gz",
+                "htslib/chr22_sample.vcf.gz.tbi",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/.stub",
@@ -38,8 +42,6 @@
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "vcf2counts",
                 "vcf2counts/chr22_sample.csv"
             ],
@@ -51,10 +53,11 @@
             ],
             [
                 "chr22_sample.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "chr22_sample.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-05-19T11:12:25.135008",
+        "timestamp": "2026-11-05T14:43:21.054252",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -65,16 +68,17 @@
             6,
             {
                 "BCFTOOLS_ANNOTATE": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_REHEADER": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
                 },
-                "TABIX_TABIX": {
-                    "tabix": 1.21
+                "HTSLIB_BGZIPTABIX": {
+                    "htslib": 1.25,
+                    "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
@@ -91,6 +95,9 @@
                 "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
+                "htslib",
+                "htslib/chr22_sample.vcf.gz",
+                "htslib/chr22_sample.vcf.gz.tbi",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/llms-full.txt",
@@ -103,8 +110,6 @@
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/NA12878.chr22.1X.vcf.gz.tbi",
                 "vcf2counts",
                 "vcf2counts/chr22_sample.csv"
             ],
@@ -115,7 +120,8 @@
             ],
             [
                 "chr22_sample.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
-                "chr22_sample.chr22_label.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
+                "chr22_sample.chr22_label.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a",
+                "chr22_sample.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
             ],
             [
                 [
@@ -133,7 +139,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-19T11:11:36.054687",
+        "timestamp": "2026-11-05T14:43:01.436778",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
