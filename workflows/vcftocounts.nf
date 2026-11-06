@@ -4,7 +4,7 @@
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 */
 include { MULTIQC                               } from '../modules/nf-core/multiqc'
-include { TABIX_TABIX                           } from '../modules/nf-core/tabix/tabix'
+include { HTSLIB_BGZIPTABIX                     } from '../modules/nf-core/htslib/bgziptabix'
 include { GATK4_GENOTYPEGVCFS                   } from '../modules/nf-core/gatk4/genotypegvcfs'
 include { BCFTOOLS_CONCAT                       } from '../modules/nf-core/bcftools/concat'
 include { CREATE_SAMPLE_FILE                    } from '../modules/local/createsamplefile'
@@ -47,18 +47,29 @@ workflow VCFTOCOUNTS {
         .map { meta, vcf, tbi ->
             // Strip common VCF/GVCF and compression extensions reliably
             def cleanedName = vcf.name.replaceFirst(/(\.g\.vcf\.gz|\.gvcf\.gz|\.vcf\.gz|\.g\.vcf|\.gvcf|\.vcf|\.gz)$/, '')
-            [meta + [name: cleanedName], vcf, tbi]
+            // keep the original file name so every input file has a unique meta key
+            [meta + [name: cleanedName, wholename: vcf.name], vcf, tbi]
         }
         .branch { _meta, _vcf, tbi ->
             has_index: tbi
             to_index: !tbi
         }
 
-    TABIX_TABIX(ch_has_no_index.map { meta, vcf, _tbi -> [meta, vcf, [], []] })
+    HTSLIB_BGZIPTABIX (
+        ch_has_no_index.map { meta, vcf, _tbi -> [meta, vcf, [], []] },
+        'compress',
+        true,
+        'vcf'
+        )
 
+    // Use the module's own output VCF together with its index so that the two
+    // always belong to each other (a recompressed input would otherwise be
+    // paired with an index built from the original file)
     ch_indexed = ch_has_no_index
-        .join(TABIX_TABIX.out.index)
-        .map { meta, vcf, _placeholder, tbi -> [meta, vcf, tbi] }
+        .join(HTSLIB_BGZIPTABIX.out.output.join(HTSLIB_BGZIPTABIX.out.index))
+        .map { meta, _vcf, _tbi, indexed_vcf, tbi ->
+            [meta, indexed_vcf, tbi]
+        }
 
     // Join both channels back together
     ch_vcf_tbi = ch_has_index.mix(ch_indexed)
@@ -119,7 +130,7 @@ workflow VCFTOCOUNTS {
             [],
         )
 
-        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf.join(BCFTOOLS_VIEW.out.tbi)
+        ch_filtered_vcf = BCFTOOLS_VIEW.out.vcf.join(BCFTOOLS_VIEW.out.index)
 
         AFTER_FILTER_STATS(
             ch_filtered_vcf,
@@ -177,7 +188,7 @@ workflow VCFTOCOUNTS {
 
     BCFTOOLS_CONCAT(ch_multiple_vcf)
 
-    ch_vcf_index = BCFTOOLS_CONCAT.out.vcf.join(BCFTOOLS_CONCAT.out.tbi)
+    ch_vcf_index = BCFTOOLS_CONCAT.out.vcf.join(BCFTOOLS_CONCAT.out.index)
 
     ch_vcf_concat = ch_single_vcf.mix(ch_vcf_index)
 
@@ -242,7 +253,7 @@ workflow VCFTOCOUNTS {
             ch_merged_vcfs.map { meta, vcf, tbi -> [meta, vcf, tbi, [], [], [], [], []] }
         )
 
-        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf.join(BCFTOOLS_ANNOTATE.out.tbi)
+        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf.join(BCFTOOLS_ANNOTATE.out.index)
     }
     else {
         ch_removedIDs_vcfs = ch_merged_vcfs

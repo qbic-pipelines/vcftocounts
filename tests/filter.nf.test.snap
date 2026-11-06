@@ -4,28 +4,29 @@
             16,
             {
                 "AFTER_FILTER_STATS": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_ANNOTATE": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_MERGE": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_REHEADER": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_VIEW": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BEFORE_FILTER_STATS": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
                 },
-                "TABIX_TABIX": {
-                    "tabix": 1.21
+                "HTSLIB_BGZIPTABIX": {
+                    "htslib": 1.25,
+                    "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
@@ -64,6 +65,13 @@
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
+                "htslib",
+                "htslib/chr21_ann_callerA",
+                "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz",
+                "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz.tbi",
+                "htslib/chr21_ann_callerB",
+                "htslib/chr21_ann_callerB/annotated.indexed.vcf.gz",
+                "htslib/chr21_ann_callerB/annotated.indexed.vcf.gz.tbi",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/.stub",
@@ -72,8 +80,6 @@
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/annotated.vcf.gz.tbi",
                 "vcf2counts",
                 "vcf2counts/chr21_ann_sample.csv"
             ],
@@ -95,10 +101,12 @@
                 "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
+                "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "annotated.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "annotated.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-05-19T11:12:58.667504",
+        "timestamp": "2026-11-06T11:48:42.348497",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -109,28 +117,29 @@
             16,
             {
                 "AFTER_FILTER_STATS": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_ANNOTATE": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_MERGE": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_REHEADER": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BCFTOOLS_VIEW": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "BEFORE_FILTER_STATS": {
-                    "bcftools": "1.23.1"
+                    "bcftools": 1.25
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
                 },
-                "TABIX_TABIX": {
-                    "tabix": 1.21
+                "HTSLIB_BGZIPTABIX": {
+                    "htslib": 1.25,
+                    "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
                     "vcf2counts": "1.0.0"
@@ -169,6 +178,13 @@
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
+                "htslib",
+                "htslib/chr21_ann_callerA",
+                "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz",
+                "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz.tbi",
+                "htslib/chr21_ann_callerB",
+                "htslib/chr21_ann_callerB/annotated.indexed.vcf.gz",
+                "htslib/chr21_ann_callerB/annotated.indexed.vcf.gz.tbi",
                 "multiqc",
                 "multiqc/multiqc_data",
                 "multiqc/multiqc_data/llms-full.txt",
@@ -181,18 +197,16 @@
                 "multiqc/multiqc_report.html",
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
-                "tabix",
-                "tabix/annotated.vcf.gz.tbi",
                 "vcf2counts",
                 "vcf2counts/chr21_ann_sample.csv"
             ],
             [
                 "chr21_ann_callerA.txt:md5,53d75ae10df3e0af2f8e2172826ed179",
                 "chr21_ann_callerB.txt:md5,c72e9e92762ccaf4b20f7e92126e7aef",
-                "annotated.bcftools_stats.txt:md5,45ff0a7c7a0cbf06295270f70d91978d",
-                "annotated.filter.bcftools_stats.txt:md5,32ef910abad5977d2bd15db9a68de5ff",
-                "annotated.bcftools_stats.txt:md5,45ff0a7c7a0cbf06295270f70d91978d",
-                "annotated.filter.bcftools_stats.txt:md5,32ef910abad5977d2bd15db9a68de5ff",
+                "annotated.bcftools_stats.txt:md5,086e8837c1e6936125889969e8fd13d5",
+                "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
+                "annotated.bcftools_stats.txt:md5,086e8837c1e6936125889969e8fd13d5",
+                "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
                 "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr21_ann_sample.csv:md5,fcc24dc4637679c9b8489da8a4b789e4"
@@ -203,7 +217,9 @@
                 "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
                 "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
                 "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
-                "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035"
+                "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
+                "annotated.indexed.vcf.gz:md5,c507b1cbd540e8324f686618013ad137",
+                "annotated.indexed.vcf.gz:md5,c507b1cbd540e8324f686618013ad137"
             ],
             [
                 [
@@ -223,7 +239,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-05-19T11:12:01.125639",
+        "timestamp": "2026-11-06T11:48:13.449749",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

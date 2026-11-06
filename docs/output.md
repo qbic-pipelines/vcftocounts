@@ -10,7 +10,7 @@ The directories listed below will be created in the results directory after the 
 
 The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-- [Tabix](#tabix) - Indexes (g.)vcf files
+- [Tabix](#tabix) - Recompresses and indexes (g.)vcf files
 - [GenotypeGVCFs](#genotypegvcfs) - Converts g.vcf files to vcf with GATK
 - [Filter VCFs](#filter-vcfs) - Filters the VCF based on a string given to the `filter` param with bcftools/view
 - [Concatenate VCFs](#concatenate-vcfs) - Concatenates all vcfs that have the same id and the same label with bcftools/concat
@@ -26,12 +26,13 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 <details markdown="1">
 <summary>Output files</summary>
 
-- `tabix`
-  - `{filename}.vcf.gz.tbi`: tabix index of the vcf file.
+- `htslib/{meta.label}/`
+  - `{filename}.indexed.vcf.gz`: bgzf-compressed vcf file.
+  - `{filename}.indexed.vcf.gz.tbi`: tabix index of the vcf file.
 
 </details>
 
-Tabix generated index files with `.tbi` extension for all `(g).vcf` files that are given to the pipeline without index.
+For all `(g).vcf` files that are given to the pipeline without an index, `htslib/bgziptabix` recompresses the input to bgzf (if it is not already bgzf-compressed) and generates a tabix index with `.tbi` extension. The indexed VCF and its index are emitted together by the same process, so they always belong to each other. The suffix `.indexed` keeps the output distinct from the input file name.
 
 ### GenotypeGVCFs
 

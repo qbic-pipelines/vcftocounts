@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Changed`
 
+- [#51](https://github.com/qbic-pipelines/vcftocounts/pull/51) - Back to dev, update all nf-core modules and subworkflows, replace the deprecated `tabix/tabix` module with `htslib/bgziptabix`.
 - [#52](https://github.com/qbic-pipelines/vcftocounts/pull/52) - Template update for nf-core/tools version 4.2.1
 
 ### `Fixed`
@@ -17,6 +18,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Dependency | Old version | New version |
 | ---------- | ----------- | ----------- |
+| BCFtools   | 1.23.1      | 1.25        |
+| HTSlib     | 1.21        | 1.25        |
+| GATK4      | 4.6.2.0     | 4.7.0.0     |
 | MultiQC    | 1.34        | 1.35        |
 | nf-schema  | 2.5.1       | 2.7.3       |
 

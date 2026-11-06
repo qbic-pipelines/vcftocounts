@@ -16,7 +16,7 @@
 
 **qbic-pipelines/vcftocounts** is a bioinformatics pipeline that processes g.vcf files to a matrix suitable for downstream analysis. The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes data using the following steps:
 
-1. Indexes (g.)vcf files ([`tabix`](http://www.htslib.org/doc/tabix.html))
+1. Recompresses and indexes (g.)vcf files ([`bgzip`](http://www.htslib.org/doc/bgzip.html), [`tabix`](http://www.htslib.org/doc/tabix.html))
 2. Converts g.vcf files to vcf with `genotypegvcf` ([`GATK`](https://gatk.broadinstitute.org/hc/en-us))
 3. Filters the VCF based on a string given to the `filter` param with `bcftools/view` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - Turned off by default.
 4. Concatenates all vcfs that have the same id and the same label with `bcftools/concat` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
