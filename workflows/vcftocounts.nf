@@ -242,7 +242,7 @@ workflow VCFTOCOUNTS {
             ch_merged_vcfs.map { meta, vcf, tbi -> [meta, vcf, tbi, [], [], [], [], []] }
         )
 
-        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf
+        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf.join(BCFTOOLS_ANNOTATE.out.tbi)
     }
     else {
         ch_removedIDs_vcfs = ch_merged_vcfs
