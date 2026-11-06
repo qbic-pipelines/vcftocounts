@@ -49,12 +49,11 @@ Each row represents a VCF file coming from a sample. The `label` column enables 
 
 Now, you can run the pipeline using:
 
-<!-- TODO nf-core: update the following command to include all required parameters for a minimal example -->
-
 ```bash
 nextflow run qbic-pipelines/vcftocounts \
    -profile <docker/singularity/.../institute> \
    --input samplesheet.csv \
+   --genome GATK.GRCh38 \
    --outdir <OUTDIR>
 ```
 

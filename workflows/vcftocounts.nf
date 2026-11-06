@@ -38,7 +38,6 @@ workflow VCFTOCOUNTS {
     outdir
 
     main:
-    def ch_versions = channel.empty()
     ch_multiqc_files = channel.empty()
 
     //
@@ -277,7 +276,7 @@ workflow VCFTOCOUNTS {
             "${process}:\n${tool_versions.join('\n')}"
         }
 
-    def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
+    def ch_collated_versions = softwareVersionsToYAML(topic_versions.versions_file)
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
