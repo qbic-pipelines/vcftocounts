@@ -84,10 +84,10 @@ workflow VCFTOCOUNTS {
 
 
     GATK4_GENOTYPEGVCFS(
-        ch_gvcf.map { it -> [it[0], it[1], it[2], [], []] },
-        fasta.map { it -> [[id: it.baseName], it] },
-        fai.map { it -> [[id: it.baseName], it] },
-        dict.map { it -> [[id: it.baseName], it] },
+        ch_gvcf.map { meta, vcf, tbi -> [meta, vcf, tbi, [], []] },
+        fasta.map { fasta_file -> [[id: fasta_file.baseName], fasta_file] },
+        fai.map { fai_file -> [[id: fai_file.baseName], fai_file] },
+        dict.map { dict_file -> [[id: dict_file.baseName], dict_file] },
         [[], []],
         [[], []],
     )
@@ -181,9 +181,9 @@ workflow VCFTOCOUNTS {
             // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }
-        .branch { it ->
-            single: it[1].size == 1
-            multiple: it[1].size > 1
+        .branch { _meta, vcfs, _tbis ->
+            single: vcfs.size == 1
+            multiple: vcfs.size > 1
         }
 
     BCFTOOLS_CONCAT(ch_multiple_vcf)
@@ -194,7 +194,7 @@ workflow VCFTOCOUNTS {
 
     if (params.rename) {
         // Create the sample file and add them to ch_vcf_concat
-        CREATE_SAMPLE_FILE(ch_vcf_concat.map { it -> it[0] })
+        CREATE_SAMPLE_FILE(ch_vcf_concat.map { meta, _vcf, _tbi -> meta })
 
         ch_vcf_sample = ch_vcf_concat
             .join(CREATE_SAMPLE_FILE.out.samplefile)
@@ -228,9 +228,9 @@ workflow VCFTOCOUNTS {
             // Take the first meta without filename, they should all be the same for a given ID
             [meta, vcfs.flatten(), tbis.flatten()]
         }
-        .branch { it ->
-            single: it[1].size == 1
-            multiple: it[1].size > 1
+        .branch { _meta, vcfs, _tbis ->
+            single: vcfs.size == 1
+            multiple: vcfs.size > 1
         }
 
     // Run BCFTOOLS_MERGE only on samples with multiple VCFs
@@ -250,10 +250,10 @@ workflow VCFTOCOUNTS {
     if (params.removeIDs) {
 
         BCFTOOLS_ANNOTATE(
-            ch_merged_vcfs.map { it -> [it[0], it[1], it[2], [], [], [], [], []] }
+            ch_merged_vcfs.map { meta, vcf, tbi -> [meta, vcf, tbi, [], [], [], [], []] }
         )
 
-        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf
+        ch_removedIDs_vcfs = BCFTOOLS_ANNOTATE.out.vcf.join(BCFTOOLS_ANNOTATE.out.tbi)
     }
     else {
         ch_removedIDs_vcfs = ch_merged_vcfs
@@ -264,7 +264,7 @@ workflow VCFTOCOUNTS {
     // Convert VCFs to Count Matrices
     //
     VCF2COUNTS(
-        ch_removedIDs_vcfs.map { it -> [it[0], it[1]] }
+        ch_removedIDs_vcfs.map { meta, vcf, _tbi -> [meta, vcf] }
     )
 
     //
@@ -279,9 +279,9 @@ workflow VCFTOCOUNTS {
 
     def topic_versions_string = topic_versions.versions_tuple
         .map { process, tool, version ->
-            [process[process.lastIndexOf(':') + 1..-1], "  ${tool}: ${version}"]
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
         }
-        .groupTuple(by: 0)
+        .groupTuple(by:0)
         .map { process, tool_versions ->
             tool_versions.unique().sort()
             "${process}:\n${tool_versions.join('\n')}"
@@ -291,9 +291,9 @@ workflow VCFTOCOUNTS {
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
-            name: 'vcftocounts_software_' + 'mqc_' + 'versions.yml',
+            name:  'vcftocounts_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
-            newLine: true,
+            newLine: true
         )
 
     //
@@ -322,7 +322,11 @@ workflow VCFTOCOUNTS {
             ]
         }
     )
-
-    emit:
-    multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
+    emit:multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
 }
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    THE END
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/

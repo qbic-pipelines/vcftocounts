@@ -32,22 +32,13 @@
                     "@id": "assets/"
                 },
                 {
-                    "@id": "bin/"
-                },
-                {
                     "@id": "conf/"
                 },
                 {
                     "@id": "docs/"
                 },
                 {
-                    "@id": "docs/images/"
-                },
-                {
                     "@id": "modules/"
-                },
-                {
-                    "@id": "modules/local/"
                 },
                 {
                     "@id": "modules/nf-core/"
@@ -129,12 +120,10 @@
                 "SoftwareSourceCode",
                 "ComputationalWorkflow"
             ],
-            "author": [
+            "contributor": [
                 {
                     "@id": "https://orcid.org/0000-0003-1387-0251"
-                }
-            ],
-            "contributor": [
+                },
                 {
                     "@id": "#6031ea31-9025-4a73-a58c-0ac42149227e"
                 }
@@ -148,11 +137,6 @@
             ],
             "license": [
                 "MIT"
-            ],
-            "maintainer": [
-                {
-                    "@id": "https://orcid.org/0000-0003-1387-0251"
-                }
             ],
             "name": [
                 "qbic-pipelines/vcftocounts"
@@ -341,8 +325,7 @@
         {
             "@id": "#6031ea31-9025-4a73-a58c-0ac42149227e",
             "@type": "Person",
-            "name": "Dorothy Ellis",
-            "url": "https://github.com/ellisdoro"
+            "name": "Dorothy Ellis"
         }
     ]
 }
