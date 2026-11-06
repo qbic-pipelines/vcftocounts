@@ -10,7 +10,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Changed`
 
-- [#51](https://github.com/qbic-pipelines/vcftocounts/pull/51) - Update all nf-core modules and subworkflows, replace the deprecated `tabix/tabix` module with `htslib/bgziptabix`.
+- [#51](https://github.com/qbic-pipelines/vcftocounts/pull/51) - Back to dev, update all nf-core modules and subworkflows, replace the deprecated `tabix/tabix` module with `htslib/bgziptabix`.
 
 ### `Fixed`
 
