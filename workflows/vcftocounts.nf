@@ -38,6 +38,7 @@ workflow VCFTOCOUNTS {
     outdir
 
     main:
+    def ch_versions = channel.empty()
     ch_multiqc_files = channel.empty()
 
     //
@@ -268,21 +269,21 @@ workflow VCFTOCOUNTS {
 
     def topic_versions_string = topic_versions.versions_tuple
         .map { process, tool, version ->
-            [process[process.lastIndexOf(':') + 1..-1], "  ${tool}: ${version}"]
+            [ process[process.lastIndexOf(':')+1..-1], "  ${tool}: ${version}" ]
         }
-        .groupTuple(by: 0)
+        .groupTuple(by:0)
         .map { process, tool_versions ->
             tool_versions.unique().sort()
             "${process}:\n${tool_versions.join('\n')}"
         }
 
-    def ch_collated_versions = softwareVersionsToYAML(topic_versions.versions_file)
+    def ch_collated_versions = softwareVersionsToYAML(ch_versions.mix(topic_versions.versions_file))
         .mix(topic_versions_string)
         .collectFile(
             storeDir: "${outdir}/pipeline_info",
-            name: 'vcftocounts_software_' + 'mqc_' + 'versions.yml',
+            name:  'vcftocounts_software_'  + 'mqc_'  + 'versions.yml',
             sort: true,
-            newLine: true,
+            newLine: true
         )
 
     //
@@ -311,7 +312,11 @@ workflow VCFTOCOUNTS {
             ]
         }
     )
-
-    emit:
-    multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
+    emit:multiqc_report = MULTIQC.out.report.map { _meta, report -> [report] }.toList() // channel: /path/to/multiqc_report.html
 }
+
+/*
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    THE END
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+*/
