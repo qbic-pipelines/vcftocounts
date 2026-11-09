@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 - [#51](https://github.com/qbic-pipelines/vcftocounts/pull/51) - Back to dev, update all nf-core modules and subworkflows, replace the deprecated `tabix/tabix` module with `htslib/bgziptabix`.
 - [#52](https://github.com/qbic-pipelines/vcftocounts/pull/52) - Template update for nf-core/tools version 4.2.1
+- [#54](https://github.com/qbic-pipelines/vcftocounts/pull/54) - Rewrite the `vcf2counts` matrix conversion script from R to Python, streaming the VCF line by line instead of loading it into memory.
 
 ### `Fixed`
 
