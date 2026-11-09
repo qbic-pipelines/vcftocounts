@@ -1,7 +1,7 @@
 {
     "-profile test_full - stub": {
         "content": [
-            39,
+            40,
             {
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.25
@@ -14,6 +14,9 @@
                 },
                 "BCFTOOLS_REHEADER": {
                     "bcftools": 1.25
+                },
+                "COUNTS2RDS": {
+                    "counts2rds": "1.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -81,6 +84,10 @@
                 "bcftools/reheader/toindex_gvcf_merge/toindex_gvcf_merge.callerA.reheader.vcf.gz.tbi",
                 "bcftools/reheader/toindex_gvcf_merge/toindex_gvcf_merge.callerB.reheader.vcf.gz",
                 "bcftools/reheader/toindex_gvcf_merge/toindex_gvcf_merge.callerB.reheader.vcf.gz.tbi",
+                "counts2rds",
+                "counts2rds/all_samples.rds",
+                "counts2rds/all_samples_dropped_samples.csv",
+                "counts2rds/all_samples_summary.csv",
                 "gvcftovcf",
                 "gvcftovcf/callerA",
                 "gvcftovcf/callerA/test.genome.normal.vcf.gz",
@@ -128,6 +135,9 @@
                 "concat.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "empty.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "merge.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples_dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr21_ann_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -163,7 +173,7 @@
                 "NA24385_sv.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-06T11:32:17.64154",
+        "timestamp": "2026-11-09T11:06:01.654584",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -171,7 +181,7 @@
     },
     "-profile test_full": {
         "content": [
-            39,
+            40,
             {
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.25
@@ -184,6 +194,9 @@
                 },
                 "BCFTOOLS_REHEADER": {
                     "bcftools": 1.25
+                },
+                "COUNTS2RDS": {
+                    "counts2rds": "1.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -251,6 +264,11 @@
                 "bcftools/reheader/toindex_gvcf_merge/toindex_gvcf_merge.callerA.reheader.vcf.gz.tbi",
                 "bcftools/reheader/toindex_gvcf_merge/toindex_gvcf_merge.callerB.reheader.vcf.gz",
                 "bcftools/reheader/toindex_gvcf_merge/toindex_gvcf_merge.callerB.reheader.vcf.gz.tbi",
+                "counts2rds",
+                "counts2rds/all_samples.csv",
+                "counts2rds/all_samples.rds",
+                "counts2rds/all_samples_dropped_samples.csv",
+                "counts2rds/all_samples_summary.csv",
                 "gvcftovcf",
                 "gvcftovcf/callerA",
                 "gvcftovcf/callerA/test.genome.normal.vcf.gz",
@@ -302,6 +320,10 @@
                 "concat.txt:md5,6a21cb02f698003fb22d6dfdc183adf2",
                 "empty.txt:md5,84b40460f8374ccbde4c353cc301f5fc",
                 "merge.txt:md5,448a611e90ae2754539592093324ff3c",
+                "all_samples.csv:md5,fcc83dabcdc64a0bb2a1d6ebc9e12084",
+                "all_samples.rds:md5,9951cf01ec5748ecf1606862f4a490dc",
+                "all_samples_dropped_samples.csv:md5,65fe35a318b2fe9b0f33c3e654e9a3c3",
+                "all_samples_summary.csv:md5,394eb18b0f72fdaf7e80eadbb2157258",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr21_ann_sample.csv:md5,502079cf615cf32ec8ee9443d42f1233",
                 "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
@@ -387,7 +409,7 @@
                 "NA24385_sv.indexed.vcf.gz:headerCols,10"
             ]
         ],
-        "timestamp": "2026-11-06T11:31:26.101844",
+        "timestamp": "2026-11-09T11:05:07.387123",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
