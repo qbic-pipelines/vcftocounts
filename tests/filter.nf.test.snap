@@ -209,7 +209,7 @@
                 "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
                 "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_sample.csv:md5,fcc24dc4637679c9b8489da8a4b789e4"
+                "chr21_ann_sample.csv:md5,175ee2cdbc9fe17c6f5312b8c2cebdac"
             ],
             [
                 "chr21_ann_sample.IDremoved.vcf.gz:md5,2b75dcfffa100d95308752e44aa704c8",
@@ -228,18 +228,18 @@
                     "chr21_ann_sample,chr21_ann_callerB,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi"
                 ],
                 [
-                    "\"\",\"chr21_ann_callerA\",\"chr21_ann_callerB\"",
-                    "\"chr21:10462834_A/G\",1,1",
-                    "\"chr21:10569701_C/T\",1,1",
-                    "\"chr21:10605416_G/T\",1,1",
-                    "\"chr21:30541662_AG/A\",2,2",
-                    "\"chr21:33576378_G/GA\",2,2",
-                    "\"chr21:33576390_GA/G\",2,2",
-                    "\"chr21:42383199_C/CTA\",1,1"
+                    ",chr21_ann_callerA,chr21_ann_callerB",
+                    "chr21:10462834_A/G,1,1",
+                    "chr21:10569701_C/T,1,1",
+                    "chr21:10605416_G/T,1,1",
+                    "chr21:30541662_AG/A,2,2",
+                    "chr21:33576378_G/GA,2,2",
+                    "chr21:33576390_GA/G,2,2",
+                    "chr21:42383199_C/CTA,1,1"
                 ]
             ]
         ],
-        "timestamp": "2026-11-06T11:48:13.449749",
+        "timestamp": "2026-11-09T11:45:33.055324",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
