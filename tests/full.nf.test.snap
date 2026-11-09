@@ -196,7 +196,7 @@
                     "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts": "1.0.0"
+                    "vcf2counts": "2.0.0"
                 }
             },
             [
