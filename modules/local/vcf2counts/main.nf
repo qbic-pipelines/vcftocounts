@@ -14,9 +14,6 @@ process VCF2COUNTS {
     tuple val(meta), path("*.csv"), emit: csv
     tuple val("${task.process}"), val('vcf2counts'), eval("echo 1.0.0"), topic: versions, emit: versions_vcf2counts
 
-    when:
-    task.ext.when == null || task.ext.when
-
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     """
