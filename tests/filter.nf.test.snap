@@ -192,7 +192,6 @@
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
                 "counts2rds",
-                "counts2rds/all_samples.csv",
                 "counts2rds/all_samples.rds",
                 "counts2rds/all_samples_dropped_samples.csv",
                 "counts2rds/all_samples_summary.csv",
@@ -226,7 +225,6 @@
                 "annotated.bcftools_stats.txt:md5,086e8837c1e6936125889969e8fd13d5",
                 "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
                 "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
-                "all_samples.csv:md5,1ceac409a04d4bd599d20c7e2dccf8a3",
                 "all_samples.rds:md5,08f3c60febd678e4f4f205ae6590be95",
                 "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
                 "all_samples_summary.csv:md5,26370b3477ccd7a4eadfcdc6eee3c968",
@@ -245,39 +243,6 @@
             ],
             [
                 [
-                    "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi",
-                    "chr21_ann_sample,chr21_ann_callerA,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
-                    "chr21_ann_sample,chr21_ann_callerB,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi"
-                ],
-                [
-                    "sample_name,variant_called,chr21_ann_callerA,chr21_ann_callerB,population_code,super_population_code,population_description,super_population_description",
-                    "chr21_ann_sample,chr21:10462834_A/G,1,1,,,,",
-                    "chr21_ann_sample,chr21:10569701_C/T,1,1,,,,",
-                    "chr21_ann_sample,chr21:10605416_G/T,1,1,,,,",
-                    "chr21_ann_sample,chr21:30541662_AG/A,2,2,,,,",
-                    "chr21_ann_sample,chr21:33576378_G/GA,2,2,,,,",
-                    "chr21_ann_sample,chr21:33576390_GA/G,2,2,,,,",
-                    "chr21_ann_sample,chr21:42383199_C/CTA,1,1,,,,"
-                ],
-                [
-                    "sample_name,source_file,reason"
-                ],
-                [
-                    "metric,value",
-                    "n_samples,1",
-                    "n_callers,2",
-                    "callers,chr21_ann_callerA|chr21_ann_callerB",
-                    "n_rows,7",
-                    "n_variants,7",
-                    "n_duplicate_keys_collapsed,0",
-                    "n_samples_dropped,0",
-                    "n_rows_without_metadata,7",
-                    "n_populations,0",
-                    "n_superpopulations,5",
-                    "metadata_file,20130502.phase3.analysis.sequence.index",
-                    "population_lookup_file,20131219.populations.tsv"
-                ],
-                [
                     "\"\",\"chr21_ann_callerA\",\"chr21_ann_callerB\"",
                     "\"chr21:10462834_A/G\",1,1",
                     "\"chr21:10569701_C/T\",1,1",
@@ -289,7 +254,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-09T11:02:59.27487",
+        "timestamp": "2026-11-09T14:04:59.980173",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
