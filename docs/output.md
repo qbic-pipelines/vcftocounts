@@ -18,6 +18,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro
+- [Merge to RDS](#merge-to-rds) - Merges the per-sample matrices into one RDS with sample metadata using `counts2rds`
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -128,6 +129,40 @@ Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to
 </details>
 
 A custom R script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro).
+
+The first column holds the variant id (chromosome and position, unless rsIDs were kept), and every further column is one caller, holding the genotype call per variant as `0` (homozygous reference), `1` (heterozygous) or `2` (homozygous alternate). The column name is the `label` from the samplesheet, or the sample name recorded in the VCF when `--rename false` is used. A sample that had no variants surviving filtering still produces a header-only CSV rather than no file at all.
+
+### Merge to RDS
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `counts2rds/`
+  - `all_samples.rds`: one R object holding all samples, all callers, and the sample metadata. This is the file the downstream diversity analysis reads.
+  - `all_samples.csv`: csv copy of the same table, written because the RDS is binary and not inspectable by eye.
+  - `all_samples_summary.csv`: run metrics as `metric,value` rows (`n_samples`, `n_callers`, `callers`, `n_rows`, `n_variants`, `n_duplicate_keys_collapsed`, `n_samples_dropped`, `n_rows_without_metadata`, `n_populations`, `n_superpopulations`, `metadata_file`, `population_lookup_file`).
+  - `all_samples_dropped_samples.csv`: samples that were dropped, with `sample_name`, `source_file` and `reason`. Written even when no sample was dropped, so the file always exists.
+
+</details>
+
+The per-sample CSVs from the previous step are pooled into a single table and saved as an RDS. The table has one row per sample and variant, with these columns:
+
+| Column                         | Description                                   |
+| ------------------------------ | --------------------------------------------- |
+| `sample_name`                  | Sample id, taken from the CSV filename.       |
+| `variant_called`               | Variant id.                                   |
+| one column per `label`         | Genotype call per caller: `0`, `1` or `2`.    |
+| `population_code`              | Population code, e.g. `GBR`.                  |
+| `super_population_code`        | Superpopulation code, e.g. `EUR`.             |
+| `population_description`       | Population description, e.g. `British`.       |
+| `super_population_description` | Superpopulation description, e.g. `European`. |
+
+The four metadata columns are filled from `--sample_metadata` and `--population_info`; see the [usage documentation](usage.md#sample-metadata) for the accepted file shapes. Two behaviours are worth knowing before reading the RDS:
+
+- Repeated `(sample_name, variant_called)` pairs are collapsed by taking the maximum per caller column, so the strongest genotype call wins. `data.table` rejects duplicate row names and the downstream code builds rownames as `sample_name` + `_` + `variant_called`.
+- Genotypes that are `NA` in the VCF, such as multi-allelic or uncalled sites, are written as `0` and are therefore indistinguishable from homozygous reference in the RDS.
+
+Rows whose sample has no metadata match are kept, but their metadata columns are `NA` and they drop out of any per-population downstream stage. The count is reported as `n_rows_without_metadata` in the summary and as a warning in the task log.
 
 ### MultiQC
 

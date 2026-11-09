@@ -24,7 +24,8 @@
 6. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 7. Removes entries in the ID column with `bcftools/annotate` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - his can be turned off by adding `--removeIDs false` to the `nextflow run` command.
 8. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
-9. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
+9. Merges the per-sample matrices into one RDS and joins sample metadata onto it with a custom Python script ([`pandas`](https://pandas.pydata.org/))
+10. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
 ![](./docs/images/vcftocounts-subway.excalidraw.png)
 
@@ -56,6 +57,8 @@ nextflow run qbic-pipelines/vcftocounts \
    --genome GATK.GRCh38 \
    --outdir <OUTDIR>
 ```
+
+The final count matrix is written to `counts2rds/all_samples.rds`. It carries the per-caller genotype counts plus the sample metadata, so a population-level analysis can read it directly. The metadata is taken from `--sample_metadata` and `--population_info`, which default to the 1000 Genomes phase 3 sequence index and population table. Both accept a local path or a URL; see the [usage documentation](docs/usage.md#sample-metadata).
 
 > [!WARNING]
 > Please provide pipeline parameters via the CLI or Nextflow `-params-file` option. Custom config files including those provided by the `-c` Nextflow option can be used to provide any configuration _**except for parameters**_; see [docs](https://nf-co.re/docs/running/run-pipelines#using-parameter-files).
