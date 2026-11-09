@@ -20,7 +20,7 @@ process COUNTS2RDS {
 
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def write_csv = "${meta.write_csv}" ? "--write-csv" : ""
+    def write_csv = meta.write_csv ? "--write-csv" : ""
     """
     counts2rds.py \\
         --input-dir '.' \\
@@ -32,7 +32,7 @@ process COUNTS2RDS {
 
     stub:
     def prefix = task.ext.prefix ?: "${meta.id}"
-    def write_csv = "${meta.csv}" ? "touch ${prefix}.csv" : ""
+    def write_csv = meta.write_csv ? "touch ${prefix}.csv" : ""
     """
     touch ${prefix}.rds
     touch ${prefix}_dropped_samples.csv
