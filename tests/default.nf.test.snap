@@ -20,7 +20,7 @@
                     "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts": "1.0.0"
+                    "vcf2counts": "2.0.0"
                 }
             },
             [
@@ -95,7 +95,7 @@
                     "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts": "1.0.0"
+                    "vcf2counts": "2.0.0"
                 }
             },
             [
@@ -138,7 +138,7 @@
                 "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
                 "all_samples_summary.csv:md5,92e84f9a736a9445bcce0a5330f62cce",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr22_sample.csv:md5,0c4027524d1fa8acbfd429fdc0962eed"
+                "chr22_sample.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
             ],
             [
                 "chr22_sample.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
@@ -147,17 +147,17 @@
             ],
             [
                 [
-                    "\"\",\"chr22_label\"",
-                    "\"chr22:16570065_A/G\",0",
-                    "\"chr22:16570067_A/C\",0",
-                    "\"chr22:16570176_C/A\",0",
-                    "\"chr22:16570211_T/C\",0",
-                    "\"chr22:16570267_T/C\",0",
-                    "\"chr22:16570325_T/C\",0",
-                    "\"chr22:16570434_A/G\",0",
-                    "\"chr22:16570441_G/A\",0",
-                    "\"chr22:16570473_A/G\",0",
-                    "\"chr22:16570478_G/T\",0"
+                    ",chr22_label",
+                    "chr22:16570065_A/G,0",
+                    "chr22:16570067_A/C,0",
+                    "chr22:16570176_C/A,0",
+                    "chr22:16570211_T/C,0",
+                    "chr22:16570267_T/C,0",
+                    "chr22:16570325_T/C,0",
+                    "chr22:16570434_A/G,0",
+                    "chr22:16570441_G/A,0",
+                    "chr22:16570473_A/G,0",
+                    "chr22:16570478_G/T,0"
                 ]
             ]
         ],

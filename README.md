@@ -23,7 +23,7 @@
 5. Changes the sample name in the vcf file to the filename with `bcftools/reheader` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - This can be turned off by adding `--rename false` to the `nextflow run` command.
 6. Merges all vcfs from the same sample with `bcftools/merge` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html))
 7. Removes entries in the ID column with `bcftools/annotate` ([`bcftools`](https://samtools.github.io/bcftools/bcftools.html)) - his can be turned off by adding `--removeIDs false` to the `nextflow run` command.
-8. Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro ([`R`](https://www.r-project.org/))
+8. Converts the (merged) vcfs to a matrix using a custom Python script based on a script by @ellisdoro ([`Python`](https://www.python.org/))
 9. Merges the per-sample matrices into one RDS and joins sample metadata onto it with a custom Python script ([`pandas`](https://pandas.pydata.org/))
 10. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
