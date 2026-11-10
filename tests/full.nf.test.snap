@@ -26,7 +26,7 @@
                     "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts": "1.0.0"
+                    "vcf2counts": "2.0.0"
                 }
             },
             [
@@ -163,7 +163,7 @@
                 "NA24385_sv.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-06T11:32:17.64154",
+        "timestamp": "2026-11-09T11:32:20.265288",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -196,7 +196,7 @@
                     "xz": "5.8.3"
                 },
                 "VCF2COUNTS": {
-                    "vcf2counts": "1.0.0"
+                    "vcf2counts": "2.0.0"
                 }
             },
             [
@@ -303,10 +303,10 @@
                 "empty.txt:md5,84b40460f8374ccbde4c353cc301f5fc",
                 "merge.txt:md5,448a611e90ae2754539592093324ff3c",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_sample.csv:md5,502079cf615cf32ec8ee9443d42f1233",
-                "empty.csv:md5,1bd32757621943a049881f0f99e4a2c4",
-                "indexed_merge.csv:md5,4e9896dbd6e9b63e049a64cc6f5a42f9",
-                "toindex_gvcf_merge.csv:md5,bb0cc37d7f55f611a8d0f11c4d80dece"
+                "chr21_ann_sample.csv:md5,a9378aca97e0899759f9116d24717e74",
+                "empty.csv:md5,e57cb1b5b39b433e7a49133676746bed",
+                "indexed_merge.csv:md5,5d0cb3dcf72a10c8a4bca88ea7246bdd",
+                "toindex_gvcf_merge.csv:md5,f49ea941fd9ba99bd392db248ebf5930"
             ],
             [
                 "chr21_ann_sample.IDremoved.vcf.gz:md5,188c2be2f427d894e8bbf32911dcdb7e",
@@ -387,7 +387,7 @@
                 "NA24385_sv.indexed.vcf.gz:headerCols,10"
             ]
         ],
-        "timestamp": "2026-11-06T11:31:26.101844",
+        "timestamp": "2026-11-09T11:31:36.682726",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

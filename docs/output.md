@@ -17,7 +17,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Rename Samples](#rename-samples) - Changes the sample name in the vcf file to the label with bcftools/reheader
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
-- [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom R script written by @ellisdoro
+- [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom Python script written by @ellisdoro
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -115,7 +115,7 @@ To enable comparison of different variant callers or variant calling pipelines, 
 
 </details>
 
-Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the R script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
+Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to prepare for matrix conversion. If the entries are not removed, the matrix conversion script will use available IDs instead of chromosome + position to map the variants. Can be turned off with `--removeIDs false`.
 
 ### Convert to matrix
 
@@ -127,7 +127,9 @@ Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to
 
 </details>
 
-A custom R script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro).
+A custom Python script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro). The VCF is streamed line by line rather than loaded into memory, so large cohort VCFs can be converted without a memory penalty.
+
+The CSV holds one row per variant, labelled `{chrom}:{pos}_{REF}/{ALT}` using the first ALT allele only, and one column per sample. Cells encode the genotype: `0` for hom-ref (`0/0`), `1` for het (`0/1`, `1/0`), `2` for hom-alt (`1/1`) and `NA` for anything else, such as multi-allelic genotypes (`0/2`).
 
 ### MultiQC
 
