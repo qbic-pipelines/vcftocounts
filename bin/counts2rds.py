@@ -121,7 +121,7 @@ def detect_separator(path):
         return ","
     if ";" in header:
         return ";"
-    return "\t" if "\t" in header else ","
+    return ","
 
 
 def read_delimited(path, nrows=None):
