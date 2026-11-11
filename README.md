@@ -26,7 +26,7 @@
 8. Converts the (merged) vcfs to a matrix using a custom Python script based on a script by @ellisdoro ([`Python`](https://www.python.org/))
 9. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
-![](./docs/images/vcftocounts-subway.excalidraw.png)
+![](./docs/images/vcftocounts_metro.svg)
 
 ## Usage
 

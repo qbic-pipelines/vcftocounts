@@ -1,0 +1,97 @@
+%%metro title: qbic-pipelines/vcftocounts
+%%metro style: nfcore
+%%metro legend: br
+%%metro line_order: definition
+%%metro x_spacing: 84
+%%metro grid: input | 0,0
+%%metro grid: harmonise | 1,0
+%%metro grid: output | 2,0
+
+%%metro file: vcf_in | VCF | Called variants
+%%metro file: ref_fasta | FASTA | Reference
+%%metro file: csv_out | CSV | Count matrix
+%%metro file: report_out | HTML | MultiQC
+
+%%metro line: flow | VCF pipeline | #0570b0
+%%metro line: ref | Reference (gVCF only) | #8a8a8a | dashed | inactive
+
+%%metro off_track: vcf_in, ref_fasta
+
+%%metro marker: bgziptabix | circle, open
+%%metro marker: genotypegvcfs | circle, open
+%%metro marker: ref_fasta | square, open
+%%metro marker: bf_view | square, open
+%%metro marker: concat | circle, open
+%%metro marker: reheader | square, open
+%%metro marker: merge | circle, open
+%%metro marker: annotate | square, open
+%%metro marker: vcf2counts | circle, solid
+%%metro marker: multiqc | circle, solid
+
+%%metro group: no index | bgziptabix | below
+%%metro group: gVCF only | genotypegvcfs | below
+%%metro group: --filter | bf_view | below
+%%metro group: --rename | reheader | below
+%%metro group: --removeIDs | annotate | below
+
+%%metro marker_legend: circle, open | Runs when applicable
+%%metro marker_legend: square, open | Runs when flag is set
+%%metro marker_legend: circle, solid | Runs always
+
+%%metro process_scope: QBICPIPELINES_VCFTOCOUNTS
+%%metro process: bgziptabix | VCFTOCOUNTS:HTSLIB_BGZIPTABIX
+%%metro process: genotypegvcfs | VCFTOCOUNTS:GATK4_GENOTYPEGVCFS
+%%metro process: bf_view | VCFTOCOUNTS:BCFTOOLS_VIEW
+%%metro process: concat | VCFTOCOUNTS:BCFTOOLS_CONCAT
+%%metro process: reheader | VCFTOCOUNTS:BCFTOOLS_REHEADER
+%%metro process: merge | VCFTOCOUNTS:BCFTOOLS_MERGE
+%%metro process: annotate | VCFTOCOUNTS:BCFTOOLS_ANNOTATE
+%%metro process: vcf2counts | VCFTOCOUNTS:VCF2COUNTS
+%%metro process: multiqc | VCFTOCOUNTS:MULTIQC
+
+graph LR
+    subgraph input [Input & indexing]
+        %%metro number: 1
+        %%metro exit: right | flow
+        vcf_in[ ]
+        bgziptabix[Tabix]
+        ref_fasta[ ]
+        genotypegvcfs[GenotypeGVCFs]
+
+        vcf_in -->|flow| bgziptabix
+        bgziptabix -->|flow| genotypegvcfs
+        ref_fasta -->|ref| genotypegvcfs
+    end
+
+    subgraph harmonise [Harmonise]
+        %%metro number: 2
+        %%metro entry: left | flow
+        %%metro exit: right | flow
+        bf_view[bcftools view]
+        concat[bcftools concat]
+        reheader[bcftools reheader]
+        merge[bcftools merge]
+        annotate[bcftools annotate]
+
+        bf_view -->|flow| concat
+        concat -->|flow| reheader
+        reheader -->|flow| merge
+        merge -->|flow| annotate
+    end
+
+    subgraph output [Output]
+        %%metro number: 3
+        %%metro entry: left | flow
+        vcf2counts[vcf2counts]
+        csv_out[ ]
+        multiqc[MultiQC]
+        report_out[ ]
+
+        vcf2counts -->|flow| csv_out
+        vcf2counts -->|flow| multiqc
+        multiqc -->|flow| report_out
+    end
+
+    %% Inter-section edges
+    genotypegvcfs -->|flow| bf_view
+    annotate -->|flow| vcf2counts
