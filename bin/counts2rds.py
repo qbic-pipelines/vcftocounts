@@ -44,6 +44,12 @@ Output (one RDS):
     sample_name,variant_called,sarek_freebayes,sarek_strelka,
     population_code,super_population_code,population_description,super_population_description
     HG00097,chr22_00001,1,0,GBR,EUR,British,European
+
+Genotype encoding in the RDS: 0 = homozygous reference, 1 = heterozygous,
+2 = homozygous alternate, NA = not called. NA covers both a variant that is
+absent from that sample's vcf2counts CSV (the caller did not report it there)
+and a genotype vcf2counts itself marked NA (uncalled, multi-allelic). Neither
+is the same as a homozygous-reference 0, so neither is filled with one.
 """
 
 import argparse
@@ -372,21 +378,20 @@ def main():
     # The conversion runs unconditionally: pandas 3 reads the text CSVs as its
     # `str` dtype, which is not `object`, so a dtype check here would skip the
     # conversion and `astype` would fail on the remaining strings.
-    # NOTE: NA genotypes (multi-allelic, uncalled) are written as 0 here,
-    # i.e. they are recorded as homozygous reference.
+    #
+    # NA is preserved, not filled: a variant that is not in a sample's CSV was
+    # not called there, and writing it as 0 would claim a homozygous reference
+    # genotype the data never reported. In a multi-sample run that is the common
+    # case - every variant one caller saw but another missed - so filling it
+    # would fabricate most of the matrix. `na_values` keeps vcf2counts' own NA
+    # (multi-allelic, uncalled) as NA for the same reason.
     count_cols = [c for c in data.columns if c not in ID_COLS]
-    n_na_genotypes = 0
     for col in count_cols:
-        numeric = pd.to_numeric(data[col], errors="coerce")
-        n_na_genotypes += int(numeric.isna().sum())
-        # int32 rather than the default int64: counts are only 0/1/2, and R has
-        # no 64-bit integer, so pyreadr writes int64 as a double. Declaring
-        # int32 keeps the RDS column an R integer, which is what the diversity
-        # analysis expects (and halves the memory of the merge).
-        data[col] = numeric.fillna(0).astype("int32")
-    if n_na_genotypes:
-        print(f"  WARNING: {n_na_genotypes} NA genotype(s) were written as 0 "
-              f"(homozygous reference)")
+        # Nullable Int32, not float: pandas needs a float column to hold NA
+        # otherwise, and pyreadr writes floats as R numeric doubles. Int32 keeps
+        # R's integer type (counts are only 0/1/2, and R has no 64-bit integer)
+        # while still allowing NA.
+        data[col] = pd.to_numeric(data[col], errors="coerce").astype("Int32")
 
     if not count_cols:
         raise SystemExit(
@@ -418,6 +423,16 @@ def main():
               f"(sample_name, variant_called) key(s); {len(data)} rows remain")
     else:
         print("Deduplicated: no duplicate (sample_name, variant_called) keys found")
+
+    # Counted after the dedupe, so the number describes the matrix that is
+    # actually written rather than the pre-collapse concat.
+    n_na_cells = int(data[count_cols].isna().sum().sum())
+    if n_na_cells:
+        n_cells = len(data) * len(count_cols)
+        print(f"NA genotypes: {n_na_cells} of {n_cells} cell(s) "
+              f"({100 * n_na_cells / n_cells:.1f}%) are NA, i.e. not called: "
+              f"the variant is absent from that sample's CSV, or the caller "
+              f"left it uncalled/multi-allelic")
 
     # ---------------------------------------------------------- metadata
     n_unmatched = 0
@@ -476,18 +491,21 @@ def main():
         )
 
     # The RDS itself is written by pyreadr (librdata), so no R installation is
-    # needed. Compression is done here rather than by pyreadr: pyreadr's gzip
-    # header carries the current mtime, so the same data would give a different
-    # file on every run and the nf-test md5 snapshots could never match. Writing
-    # the frame uncompressed and recompressing with mtime=0 keeps the output
-    # byte-identical across runs. Level 6 is the knee of the curve: level 9 is
-    # ~4x slower for ~3% smaller output.
+    # needed. pyreadr's own compression is unused: see the note at the gzip call.
     uncompressed_rds = os.path.join(output_dir, base + ".tmp.rds")
     try:
         pyreadr.write_rds(uncompressed_rds, data)
+        # pyreadr's compress='gzip' writes the current mtime and the file name
+        # into the gzip header, so the same data gives different bytes on every
+        # run and the nf-test md5 snapshots could never match. Recompressing here
+        # with mtime=0 and an empty filename keeps the output byte-identical
+        # across runs and across output paths; the empty name drops the FNAME
+        # header field, which is also what R's saveRDS writes. Level 6 is the
+        # knee of the curve: level 9 is ~4x slower for ~3% smaller output.
         with open(uncompressed_rds, "rb") as raw, \
-                gzip.GzipFile(filename=args.output, mode="wb", compresslevel=6,
-                              mtime=0) as gz:
+                open(args.output, "wb") as out, \
+                gzip.GzipFile(filename="", fileobj=out, mode="wb",
+                              compresslevel=6, mtime=0) as gz:
             shutil.copyfileobj(raw, gz, length=1024 * 1024)
     finally:
         if os.path.exists(uncompressed_rds):
@@ -496,7 +514,10 @@ def main():
     print(f"Saved RDS: {args.output}")
     if args.write_csv:
         csv_out = os.path.join(output_dir, base + ".csv")
-        data.to_csv(csv_out, index=False)
+        # na_rep keeps the CSV vocabulary the same as vcf2counts (and as the R
+        # side): a missing genotype is NA, not an empty field that a reader may
+        # silently parse as 0.
+        data.to_csv(csv_out, index=False, na_rep="NA")
         print(f"Saved CSV: {csv_out}")
 
     # Samples dropped for having no rows. Written even when empty, so the file
@@ -514,12 +535,14 @@ def main():
             "metric": ["n_samples", "n_callers", "callers", "n_rows",
                        "n_variants", "n_duplicate_keys_collapsed",
                        "n_samples_dropped", "n_rows_without_metadata",
+                       "n_na_genotypes",
                        "n_populations", "n_superpopulations",
                        "metadata_file", "population_lookup_file"],
             "value": [data["sample_name"].nunique(), len(count_cols),
                       "|".join(count_cols), len(data),
                       data["variant_called"].nunique(), n_dup_keys,
                       len(empty_samples), n_unmatched,
+                      n_na_cells,
                       data["population_code"].nunique() if args.metadata else 0,
                       n_superpop, args.metadata if args.metadata else "none",
                       args.population_lookup if args.population_lookup else "none"],

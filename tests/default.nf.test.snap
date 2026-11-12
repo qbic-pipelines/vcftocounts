@@ -68,7 +68,7 @@
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-12T10:54:31.992378",
+        "timestamp": "2026-11-12T11:53:33.229407",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -134,9 +134,9 @@
             ],
             [
                 "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
-                "all_samples.rds:md5,530aa193680367b7fbec9566a5976ec7",
+                "all_samples.rds:md5,b0f74837702c3e851695ae59e750be5a",
                 "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
-                "all_samples_summary.csv:md5,92e84f9a736a9445bcce0a5330f62cce",
+                "all_samples_summary.csv:md5,26a8690881e6ed194b16d7a62f0cda86",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr22_sample.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
             ],
@@ -161,7 +161,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-12T10:53:53.095047",
+        "timestamp": "2026-11-12T12:00:02.851062",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

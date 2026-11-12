@@ -17,9 +17,13 @@ The output is a CSV with the same semantics as the original R vcf2counts:
   - Rows are variants labelled "chrom:pos_REF/ALT" (first ALT only)
   - Columns are samples, one per VCF sample column
   - Values: 0 = hom-ref (00), 1 = het (01/10), 2 = hom-alt (11),
-    NA = anything else (uncalled, multi-allelic, etc.)
+    NA = anything else (multi-allelic, etc.)
   - The GT field is stripped of all punctuation (/|) before classification,
     so "0/1" → "01", "1|1" → "11", "0/2" → "02" → NA, etc.
+  - An uncalled genotype ("./.", ".", empty) strips to "" and is written as
+    0, the same as an explicit "0/0". For this application the two are
+    equivalent: the variant is not present in that sample either way. Only a
+    genotype that names more than one ALT allele ("0/2", "1/2") is NA.
 """
 
 import argparse
@@ -49,7 +53,7 @@ def classify_gt(gt_raw: str) -> int | None:
         "0/1"  → "01"  → 1  (het)
         "1|0"  → "10"  → 1  (het, phased)
         "1/1"  → "11"  → 2  (hom-alt)
-        "./."  → ".."  → NA (uncalled)
+        "./."  → ""    → 0  (uncalled, treated as hom-ref)
         "0/2"  → "02"  → NA (multi-allelic)
 
     Then:
@@ -57,6 +61,14 @@ def classify_gt(gt_raw: str) -> int | None:
         "01"/"10" → 1
         "00"/""   → 0
         anything else → None (→ NA)
+
+    An uncalled genotype falls into the "" case and is therefore reported as 0,
+    not as NA. That is deliberate for this application: a variant row exists
+    because at least one sample carries the ALT allele, and for every other
+    sample the question is only whether it carries that ALT. "not called" and
+    "called hom-ref" both answer no, so they map to the same 0. Only a genotype
+    naming an ALT other than the one in the row label ("./." does not; "0/2"
+    does) cannot be reduced to that yes/no and becomes NA.
     """
     gt_stripped = re.sub(r'[^\w]', '', gt_raw)  # keep only alphanumeric
     if gt_stripped == "11":
