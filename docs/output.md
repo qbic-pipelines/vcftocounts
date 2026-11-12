@@ -18,6 +18,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom Python script written by @ellisdoro
+- [Merge to RDS](#merge-to-rds) - Merges the per-sample matrices into one RDS with sample metadata using `counts2rds`
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -130,6 +131,46 @@ Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to
 A custom Python script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro). The VCF is streamed line by line rather than loaded into memory, so large cohort VCFs can be converted without a memory penalty.
 
 The CSV holds one row per variant, labelled `{chrom}:{pos}_{REF}/{ALT}` using the first ALT allele only, and one column per sample. Cells encode the genotype: `0` for hom-ref (`0/0`), `1` for het (`0/1`, `1/0`), `2` for hom-alt (`1/1`) and `NA` for anything else, such as multi-allelic genotypes (`0/2`).
+
+The first column holds the variant id (chromosome and position, unless rsIDs were kept), and every further column is one caller, holding the genotype call per variant as `0` (homozygous reference), `1` (heterozygous), `2` (homozygous alternate) or `NA` (not called). `NA` is used for both a genotype the caller left uncalled and a site the caller did not report at all, so `0` always means a real homozygous-reference call. The column name is the `label` from the samplesheet, or the sample name recorded in the VCF when `--rename false` is used. A sample that had no variants surviving filtering still produces a header-only CSV rather than no file at all.
+
+### Merge to RDS
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `counts2rds/`
+  - `all_samples.rds`: one R object holding all samples, all callers, and the sample metadata. This is the file the downstream diversity analysis reads.
+  - `all_samples.csv`: csv copy of the same table, written only when `write_csv` is set, because the RDS is binary and not inspectable by eye.
+  - `all_samples_summary.csv`: run metrics as `metric,value` rows (`n_samples`, `n_callers`, `callers`, `n_rows`, `n_variants`, `n_duplicate_keys_collapsed`, `n_samples_dropped`, `n_rows_without_metadata`, `n_na_genotypes`, `n_populations`, `n_superpopulations`, `metadata_file`, `population_lookup_file`).
+  - `all_samples_dropped_samples.csv`: samples that were dropped, with `sample_name`, `source_file` and `reason`. Written even when no sample was dropped, so the file always exists.
+
+</details>
+
+The per-sample CSVs from the previous step are pooled into a single table and saved as an RDS. The table has one row per sample and variant, with these columns:
+
+| Column                         | Description                                      |
+| ------------------------------ | ------------------------------------------------ |
+| `sample_name`                  | Sample id, taken from the CSV filename.          |
+| `variant_called`               | Variant id.                                      |
+| one column per `label`         | Genotype call per caller: `0`, `1`, `2` or `NA`. |
+| `population_code`              | Population code, e.g. `GBR`.                     |
+| `super_population_code`        | Superpopulation code, e.g. `EUR`.                |
+| `population_description`       | Population description, e.g. `British`.          |
+| `super_population_description` | Superpopulation description, e.g. `European`.    |
+
+The four metadata columns are filled from `--sample_metadata` and `--population_info`; see the [usage documentation](usage.md#sample-metadata) for the accepted file shapes. Three behaviours are worth knowing before reading the RDS:
+
+- The genotype columns hold `0` (homozygous reference), `1` (heterozygous), `2` (homozygous alternate) and `NA` (not called). `NA` is a real missing value, not a stand-in for `0`: it covers both a variant that is absent from that sample's `vcf2counts` CSV, because the caller did not report it there, and a genotype `vcf2counts` itself marked `NA` (uncalled or multi-allelic). Read it with `is.na()`, and pass `na.rm = TRUE` to any arithmetic that should ignore those cells. The count is reported as `n_na_genotypes` in the summary and in the task log.
+
+  A hom-ref `0` and a not-called `NA` answer different questions. `0` is a call: the site was evaluated for that sample and the genotype was reference, so that sample does not carry this particular ALT allele. `NA` claims nothing. A variant row exists in the VCF because at least one sample carries the ALT allele, and in that same row every other sample is `0/0`, so `0` here means "this sample does not have the variant, the other sample does". That is a genotype, not an absence of information.
+
+  `NA` appears where that reasoning breaks down. When the per-sample CSV has no row for a variant at all, the caller never reported the site for that sample and nothing can be inferred; this is the common case in a multi-caller run, because each caller emits its own variant set and the union across samples is larger than any single one. It also appears for a genotype `vcf2counts` marked `NA`, i.e. uncalled (`./.`) or multi-allelic (`0/2`), where the call exists but is not one of the three states the matrix can express. Filling either with `0` would assert a homozygous-reference genotype nobody reported.
+
+- Repeated `(sample_name, variant_called)` pairs are collapsed by taking the maximum per caller column, so the strongest genotype call wins. `data.table` rejects duplicate row names and the downstream code builds rownames as `sample_name` + `_` + `variant_called`.
+- Rows whose sample has no metadata match are kept, but their metadata columns are `NA` and they drop out of any per-population downstream stage. The count is reported as `n_rows_without_metadata` in the summary and as a warning in the task log.
+
+The RDS is written by [`pyreadr`](https://ofajardo.github.io/pyreadr/), so the module needs no R installation. Count columns are stored as R integers and the metadata columns as character with `NA`, and the file is gzip-compressed without a timestamp, so the same input always gives a byte-identical RDS.
 
 ### MultiQC
 

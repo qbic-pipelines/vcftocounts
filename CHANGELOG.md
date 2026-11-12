@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
+- [#53](https://github.com/qbic-pipelines/vcftocounts/pull/53) - Add `counts2rds`, which pools the per-sample `vcf2counts` matrices into a single `all_samples.rds` and joins the sample metadata onto it.
+
 ### `Changed`
 
 - [#51](https://github.com/qbic-pipelines/vcftocounts/pull/51) - Back to dev, update all nf-core modules and subworkflows, replace the deprecated `tabix/tabix` module with `htslib/bgziptabix`.

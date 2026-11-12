@@ -15,6 +15,7 @@ include { BCFTOOLS_VIEW                         } from '../modules/nf-core/bcfto
 include { BCFTOOLS_MERGE                        } from '../modules/nf-core/bcftools/merge'
 include { BCFTOOLS_ANNOTATE                     } from '../modules/nf-core/bcftools/annotate'
 include { VCF2COUNTS                            } from '../modules/local/vcf2counts'
+include { COUNTS2RDS                            } from '../modules/local/counts2rds'
 include { paramsSummaryMap                      } from 'plugin/nf-schema'
 include { paramsSummaryMultiqc                  } from '../subworkflows/nf-core/utils_nfcore_pipeline'
 include { softwareVersionsToYAML                } from '../subworkflows/nf-core/utils_nfcore_pipeline'
@@ -32,6 +33,7 @@ workflow VCFTOCOUNTS {
     fasta
     fai
     dict
+    ch_metadata_table
     multiqc_config
     multiqc_logo
     multiqc_methods_description
@@ -265,6 +267,17 @@ workflow VCFTOCOUNTS {
     //
     VCF2COUNTS(
         ch_removedIDs_vcfs.map { meta, vcf, _tbi -> [meta, vcf] }
+    )
+
+    // Pool every per-sample count matrix into a single task.
+    ch_counts_csvs = VCF2COUNTS.out.csv
+        .map { _meta, csv -> csv }
+        .collect()
+        .map { csvs -> [[id: 'all_samples'], csvs] }
+
+    COUNTS2RDS(
+        ch_counts_csvs,
+        ch_metadata_table
     )
 
     //
