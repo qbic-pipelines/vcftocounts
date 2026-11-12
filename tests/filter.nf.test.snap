@@ -116,7 +116,7 @@
                 "annotated.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-09T11:03:35.414404",
+        "timestamp": "2026-11-12T10:55:00.483593",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -225,7 +225,7 @@
                 "annotated.bcftools_stats.txt:md5,086e8837c1e6936125889969e8fd13d5",
                 "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
                 "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
-                "all_samples.rds:md5,08f3c60febd678e4f4f205ae6590be95",
+                "all_samples.rds:md5,0006626e19e08557145f528586ed8b80",
                 "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
                 "all_samples_summary.csv:md5,26370b3477ccd7a4eadfcdc6eee3c968",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
@@ -243,11 +243,6 @@
             ],
             [
                 [
-                    "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi",
-                    "chr21_ann_sample,chr21_ann_callerA,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
-                    "chr21_ann_sample,chr21_ann_callerB,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi"
-                ],
-                [
                     ",chr21_ann_callerA,chr21_ann_callerB",
                     "chr21:10462834_A/G,1,1",
                     "chr21:10569701_C/T,1,1",
@@ -259,7 +254,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-09T11:45:33.055324",
+        "timestamp": "2026-11-12T10:54:14.687919",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

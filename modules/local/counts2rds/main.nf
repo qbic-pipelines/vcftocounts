@@ -4,11 +4,11 @@ process COUNTS2RDS {
 
     conda "${moduleDir}/environment.yml"
     container "${workflow.containerEngine == 'singularity' && !task.ext.singularity_pull_docker_container
-        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/79/796ae8263fbd0df33c24322acbe985e1851045461d7a8e335ee0e5df4dcc96e6/data'
-        : 'community.wave.seqera.io/library/pandas_rpy2:50401fa0182d5917'}"
+        ? 'https://community-cr-prod.seqera.io/docker/registry/v2/blobs/sha256/9d/9d2d32679d6075e6f6f95600e96531beb321a54e510a1e9ccc472b2174dd0662/data'
+        : 'community.wave.seqera.io/library/pandas_pyreadr:65b993d44598cac9'}"
 
     input:
-    tuple val(meta), path(csvs)
+    tuple val(meta), path(csvs, stageAs: 'counts/*')
     tuple val(meta2), path(sample_metadata), path(population_info)
 
     output:
@@ -21,12 +21,16 @@ process COUNTS2RDS {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     def write_csv = meta.write_csv ? "--write-csv" : ""
+    // Both metadata files are optional: an unset parameter reaches argparse as
+    // the literal string "null", which it rejects.
+    def metadata = sample_metadata ? "--metadata ${sample_metadata}" : ""
+    def population = population_info ? "--population ${population_info}" : ""
     """
     counts2rds.py \\
-        --input-dir '.' \\
+        --input-dir counts/ \\
         ${write_csv} \\
-        --metadata ${sample_metadata} \\
-        --population ${population_info} \\
+        ${metadata} \\
+        ${population} \\
         --output ${prefix}.rds
     """
 

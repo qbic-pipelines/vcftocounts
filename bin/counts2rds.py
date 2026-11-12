@@ -48,16 +48,24 @@ Output (one RDS):
 
 import argparse
 import glob
+import gzip
 import os
+import shutil
 
 import pandas as pd
-import rpy2.robjects as ro
-from rpy2.robjects import r
+import pyreadr
 
 # Accepted source column names -> analysis-side names. First match wins, so the
 # more specific names are listed before the generic ones. This is what lets one
 # script read both the analysis-shaped metadata file and the 1000G sequence
 # index without a flag.
+#
+# Only columns that end up in the RDS are mapped. Other identifiers a metadata
+# file may carry (id, sample_accession, ...) are left alone: nothing downstream
+# reads them, and the R count-matrix code derives the caller columns as
+# setdiff(colnames, metadata_cols), so an extra character column would be taken
+# for a caller. Overwriting them with a flag can come with the first downstream
+# consumer that needs them.
 ALIASES = [
     ("sample_name", ["Run", "SAMPLE_NAME", "sample_name", "Sample", "sample"]),
     ("population_code", ["population", "POPULATION", "population_code", "Population"]),
@@ -117,9 +125,7 @@ def detect_separator(path):
         header = fh.readline()
     if "\t" in header:
         return "\t"
-    if header.count(",") >= header.count(";") and "," in header:
-        return ","
-    if ";" in header:
+    if ";" in header and header.count(";") > header.count(","):
         return ";"
     return ","
 
@@ -195,8 +201,8 @@ def normalise_metadata(demo, lookup=None):
 
     n_rows_in = len(demo)
 
-    # Collapse to one row per sample. sort=False keeps first-seen order, which
-    # for a sequence index means the first FASTQ entry for that sample.
+    # Collapse to one row per sample. drop_duplicates keeps first-seen order,
+    # which for a sequence index means the first FASTQ entry for that sample.
     demo = demo.drop_duplicates(subset="sample_name", keep="first")
     print(f"Metadata: {n_rows_in} rows -> {len(demo)} sample(s) after collapsing")
 
@@ -356,22 +362,32 @@ def main():
     for s in empty_samples:
         print(f"  WARNING: dropping sample {s['sample_name']} - {s['reason']}")
 
-    data = pd.concat(dfs, ignore_index=True, sort=False)
+    data = pd.concat(dfs, ignore_index=True)
     print(f"Concatenated: {len(data)} rows x {len(data.columns)} cols "
           f"from {len(dfs)} sample(s)")
 
     # ----------------------------------------------------- fill + coerce
-    # Non-numeric columns other than the ids are coerced to int, so a sample
-    # whose CSV came back as strings does not break the merge downstream.
+    # Every non-id column is a caller count column and is coerced to int, so a
+    # sample whose CSV came back as strings does not break the merge downstream.
+    # The conversion runs unconditionally: pandas 3 reads the text CSVs as its
+    # `str` dtype, which is not `object`, so a dtype check here would skip the
+    # conversion and `astype` would fail on the remaining strings.
     # NOTE: NA genotypes (multi-allelic, uncalled) are written as 0 here,
     # i.e. they are recorded as homozygous reference.
-    for col in data.columns:
-        if col not in ID_COLS:
-            if data[col].dtype == "object":
-                data[col] = pd.to_numeric(data[col], errors="coerce")
-            data[col] = data[col].fillna(0).astype(int)
-
     count_cols = [c for c in data.columns if c not in ID_COLS]
+    n_na_genotypes = 0
+    for col in count_cols:
+        numeric = pd.to_numeric(data[col], errors="coerce")
+        n_na_genotypes += int(numeric.isna().sum())
+        # int32 rather than the default int64: counts are only 0/1/2, and R has
+        # no 64-bit integer, so pyreadr writes int64 as a double. Declaring
+        # int32 keeps the RDS column an R integer, which is what the diversity
+        # analysis expects (and halves the memory of the merge).
+        data[col] = numeric.fillna(0).astype("int32")
+    if n_na_genotypes:
+        print(f"  WARNING: {n_na_genotypes} NA genotype(s) were written as 0 "
+              f"(homozygous reference)")
+
     if not count_cols:
         raise SystemExit(
             f"No caller count columns found; only id columns {list(ID_COLS)} "
@@ -389,11 +405,13 @@ def main():
     # each count column, i.e. the strongest genotype call wins (2 beats 1 beats 0).
     # Required: data.table rejects duplicate row names, and data_io.R assigns
     # rownames as paste0(sample_name, "_", variant_called).
-    n_before = len(data)
     # duplicated() is a single hash pass; calling groupby().ngroups here instead
     # would run the whole grouping twice on the common no-duplicates path.
     n_dup_keys = int(data.duplicated(subset=list(ID_COLS)).sum())
     if n_dup_keys > 0:
+        # groupby sorts its keys unless told otherwise; sort=False keeps the
+        # original row order, so the RDS row order does not depend on how many
+        # duplicates happened to be present.
         data = (data.groupby(list(ID_COLS), as_index=False, sort=False)[count_cols]
                     .max())
         print(f"Deduplicated: collapsed {n_dup_keys} duplicate "
@@ -440,37 +458,40 @@ def main():
     output_dir = os.path.dirname(os.path.abspath(args.output))
     base = os.path.splitext(os.path.basename(args.output))[0]
 
-    # Write the RDS through a temporary CSV instead of converting the pandas
-    # frame with rpy2. Direct conversion costs ~100 s for 3.5 M rows: rpy2 walks
-    # every column through pandas2ri and copies the mixed character/numeric frame
-    # repeatedly, which also produces "Error while trying to convert the column"
-    # warnings for all-NA columns. Writing the CSV and letting R parse it with
-    # explicit colClasses takes ~16 s and removes the warnings, because the
-    # column types are declared rather than guessed. The CSV is transport only:
-    # it is deleted afterwards and is not an output of the module.
-    transport_csv = os.path.join(output_dir, base + ".transport.tmp.csv")
-    col_classes = ["integer" if str(dt).startswith(("int", "uint")) else "character"
-                   for dt in data.dtypes]
-    try:
-        # na_rep="NA" matches read.csv's default na.strings, so missing metadata
-        # arrives in R as a true NA rather than an empty string.
-        data.to_csv(transport_csv, index=False, na_rep="NA")
+    # Metadata columns are declared as pandas' nullable string dtype so that an
+    # all-empty column (no superpopulation anywhere) is written as R character
+    # NA. An object column that is entirely NA is written as logical instead,
+    # which would change the column type of the RDS between runs.
+    for col in ANALYSIS_METADATA_COLS:
+        if col in data.columns:
+            data[col] = data[col].astype("string")
 
-        r.assign("transport_csv", transport_csv)
-        r.assign("transport_classes", ro.StrVector(col_classes))
-        r.assign("transport_out", args.output)
-        # comment.char="" is required because "#" would otherwise truncate any
-        # line containing one, silently dropping data.
-        r("""
-          transport_df <- read.csv(transport_csv, header = TRUE,
-                                   stringsAsFactors = FALSE,
-                                   colClasses = transport_classes,
-                                   comment.char = "", check.names = FALSE)
-          saveRDS(transport_df, file = transport_out)
-        """)
+    # pyreadr rejects duplicate column names outright, and the merge above can
+    # produce them if a metadata file carries a column already in the counts.
+    duplicated = sorted(set(data.columns[data.columns.duplicated()]))
+    if duplicated:
+        raise SystemExit(
+            f"Duplicate column name(s) in the merged table: {', '.join(duplicated)}. "
+            f"Rename or drop them before writing the RDS."
+        )
+
+    # The RDS itself is written by pyreadr (librdata), so no R installation is
+    # needed. Compression is done here rather than by pyreadr: pyreadr's gzip
+    # header carries the current mtime, so the same data would give a different
+    # file on every run and the nf-test md5 snapshots could never match. Writing
+    # the frame uncompressed and recompressing with mtime=0 keeps the output
+    # byte-identical across runs. Level 6 is the knee of the curve: level 9 is
+    # ~4x slower for ~3% smaller output.
+    uncompressed_rds = os.path.join(output_dir, base + ".tmp.rds")
+    try:
+        pyreadr.write_rds(uncompressed_rds, data)
+        with open(uncompressed_rds, "rb") as raw, \
+                gzip.GzipFile(filename=args.output, mode="wb", compresslevel=6,
+                              mtime=0) as gz:
+            shutil.copyfileobj(raw, gz, length=1024 * 1024)
     finally:
-        if os.path.exists(transport_csv):
-            os.remove(transport_csv)
+        if os.path.exists(uncompressed_rds):
+            os.remove(uncompressed_rds)
 
     print(f"Saved RDS: {args.output}")
     if args.write_csv:

@@ -141,7 +141,7 @@ The first column holds the variant id (chromosome and position, unless rsIDs wer
 
 - `counts2rds/`
   - `all_samples.rds`: one R object holding all samples, all callers, and the sample metadata. This is the file the downstream diversity analysis reads.
-  - `all_samples.csv`: csv copy of the same table, written because the RDS is binary and not inspectable by eye.
+  - `all_samples.csv`: csv copy of the same table, written only when `write_csv` is set, because the RDS is binary and not inspectable by eye.
   - `all_samples_summary.csv`: run metrics as `metric,value` rows (`n_samples`, `n_callers`, `callers`, `n_rows`, `n_variants`, `n_duplicate_keys_collapsed`, `n_samples_dropped`, `n_rows_without_metadata`, `n_populations`, `n_superpopulations`, `metadata_file`, `population_lookup_file`).
   - `all_samples_dropped_samples.csv`: samples that were dropped, with `sample_name`, `source_file` and `reason`. Written even when no sample was dropped, so the file always exists.
 
@@ -165,6 +165,8 @@ The four metadata columns are filled from `--sample_metadata` and `--population_
 - Genotypes that are `NA` in the VCF, such as multi-allelic or uncalled sites, are written as `0` and are therefore indistinguishable from homozygous reference in the RDS.
 
 Rows whose sample has no metadata match are kept, but their metadata columns are `NA` and they drop out of any per-population downstream stage. The count is reported as `n_rows_without_metadata` in the summary and as a warning in the task log.
+
+The RDS is written by [`pyreadr`](https://ofajardo.github.io/pyreadr/), so the module needs no R installation. Count columns are stored as R integers and the metadata columns as character with `NA`, and the file is gzip-compressed without a timestamp, so the same input always gives a byte-identical RDS.
 
 ### MultiQC
 

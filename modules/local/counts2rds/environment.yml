@@ -3,4 +3,4 @@ channels:
   - bioconda
 dependencies:
   - conda-forge::pandas=3.0.6
-  - conda-forge::rpy2=3.6.8
+  - conda-forge::pyreadr=0.5.9

@@ -39,12 +39,14 @@
                 },
                 "sample_metadata": {
                     "type": "string",
+                    "default": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/20130502.phase3.analysis.sequence.index",
                     "description": "Sample metadata table (sample to population).",
                     "help_text": "Path or URL to a table that maps each sample to a population code. Two shapes are accepted, detected from the column names: an analysis-shaped csv with one row per sample and columns such as `Run` and `population`, or the 1000 Genomes sequence index (tab-separated, many rows per sample, `SAMPLE_NAME` and `POPULATION` are read and the remaining columns ignored). The default points at the phase 3 sequence index. Pass an empty string to disable the metadata join, in which case the RDS carries count columns only.",
                     "fa_icon": "fas fa-file-csv"
                 },
                 "population_info": {
                     "type": "string",
+                    "default": "https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/20131219.populations.tsv",
                     "description": "Population lookup table supplying superpopulation codes and descriptions.",
                     "help_text": "Path or URL to a table keyed on population code that supplies the superpopulation code and the population descriptions, for example the 1000 Genomes `populations.tsv`. The sequence index alone carries neither superpopulation nor descriptions, so this file is what fills those three RDS columns. Both space-separated (`Population Code`) and underscore (`population_code`) headers are accepted. Pass an empty string to leave the superpopulation columns empty.",
                     "fa_icon": "fas fa-file-csv"
