@@ -21,15 +21,14 @@ process COUNTS2RDS {
     script:
     def prefix = task.ext.prefix ?: "${meta.id}"
     def write_csv = meta.write_csv ? "--write-csv" : ""
-    // Both metadata files are optional: an unset parameter reaches argparse as
+    // population_info is optional: an unset parameter reaches argparse as
     // the literal string "null", which it rejects.
-    def metadata = sample_metadata ? "--metadata ${sample_metadata}" : ""
     def population = population_info ? "--population ${population_info}" : ""
     """
     counts2rds.py \\
         --input-dir counts/ \\
         ${write_csv} \\
-        ${metadata} \\
+        --metadata ${sample_metadata} \\
         ${population} \\
         --output ${prefix}.rds
     """
