@@ -225,10 +225,9 @@ workflow VCFTOCOUNTS {
             [meta.id, meta, vcf, tbi]
         }
         .groupTuple(by: 0)
-        .map { _id, metas, vcfs, tbis ->
-            def meta = metas[0].findAll { k, _v -> k != 'name' }
-            // Take the first meta without filename, they should all be the same for a given ID
-            [meta, vcfs.flatten(), tbis.flatten()]
+        .map { id, _metas, vcfs, tbis ->
+            // improve caching by using a stable meta
+            [[id: id], vcfs.flatten(), tbis.flatten()]
         }
         .branch { _meta, vcfs, _tbis ->
             single: vcfs.size == 1
