@@ -12,11 +12,10 @@ Usage:
 
 --metadata is required and is either analysis-shaped (one row per sample) or the
 1000G sequence index (many rows per sample, tab-separated). Population columns
-are optional: if absent, metadata supplies sample mapping and custom analysis
-columns while population fields default to NA.
+are optional: if absent, metadata supplies sample mapping while population fields
+default to NA.
 Output columns: sample_name, variant_called, <one per caller>, population_code,
-super_population_code, population_description, super_population_description,
-plus any additional custom columns present in the metadata.
+super_population_code.
 
 Genotypes: 0 = hom ref, 1 = het, 2 = hom alt, NA = not called (absent from that
 sample's CSV, or uncalled/multi-allelic). NA is never filled with 0: that would
@@ -34,18 +33,14 @@ import pyreadr
 
 # Source column name -> analysis name, first match wins. This is what reads both
 # the analysis-shaped metadata and the 1000G sequence index without a flag. Only
-# standard population/sample columns that reach the RDS are mapped. Any custom
-# analysis columns present in the metadata will be preserved through the merge.
+# columns that reach the RDS are mapped: hill_calculations.R derives its caller
+# columns as setdiff(colnames, metadata_cols), so an extra character column would
+# be taken for a caller.
 ALIASES = [
     ("sample_name", ["Run", "SAMPLE_NAME", "sample_name", "Sample", "sample"]),
     ("population_code", ["population", "POPULATION", "population_code", "Population"]),
     ("super_population_code", ["Super_Population_Code", "super_population_code",
                                "SUPER_POPULATION_CODE", "super_population"]),
-    ("population_description", ["Population_Description", "population_description",
-                                "POPULATION_DESCRIPTION"]),
-    ("super_population_description", ["Super_Population_Description",
-                                      "super_population_description",
-                                      "SUPER_POPULATION_DESCRIPTION"]),
 ]
 # The lookup additionally accepts the space-and-title spelling populations.tsv uses.
 POP_LOOKUP_ALIASES = [
@@ -54,27 +49,27 @@ POP_LOOKUP_ALIASES = [
     for target, names in ALIASES
 ]
 
-ANALYSIS_METADATA_COLS = ["sample_name", "population_code", "super_population_code",
-                          "population_description", "super_population_description"]
+ANALYSIS_METADATA_COLS = ["sample_name", "population_code", "super_population_code"]
 ID_COLS = ("sample_name", "variant_called")          # not per-caller counts
 BLANKS = ("", "na", "nan", "none", "null", ".")      # strings meaning "no value"
-SUPER_POP_NAMES = {"AFR": "African", "AMR": "Admixed American", "EAS": "East Asian",
-                   "EUR": "European", "SAS": "South Asian"}
 _ALIAS_NAMES = {n for _, names in ALIASES + POP_LOOKUP_ALIASES for n in names}
 
 
 def read_table(path):
-    """Read a metadata table.
+    """Read a metadata table, parsing only columns an alias can match.
 
     The separator comes from the header line, because the sequence index is
-    tab-separated with no .tsv extension. If known standard aliases match, we can
-    use usecols to optimize, but to fully preserve custom user analysis columns,
-    we read the full table structure.
+    tab-separated with no .tsv extension. Loading just the matching columns is what
+    keeps large sequence index files a lightweight scan. If nothing matches, the
+    whole file is read so the error can list the columns it does have.
     """
     with open(path, encoding="utf-8", errors="replace") as fh:
         header = fh.readline()
     sep = "\t" if "\t" in header else ";" if header.count(";") > header.count(",") else ","
-    return pd.read_csv(path, sep=sep, dtype=str, low_memory=False)
+    columns = [c for c in pd.read_csv(path, sep=sep, nrows=0, dtype=str).columns
+               if c in _ALIAS_NAMES]
+    return pd.read_csv(path, sep=sep, usecols=columns or None, dtype=str,
+                       low_memory=False)
 
 
 def to_analysis(frame, aliases, required, what):
@@ -100,7 +95,7 @@ def blank_to_na(series):
 
 
 def normalise_metadata(demo, lookup=None):
-    """Build analysis metadata columns, preserving any custom user columns.
+    """Build the three analysis metadata columns, one row per sample.
 
     The sequence index carries many rows per sample, so it is collapsed to one row
     per sample first: that is what keeps the merge at sample count, not row count.
@@ -129,30 +124,22 @@ def normalise_metadata(demo, lookup=None):
                              "Population lookup file")
         lookup = lookup.drop_duplicates(subset="population_code", keep="first")
         lookup = lookup.set_index("population_code")
-        for col in ("super_population_code", "population_description",
-                    "super_population_description"):
-            if col in lookup.columns:
-                demo[col] = demo[col].fillna(demo["population_code"].map(lookup[col]))
+        if "super_population_code" in lookup.columns:
+            demo["super_population_code"] = demo["super_population_code"].fillna(
+                demo["population_code"].map(lookup["super_population_code"]))
         print(f"Population lookup: {len(lookup)} population(s) applied")
     elif lookup is not None and not has_pop:
-        print("  NOTE: --population-lookup provided, but metadata has no population codes; lookup ignored")
+        print("  NOTE: --population provided, but metadata has no population codes; lookup ignored")
 
     if has_pop:
-        # populations.tsv carries only the superpopulation CODE, so derive its label.
-        demo["super_population_description"] = demo["super_population_description"].fillna(
-            demo["super_population_code"].map(SUPER_POP_NAMES))
-        if n_filled := int(demo["super_population_description"].notna().sum()):
-            print(f"Superpopulation descriptions: filled {n_filled} sample(s) "
-                  f"from the superpopulation code")
-
         # Fill leftovers from another row sharing the population_code.
-        for col in ("super_population_code", "super_population_description",
-                    "population_description"):
-            known = (demo[demo[col].notna()].drop_duplicates(subset="population_code")
-                     .set_index("population_code")[col])
-            demo[col] = demo[col].fillna(demo["population_code"].map(known))
+        known = (demo[demo["super_population_code"].notna()]
+                 .drop_duplicates(subset="population_code")
+                 .set_index("population_code")["super_population_code"])
+        demo["super_population_code"] = demo["super_population_code"].fillna(
+            demo["population_code"].map(known))
 
-    return demo.reset_index(drop=True)
+    return demo[ANALYSIS_METADATA_COLS].reset_index(drop=True)
 
 
 def load_sample(path, empty_samples):
@@ -265,7 +252,7 @@ def load_counts(input_dir, staged):
 
 
 def attach_metadata(data, metadata, lookup_path):
-    """Left-join sample demographics and custom columns onto the counts.
+    """Left-join sample demographics onto the counts.
 
     Returns (data, n_superpop, n_unmatched).
     """
@@ -286,7 +273,7 @@ def attach_metadata(data, metadata, lookup_path):
             print("  NOTE: no superpopulation values available; per-superpopulation "
                   "stages will be empty. Pass --population to supply them.")
     else:
-        print("Metadata: loaded sample names and custom columns (no population information present)")
+        print("Metadata: loaded sample names (no population information present)")
 
     data = data.merge(demo, on="sample_name", how="left")
 
@@ -366,11 +353,11 @@ def main():
     p.add_argument("--input-dir", required=True,
                    help="Dir with per-sample vcf2counts CSVs")
     p.add_argument("--metadata", required=True,
-                   help="Sample metadata file (required: supplies sample mapping "
-                        "and any custom analysis columns; population columns are optional)")
+                   help="Sample metadata file (required: supplies sample mapping; "
+                        "population columns are optional)")
     p.add_argument("--population", default=None,
                    help="Table keyed on population code supplying the superpopulation "
-                        "code and the two *_description columns, e.g. populations.tsv")
+                        "code, e.g. populations.tsv")
     p.add_argument("--output", required=True, help="Output RDS file path")
     p.add_argument("--write-csv", action="store_true",
                    help="Also write a CSV copy of the merged table (large; the RDS "

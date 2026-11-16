@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
-- [#53](https://github.com/qbic-pipelines/vcftocounts/pull/53) - Add `counts2rds`, which pools the per-sample `vcf2counts` matrices into a single `all_samples.rds` and joins the sample metadata onto it.
+- [#53](https://github.com/qbic-pipelines/vcftocounts/pull/53) - Add `counts2rds`, which pools the per-sample `vcf2counts` matrices into a single `all_samples.rds` and joins the sample metadata onto it. Modify `vcf2counts` so that uncalled variants are denoted as NA instead of 0.
 
 ### `Changed`
 
