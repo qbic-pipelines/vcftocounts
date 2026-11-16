@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### `Added`
 
+- [#55](https://github.com/qbic-pipelines/vcftocounts/pull/55) - Add mmd based pipeline diagram
+
 ### `Changed`
 
 - [#51](https://github.com/qbic-pipelines/vcftocounts/pull/51) - Back to dev, update all nf-core modules and subworkflows, replace the deprecated `tabix/tabix` module with `htslib/bgziptabix`.
