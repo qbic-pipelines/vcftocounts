@@ -25,8 +25,8 @@
 %%metro marker: reheader | square, open
 %%metro marker: merge | circle, open
 %%metro marker: annotate | square, open
-%%metro marker: vcf2counts | circle, solid
-%%metro marker: multiqc | circle, solid
+%%metro marker: vcf2counts | circle, closed | #0570b0
+%%metro marker: multiqc | circle, closed | #0570b0
 
 %%metro group: no index | bgziptabix | below
 %%metro group: gVCF only | genotypegvcfs | below
@@ -36,7 +36,7 @@
 
 %%metro marker_legend: circle, open | Runs when applicable
 %%metro marker_legend: square, open | Runs when flag is set
-%%metro marker_legend: circle, solid | Runs always
+%%metro marker_legend: circle, closed | Runs always
 
 %%metro process_scope: QBICPIPELINES_VCFTOCOUNTS
 %%metro process: bgziptabix | VCFTOCOUNTS:HTSLIB_BGZIPTABIX
