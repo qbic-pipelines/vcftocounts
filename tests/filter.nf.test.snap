@@ -1,7 +1,7 @@
 {
     "-profile test --filter 'INFO/CSQ ~ 'HIGH'' - stub": {
         "content": [
-            16,
+            17,
             {
                 "AFTER_FILTER_STATS": {
                     "bcftools": 1.25
@@ -20,6 +20,9 @@
                 },
                 "BEFORE_FILTER_STATS": {
                     "bcftools": 1.25
+                },
+                "COUNTS2RDS": {
+                    "counts2rds": "1.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -65,6 +68,10 @@
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
+                "counts2rds",
+                "counts2rds/all_samples.rds",
+                "counts2rds/all_samples_dropped_samples.csv",
+                "counts2rds/all_samples_summary.csv",
                 "htslib",
                 "htslib/chr21_ann_callerA",
                 "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz",
@@ -91,6 +98,9 @@
                 "annotated.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "annotated.filter.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "info_filtered_variants.csv:md5,23f561e754c7ac127fcce400651818dd",
+                "all_samples.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples_dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr21_ann_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -106,7 +116,7 @@
                 "annotated.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-06T11:48:42.348497",
+        "timestamp": "2026-11-12T11:56:50.04013",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -114,7 +124,7 @@
     },
     "-profile test --filter 'INFO/CSQ ~ 'HIGH''": {
         "content": [
-            16,
+            17,
             {
                 "AFTER_FILTER_STATS": {
                     "bcftools": 1.25
@@ -133,6 +143,9 @@
                 },
                 "BEFORE_FILTER_STATS": {
                     "bcftools": 1.25
+                },
+                "COUNTS2RDS": {
+                    "counts2rds": "1.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -178,6 +191,10 @@
                 "bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi",
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
+                "counts2rds",
+                "counts2rds/all_samples.rds",
+                "counts2rds/all_samples_dropped_samples.csv",
+                "counts2rds/all_samples_summary.csv",
                 "htslib",
                 "htslib/chr21_ann_callerA",
                 "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz",
@@ -208,6 +225,9 @@
                 "annotated.bcftools_stats.txt:md5,086e8837c1e6936125889969e8fd13d5",
                 "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
                 "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
+                "all_samples.rds:md5,49cced0e9be20f8db8974403e309e066",
+                "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
+                "all_samples_summary.csv:md5,01dc7d312283dec67bfa66538f13b0a0",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr21_ann_sample.csv:md5,175ee2cdbc9fe17c6f5312b8c2cebdac"
             ],
@@ -223,11 +243,6 @@
             ],
             [
                 [
-                    "sample,label,numVarBefore,numVarAfter,fractionFilteredVar,vcf,tbi",
-                    "chr21_ann_sample,chr21_ann_callerA,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerA/annotated.filter.vcf.gz.tbi",
-                    "chr21_ann_sample,chr21_ann_callerB,5889,7,0.0011886568177958906,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz,bcftools/view/chr21_ann_callerB/annotated.filter.vcf.gz.tbi"
-                ],
-                [
                     ",chr21_ann_callerA,chr21_ann_callerB",
                     "chr21:10462834_A/G,1,1",
                     "chr21:10569701_C/T,1,1",
@@ -239,7 +254,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-09T11:45:33.055324",
+        "timestamp": "2026-11-12T12:03:45.637321",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

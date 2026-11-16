@@ -1,13 +1,16 @@
 {
     "-profile test - stub": {
         "content": [
-            6,
+            7,
             {
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.25
                 },
                 "BCFTOOLS_REHEADER": {
                     "bcftools": 1.25
+                },
+                "COUNTS2RDS": {
+                    "counts2rds": "1.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -31,6 +34,10 @@
                 "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
+                "counts2rds",
+                "counts2rds/all_samples.rds",
+                "counts2rds/all_samples_dropped_samples.csv",
+                "counts2rds/all_samples_summary.csv",
                 "htslib",
                 "htslib/chr22_label",
                 "htslib/chr22_label/NA12878.chr22.1X.indexed.vcf.gz",
@@ -48,6 +55,9 @@
             ],
             [
                 "chr22_label.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples_dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "chr22_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -58,7 +68,7 @@
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-09T11:33:41.550493",
+        "timestamp": "2026-11-12T11:53:33.229407",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -66,13 +76,16 @@
     },
     "-profile test": {
         "content": [
-            6,
+            7,
             {
                 "BCFTOOLS_ANNOTATE": {
                     "bcftools": 1.25
                 },
                 "BCFTOOLS_REHEADER": {
                     "bcftools": 1.25
+                },
+                "COUNTS2RDS": {
+                    "counts2rds": "1.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -96,6 +109,10 @@
                 "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
+                "counts2rds",
+                "counts2rds/all_samples.rds",
+                "counts2rds/all_samples_dropped_samples.csv",
+                "counts2rds/all_samples_summary.csv",
                 "htslib",
                 "htslib/chr22_label",
                 "htslib/chr22_label/NA12878.chr22.1X.indexed.vcf.gz",
@@ -117,6 +134,9 @@
             ],
             [
                 "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
+                "all_samples.rds:md5,b0f74837702c3e851695ae59e750be5a",
+                "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
+                "all_samples_summary.csv:md5,26a8690881e6ed194b16d7a62f0cda86",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr22_sample.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
             ],
@@ -141,7 +161,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-09T11:33:25.826663",
+        "timestamp": "2026-11-12T12:00:02.851062",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

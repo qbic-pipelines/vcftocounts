@@ -8,7 +8,7 @@ This document describes the usage of the pipeline. The pipeline processes (g)VCF
 
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 5 columns, and a header row as shown in the examples below.
 
 ```bash
 --input '[path to samplesheet file]' --genome '[genome version]'
@@ -95,6 +95,36 @@ Notably, this enables filtering for variants with certain impact levels or conse
 
 > [!NOTE]
 > The filtering step only works with conda for nextflow versions above 24.10.2 (use docker or singularity if you want to use an older nextflow version)
+
+### Sample metadata
+
+The pipeline joins sample metadata onto the final count matrix so that the RDS is ready for a population-level analysis without any further file wrangling. Two parameters control this:
+
+- `--sample_metadata`: maps each sample to a population code.
+- `--population_info`: maps each population code to a superpopulation code and descriptions.
+
+Both accept a local path or a URL and default to the 1000 Genomes phase 3 files, so a run on 1000 Genomes data needs no extra arguments:
+
+```bash
+--sample_metadata 'https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/20130502.phase3.analysis.sequence.index'
+--population_info 'https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/20131219.populations.tsv'
+```
+
+`--sample_metadata` accepts two shapes, detected from the column names rather than from the file extension or a flag:
+
+| Shape                       | Example columns             | Notes                                                                                                                                                  |
+| --------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Analysis-shaped             | `Run`, `population`         | One row per sample. Also accepts `SAMPLE_NAME`, `Sample` or `sample` for the sample column and `POPULATION` or `Population` for the population column. |
+| 1000 Genomes sequence index | `SAMPLE_NAME`, `POPULATION` | Tab-separated, many rows per sample. Only those two columns are read; the other 24 are skipped, so the 67 MB index costs one two-column scan.          |
+
+The file is collapsed to one row per sample before the join, so a sequence index with many FASTQ rows per sample does not multiply the count table. The first row seen for a sample wins.
+
+`--population_info` is keyed on population code and supplies `super_population_code`, `population_description` and `super_population_description`. The 1000 Genomes `populations.tsv` spells its headers with spaces (`Population Code`, `Super Population`), so both that and the underscore form are accepted. That file has no superpopulation description column, so `super_population_description` is derived from the code (`EAS` becomes `East Asian`).
+
+To run without metadata, pass an empty string for either parameter. `--sample_metadata ''` writes count columns only, and `--population_info ''` leaves the superpopulation columns empty. Samples whose id does not appear in the metadata file are kept in the RDS with `NA` metadata columns and are reported in the task log.
+
+> [!NOTE]
+> The sample ids in the metadata file have to match the `sample` column of the samplesheet as it appears in the CSV filenames. If a sample is reported as having no metadata match, check that first.
 
 ### Updating the pipeline
 

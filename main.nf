@@ -89,6 +89,15 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
     fai = params.fai ? channel.fromPath(params.fai).collect() : channel.value([])
     dict = params.dict ? channel.fromPath(params.dict).collect() : channel.value([])
 
+    // Metadata: two files -- the sample->population index and the
+    // population->superpopulation table. counts2rds.py joins them, so they are
+    // passed as a pair.
+    ch_metadata_table = channel.value([
+        [id: 'metadata'],
+        params.sample_metadata ? file(params.sample_metadata, checkIfExists: true) : [],
+        params.population_info ? file(params.population_info, checkIfExists: true) : [],
+    ])
+
     //
     // WORKFLOW: Run pipeline
     //
@@ -97,6 +106,7 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
         fasta,
         fai,
         dict,
+        ch_metadata_table,
         params.multiqc_config,
         params.multiqc_logo,
         params.multiqc_methods_description,

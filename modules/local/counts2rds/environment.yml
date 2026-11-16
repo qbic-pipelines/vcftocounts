@@ -1,0 +1,6 @@
+channels:
+  - conda-forge
+  - bioconda
+dependencies:
+  - conda-forge::pandas=3.0.6
+  - conda-forge::pyreadr=0.5.9
