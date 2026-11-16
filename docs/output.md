@@ -161,7 +161,7 @@ The per-sample CSVs from the previous step are pooled into a single table and sa
 
 The four metadata columns are filled from `--sample_metadata` and `--population_info`; see the [usage documentation](usage.md#sample-metadata) for the accepted file shapes. Three behaviours are worth knowing before reading the RDS:
 
-- The genotype columns hold `0` (homozygous reference), `1` (heterozygous), `2` (homozygous alternate) and `0` (not called). 
+- The genotype columns hold `0` (homozygous reference), `1` (heterozygous), `2` (homozygous alternate) and `0` (not called).
 
 - Repeated `(sample_name, variant_called)` pairs are collapsed by taking the maximum per caller column, so the strongest genotype call wins. `data.table` rejects duplicate row names and the downstream code builds rownames as `sample_name` + `_` + `variant_called`.
 - Rows whose sample has no metadata match are kept, but their metadata columns are `NA` and they drop out of any per-population downstream stage. The count is reported as `n_rows_without_metadata` in the summary and as a warning in the task log.
