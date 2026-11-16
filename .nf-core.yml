@@ -27,7 +27,7 @@ lint:
     - validation.help.afterText
     - validation.summary.beforeText
     - validation.summary.afterText
-nf_core_version: 4.2.1
+nf_core_version: 4.2.2
 repository_type: pipeline
 template:
   author: "Famke B\xE4uerle, Dorothy Ellis"
@@ -43,4 +43,4 @@ template:
     - codespaces
     - fastqc
     - adaptivecard
-  version: 2.1.0
+  version: 2.2.0dev
