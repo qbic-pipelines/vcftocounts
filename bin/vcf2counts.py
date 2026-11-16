@@ -53,13 +53,13 @@ def classify_gt(gt_raw: str) -> int | None:
         "0/1"  → "01"  → 1  (het)
         "1|0"  → "10"  → 1  (het, phased)
         "1/1"  → "11"  → 2  (hom-alt)
-        "./."  → ""    → 0  (uncalled, treated as hom-ref)
+        "./."  → ""    → NA (uncalled)
         "0/2"  → "02"  → NA (multi-allelic)
 
     Then:
         "11"      → 2
         "01"/"10" → 1
-        "00"/""   → 0
+        "00"      → 0
         anything else → None (→ NA)
 
     An uncalled genotype falls into the "" case and is therefore reported as 0,
@@ -75,7 +75,7 @@ def classify_gt(gt_raw: str) -> int | None:
         return 2
     if gt_stripped in ("01", "10"):
         return 1
-    if gt_stripped in ("00", ""):
+    if gt_stripped in ("00"):
         return 0
     return None  # NA
 
