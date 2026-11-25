@@ -27,7 +27,7 @@
 9. Merges the per-sample matrices into one RDS and joins sample metadata onto it with a custom Python script ([`pandas`](https://pandas.pydata.org/))
 10. Collects all reports into a MultiQC report ([`MultiQC`](http://multiqc.info/))
 
-![](./docs/images/vcftocounts-subway.excalidraw.png)
+![](./docs/images/vcftocounts_metro.svg)
 
 ## Usage
 
