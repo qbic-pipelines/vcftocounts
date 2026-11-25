@@ -35,7 +35,6 @@
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "counts2rds",
-                "counts2rds/all_samples.csv",
                 "counts2rds/all_samples.rds",
                 "counts2rds/all_samples_dropped_samples.csv",
                 "counts2rds/all_samples_summary.csv",
@@ -56,7 +55,6 @@
             ],
             [
                 "chr22_label.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "all_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "all_samples.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "all_samples_dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -70,7 +68,7 @@
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-25T12:47:16.449849",
+        "timestamp": "2026-11-25T13:51:36.059856",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -112,7 +110,6 @@
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "counts2rds",
-                "counts2rds/all_samples.csv",
                 "counts2rds/all_samples.rds",
                 "counts2rds/all_samples_dropped_samples.csv",
                 "counts2rds/all_samples_summary.csv",
@@ -137,10 +134,9 @@
             ],
             [
                 "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
-                "all_samples.csv:md5,77c1526e697bf78b557e2ced196b4ac2",
                 "all_samples.rds:md5,ec285e60e3f288ee0293703e00ff19c6",
                 "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
-                "all_samples_summary.csv:md5,26beb0d6da3695fb30741142afb22a5b",
+                "all_samples_summary.csv:md5,892de0d0c027ee217938dfb614f6282b",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "chr22_sample.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
             ],
@@ -165,7 +161,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-25T12:52:46.150809",
+        "timestamp": "2026-11-25T13:51:18.636305",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

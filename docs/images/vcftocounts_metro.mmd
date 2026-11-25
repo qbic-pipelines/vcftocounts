@@ -9,7 +9,8 @@
 
 %%metro file: vcf_in | VCF | Called variants
 %%metro file: ref_fasta | FASTA | Reference
-%%metro file: csv_out | CSV | Count matrix
+%%metro file: csv_out | CSV | Per-sample counts
+%%metro file: rds_out | RDS | Merged count matrix
 %%metro file: report_out | HTML | MultiQC
 
 %%metro line: flow | VCF pipeline | #0570b0
@@ -26,6 +27,7 @@
 %%metro marker: merge | circle, open
 %%metro marker: annotate | square, open
 %%metro marker: vcf2counts | circle, closed | #0570b0
+%%metro marker: counts2rds | circle, closed | #0570b0
 %%metro marker: multiqc | circle, closed | #0570b0
 
 %%metro group: no index | bgziptabix | below
@@ -47,6 +49,7 @@
 %%metro process: merge | VCFTOCOUNTS:BCFTOOLS_MERGE
 %%metro process: annotate | VCFTOCOUNTS:BCFTOOLS_ANNOTATE
 %%metro process: vcf2counts | VCFTOCOUNTS:VCF2COUNTS
+%%metro process: counts2rds | VCFTOCOUNTS:COUNTS2RDS
 %%metro process: multiqc | VCFTOCOUNTS:MULTIQC
 
 graph LR
@@ -84,11 +87,15 @@ graph LR
         %%metro entry: left | flow
         vcf2counts[vcf2counts]
         csv_out[ ]
+        counts2rds[counts2rds]
+        rds_out[ ]
         multiqc[MultiQC]
         report_out[ ]
 
         vcf2counts -->|flow| csv_out
-        vcf2counts -->|flow| multiqc
+        vcf2counts -->|flow| counts2rds
+        counts2rds -->|flow| rds_out
+        counts2rds -->|flow| multiqc
         multiqc -->|flow| report_out
     end
 
