@@ -272,7 +272,7 @@ workflow VCFTOCOUNTS {
     ch_counts_csvs = VCF2COUNTS.out.csv
         .map { _meta, csv -> csv }
         .collect()
-        .map { csvs -> [[id: 'all_samples', write_csv: true], csvs] }
+        .map { csvs -> [[id: 'all_samples'], csvs] }
 
     COUNTS2RDS(
         ch_counts_csvs,

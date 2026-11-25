@@ -24,7 +24,7 @@ nextflow_pipeline {
             def stable_path = getAllFilesFromDir(params.outdir, ignoreFile: 'tests/.nftignore')
             // vcf_files: All files in ${params.outdir}
             def vcf_files  = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
-            def vcf2counts_files = getAllFilesFromDir(params.outdir, include: ['*/*.csv'])
+            def vcf2counts_files = getAllFilesFromDir(params.outdir, include: ['vcf2counts/*.csv'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
