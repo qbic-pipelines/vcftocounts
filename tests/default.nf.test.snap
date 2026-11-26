@@ -26,12 +26,12 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz",
-                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz.tbi",
                 "bcftools/reheader",
-                "bcftools/reheader/chr22_sample",
-                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz",
-                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
+                "bcftools/reheader/HG00844",
+                "bcftools/reheader/HG00844/HG00844.chr22_label.reheader.vcf.gz",
+                "bcftools/reheader/HG00844/HG00844.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "counts2rds",
@@ -51,7 +51,7 @@
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
                 "vcf2counts",
-                "vcf2counts/chr22_sample.csv"
+                "vcf2counts/HG00844.csv"
             ],
             [
                 "chr22_label.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -60,15 +60,15 @@
                 "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "chr22_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                "HG00844.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             [
-                "chr22_sample.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr22_sample.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "HG00844.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "HG00844.chr22_label.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-25T13:51:36.059856",
+        "timestamp": "2026-11-26T10:30:54.822463",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -101,12 +101,12 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz",
-                "bcftools/annotate/chr22_sample.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz.tbi",
                 "bcftools/reheader",
-                "bcftools/reheader/chr22_sample",
-                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz",
-                "bcftools/reheader/chr22_sample/chr22_sample.chr22_label.reheader.vcf.gz.tbi",
+                "bcftools/reheader/HG00844",
+                "bcftools/reheader/HG00844/HG00844.chr22_label.reheader.vcf.gz",
+                "bcftools/reheader/HG00844/HG00844.chr22_label.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "counts2rds",
@@ -130,19 +130,19 @@
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
                 "vcf2counts",
-                "vcf2counts/chr22_sample.csv"
+                "vcf2counts/HG00844.csv"
             ],
             [
                 "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
-                "all_samples.rds:md5,ec285e60e3f288ee0293703e00ff19c6",
+                "all_samples.rds:md5,48d97a8a5b94094c442f63e8e3d70449",
                 "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
-                "all_samples_summary.csv:md5,892de0d0c027ee217938dfb614f6282b",
+                "all_samples_summary.csv:md5,a2207530e961968e2f9a9c57365a2e33",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr22_sample.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
+                "HG00844.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
             ],
             [
-                "chr22_sample.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
-                "chr22_sample.chr22_label.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a",
+                "HG00844.IDremoved.vcf.gz:md5,5e7f2837f7f33de49ced557ef2fc5bfa",
+                "HG00844.chr22_label.reheader.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a",
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
             ],
             [
@@ -161,7 +161,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-25T13:51:18.636305",
+        "timestamp": "2026-11-26T10:30:35.735229",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
