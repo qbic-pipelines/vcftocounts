@@ -117,14 +117,11 @@ Both accept a local path or a URL and default to the 1000 Genomes phase 3 files,
 | Analysis-shaped             | `Run`, `population`         | One row per sample. Also accepts `SAMPLE_NAME`, `Sample` or `sample` for the sample column and `POPULATION` or `Population` for the population column. |
 | 1000 Genomes sequence index | `SAMPLE_NAME`, `POPULATION` | Tab-separated, many rows per sample. Only those two columns are read; the other 24 are skipped, so the 67 MB index costs one two-column scan.          |
 
-The file is collapsed to one row per sample before the join, so a sequence index with many FASTQ rows per sample does not multiply the count table. The first row seen for a sample wins.
+The file is collapsed to one row per sample first, so many FASTQ rows per sample do not multiply the count table. The first row seen wins.
 
-`--population_info` is keyed on population code and supplies `super_population_code`, `population_description` and `super_population_description`. The 1000 Genomes `populations.tsv` spells its headers with spaces (`Population Code`, `Super Population`), so both that and the underscore form are accepted. That file has no superpopulation description column, so `super_population_description` is derived from the code (`EAS` becomes `East Asian`).
+`--population_info` is keyed on population code and supplies `super_population_code`. Header names with spaces (`Population Code`, `Super Population`, as in the 1000 Genomes `populations.tsv`) and the underscore form are both accepted. Since that file has no description column, `super_population_description` is derived from the code (`EAS` → `East Asian`).
 
-To run without metadata, pass an empty string for either parameter. `--sample_metadata ''` writes count columns only, and `--population_info ''` leaves the superpopulation columns empty. Samples whose id does not appear in the metadata file are kept in the RDS with `NA` metadata columns and are reported in the task log.
-
-> [!NOTE]
-> The sample ids in the metadata file have to match the `sample` column of the samplesheet as it appears in the CSV filenames. If a sample is reported as having no metadata match, check that first.
+`--sample_metadata` supplies the sample names the count matrices are joined on and always has to resolve to a file. Samples it cannot group (no population or superpopulation code, or no row at all) are dropped, since the analysis compares populations.
 
 ### Updating the pipeline
 

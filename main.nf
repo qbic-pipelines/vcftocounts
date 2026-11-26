@@ -90,8 +90,8 @@ workflow QBICPIPELINES_VCFTOCOUNTS {
     dict = params.dict ? channel.fromPath(params.dict).collect() : channel.value([])
 
     // Metadata: two files -- the sample->population index and the
-    // population->superpopulation table. counts2rds.py joins them, so they are
-    // passed as a pair.
+    // population->superpopulation table. counts2rds.R merges them
+    // into the prepared null, so they are passed as a pair.
     ch_metadata_table = channel.value([
         [id: 'metadata'],
         params.sample_metadata ? file(params.sample_metadata, checkIfExists: true) : [],

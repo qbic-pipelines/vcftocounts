@@ -10,7 +10,7 @@
                     "bcftools": 1.25
                 },
                 "COUNTS2RDS": {
-                    "counts2rds": "1.0.0"
+                    "counts2rds": "2.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -35,9 +35,12 @@
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "counts2rds",
-                "counts2rds/all_samples.rds",
-                "counts2rds/all_samples_dropped_samples.csv",
-                "counts2rds/all_samples_summary.csv",
+                "counts2rds/all_samples.dropped_samples.csv",
+                "counts2rds/all_samples.info.rds",
+                "counts2rds/all_samples.null.rds",
+                "counts2rds/all_samples.q2.rds",
+                "counts2rds/all_samples.summary.csv",
+                "counts2rds/all_samples.variants.rds",
                 "htslib",
                 "htslib/chr22_label",
                 "htslib/chr22_label/NA12878.chr22.1X.indexed.vcf.gz",
@@ -55,9 +58,12 @@
             ],
             [
                 "chr22_label.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "all_samples.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "all_samples_dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.info.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.null.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.q2.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.variants.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "HG00844.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
@@ -68,7 +74,7 @@
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-26T10:30:54.822463",
+        "timestamp": "2026-11-26T12:27:26.194338",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -85,7 +91,7 @@
                     "bcftools": 1.25
                 },
                 "COUNTS2RDS": {
-                    "counts2rds": "1.0.0"
+                    "counts2rds": "2.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -110,9 +116,12 @@
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr22_label.txt",
                 "counts2rds",
-                "counts2rds/all_samples.rds",
-                "counts2rds/all_samples_dropped_samples.csv",
-                "counts2rds/all_samples_summary.csv",
+                "counts2rds/all_samples.dropped_samples.csv",
+                "counts2rds/all_samples.info.rds",
+                "counts2rds/all_samples.null.rds",
+                "counts2rds/all_samples.q2.rds",
+                "counts2rds/all_samples.summary.csv",
+                "counts2rds/all_samples.variants.rds",
                 "htslib",
                 "htslib/chr22_label",
                 "htslib/chr22_label/NA12878.chr22.1X.indexed.vcf.gz",
@@ -134,9 +143,12 @@
             ],
             [
                 "chr22_label.txt:md5,96557cf859345118f17e83a11f36156e",
-                "all_samples.rds:md5,48d97a8a5b94094c442f63e8e3d70449",
-                "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
-                "all_samples_summary.csv:md5,a2207530e961968e2f9a9c57365a2e33",
+                "all_samples.dropped_samples.csv:md5,a57e971b0e87511f6ee95a1bc5573366",
+                "all_samples.info.rds:md5,65e201b5c9f67405146bc7333cf258d6",
+                "all_samples.null.rds:md5,5ed9993cb83a77bd0a6f446e6d332014",
+                "all_samples.q2.rds:md5,031a3fe227aadadc2ff52bd337866ca5",
+                "all_samples.summary.csv:md5,6be3bc366d50aacb8cf226020da47644",
+                "all_samples.variants.rds:md5,93f3b7b4eeca1a1255b6464485df3920",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
                 "HG00844.csv:md5,cb8cee42f1a53ecf04e40ae975f1d8f0"
             ],
@@ -146,6 +158,22 @@
                 "NA12878.chr22.1X.indexed.vcf.gz:md5,11558863c409ca2d6278e699cd5fde1a"
             ],
             [
+                [
+                    "sample_name,reason"
+                ],
+                [
+                    "metric,value",
+                    "n_samples,1",
+                    "n_callers,1",
+                    "callers,chr22_label",
+                    "n_rows,71",
+                    "n_variants,71",
+                    "n_na_filled,0",
+                    "n_populations,1",
+                    "n_superpopulations,1",
+                    "include_sex,FALSE",
+                    "metadata_file,sequence.subset.index"
+                ],
                 [
                     ",chr22_label",
                     "chr22:16570065_A/G,0",
@@ -161,7 +189,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-26T10:30:35.735229",
+        "timestamp": "2026-11-26T12:37:01.842192",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

@@ -48,6 +48,10 @@ SAMPLE-2,pipelineB-callerB,true,path/to/g.vcf.gz,path/to/g.vcf.gz.tbi
 
 Each row represents a VCF file coming from a sample. The `label` column enables concatenation of vcfs (for example when the pipeline produces different vcfs for chrM and chrY). The `gvcf` column indicates whether the file is a g.vcf file or not. The `vcf_path` and `vcf_index_path` columns contain the path to the VCF file and its index, respectively.
 
+Every sample must have the same labels, one per caller column in the count matrix. Rows with the same sample and label are concatenated, so a sample can span several VCFs per label (for example chrM and chrY); what must not differ is the set of labels. The pipeline checks this at start-up and names the samples that disagree.
+
+A VCF must contain variants: `bcftools concat` rejects a file with only a header and `bcftools merge` segfaults on it (exit 139, htslib #1845). Leave such files out of the samplesheet.
+
 Now, you can run the pipeline using:
 
 ```bash

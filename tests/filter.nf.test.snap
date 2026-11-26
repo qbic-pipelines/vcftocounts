@@ -22,7 +22,7 @@
                     "bcftools": 1.25
                 },
                 "COUNTS2RDS": {
-                    "counts2rds": "1.0.0"
+                    "counts2rds": "2.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -38,17 +38,17 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz",
-                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz.tbi",
                 "bcftools/merge",
-                "bcftools/merge/chr21_ann_sample.merge.vcf.gz",
-                "bcftools/merge/chr21_ann_sample.merge.vcf.gz.tbi",
+                "bcftools/merge/HG00844.merge.vcf.gz",
+                "bcftools/merge/HG00844.merge.vcf.gz.tbi",
                 "bcftools/reheader",
-                "bcftools/reheader/chr21_ann_sample",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz.tbi",
+                "bcftools/reheader/HG00844",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerA.reheader.vcf.gz",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerA.reheader.vcf.gz.tbi",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerB.reheader.vcf.gz",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerB.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
                 "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
@@ -69,9 +69,12 @@
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
                 "counts2rds",
-                "counts2rds/all_samples.rds",
-                "counts2rds/all_samples_dropped_samples.csv",
-                "counts2rds/all_samples_summary.csv",
+                "counts2rds/all_samples.dropped_samples.csv",
+                "counts2rds/all_samples.info.rds",
+                "counts2rds/all_samples.null.rds",
+                "counts2rds/all_samples.q2.rds",
+                "counts2rds/all_samples.summary.csv",
+                "counts2rds/all_samples.variants.rds",
                 "htslib",
                 "htslib/chr21_ann_callerA",
                 "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz",
@@ -88,7 +91,7 @@
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
                 "vcf2counts",
-                "vcf2counts/chr21_ann_sample.csv"
+                "vcf2counts/HG00844.csv"
             ],
             [
                 "chr21_ann_callerA.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
@@ -97,26 +100,29 @@
                 "annotated.filter.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "annotated.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
                 "annotated.filter.bcftools_stats.txt:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "info_filtered_variants.csv:md5,23f561e754c7ac127fcce400651818dd",
-                "all_samples.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "all_samples_dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "all_samples_summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "info_filtered_variants.csv:md5,d8d45540701b3f3eaedc565be52be0f1",
+                "all_samples.dropped_samples.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.info.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.null.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.q2.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.summary.csv:md5,d41d8cd98f00b204e9800998ecf8427e",
+                "all_samples.variants.rds:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
                 ".stub:md5,d41d8cd98f00b204e9800998ecf8427e",
-                "chr21_ann_sample.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
+                "HG00844.csv:md5,d41d8cd98f00b204e9800998ecf8427e"
             ],
             [
-                "chr21_ann_sample.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_sample.merge.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
-                "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "HG00844.IDremoved.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "HG00844.merge.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "HG00844.chr21_ann_callerA.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
+                "HG00844.chr21_ann_callerB.reheader.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.filter.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940",
                 "annotated.indexed.vcf.gz:md5,68b329da9893e34099c7d8ad5cb9c940"
             ]
         ],
-        "timestamp": "2026-11-12T11:56:50.04013",
+        "timestamp": "2026-11-26T12:42:15.115677",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"
@@ -145,7 +151,7 @@
                     "bcftools": 1.25
                 },
                 "COUNTS2RDS": {
-                    "counts2rds": "1.0.0"
+                    "counts2rds": "2.0.0"
                 },
                 "CREATE_SAMPLE_FILE": {
                     "create_sample_file": "1.0.0"
@@ -161,17 +167,17 @@
             [
                 "bcftools",
                 "bcftools/annotate",
-                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz",
-                "bcftools/annotate/chr21_ann_sample.IDremoved.vcf.gz.tbi",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz",
+                "bcftools/annotate/HG00844.IDremoved.vcf.gz.tbi",
                 "bcftools/merge",
-                "bcftools/merge/chr21_ann_sample.merge.vcf.gz",
-                "bcftools/merge/chr21_ann_sample.merge.vcf.gz.tbi",
+                "bcftools/merge/HG00844.merge.vcf.gz",
+                "bcftools/merge/HG00844.merge.vcf.gz.tbi",
                 "bcftools/reheader",
-                "bcftools/reheader/chr21_ann_sample",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz.tbi",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz",
-                "bcftools/reheader/chr21_ann_sample/chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz.tbi",
+                "bcftools/reheader/HG00844",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerA.reheader.vcf.gz",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerA.reheader.vcf.gz.tbi",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerB.reheader.vcf.gz",
+                "bcftools/reheader/HG00844/HG00844.chr21_ann_callerB.reheader.vcf.gz.tbi",
                 "bcftools/reheader/samplefiles",
                 "bcftools/reheader/samplefiles/chr21_ann_callerA.txt",
                 "bcftools/reheader/samplefiles/chr21_ann_callerB.txt",
@@ -192,9 +198,12 @@
                 "bcftools/view/csv",
                 "bcftools/view/csv/info_filtered_variants.csv",
                 "counts2rds",
-                "counts2rds/all_samples.rds",
-                "counts2rds/all_samples_dropped_samples.csv",
-                "counts2rds/all_samples_summary.csv",
+                "counts2rds/all_samples.dropped_samples.csv",
+                "counts2rds/all_samples.info.rds",
+                "counts2rds/all_samples.null.rds",
+                "counts2rds/all_samples.q2.rds",
+                "counts2rds/all_samples.summary.csv",
+                "counts2rds/all_samples.variants.rds",
                 "htslib",
                 "htslib/chr21_ann_callerA",
                 "htslib/chr21_ann_callerA/annotated.indexed.vcf.gz",
@@ -215,7 +224,7 @@
                 "pipeline_info",
                 "pipeline_info/vcftocounts_software_mqc_versions.yml",
                 "vcf2counts",
-                "vcf2counts/chr21_ann_sample.csv"
+                "vcf2counts/HG00844.csv"
             ],
             [
                 "chr21_ann_callerA.txt:md5,53d75ae10df3e0af2f8e2172826ed179",
@@ -224,24 +233,43 @@
                 "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
                 "annotated.bcftools_stats.txt:md5,086e8837c1e6936125889969e8fd13d5",
                 "annotated.filter.bcftools_stats.txt:md5,5dc91fc00d3de090422f25f1dfd25b16",
-                "info_filtered_variants.csv:md5,580391966264b04d183b5ca89ea78b3a",
-                "all_samples.rds:md5,49cced0e9be20f8db8974403e309e066",
-                "all_samples_dropped_samples.csv:md5,a11a1df4f3108b98c0890cf464e11129",
-                "all_samples_summary.csv:md5,01dc7d312283dec67bfa66538f13b0a0",
+                "info_filtered_variants.csv:md5,3d091064d2076b09a39ee80cc30d78ff",
+                "all_samples.dropped_samples.csv:md5,a57e971b0e87511f6ee95a1bc5573366",
+                "all_samples.info.rds:md5,cf9f764091d6774405af2cdd87988331",
+                "all_samples.null.rds:md5,318af798f5a72b63f64b27e6dfb84458",
+                "all_samples.q2.rds:md5,5d1acbff04e8859a8042d040d1c60f6f",
+                "all_samples.summary.csv:md5,3fff3ca84a6eb6f5daf693b0f3f8ea4a",
+                "all_samples.variants.rds:md5,8c32e720335a03a888e86bf15c35d0a4",
                 "multiqc_citations.txt:md5,4c806e63a283ec1b7e78cdae3a923d4f",
-                "chr21_ann_sample.csv:md5,175ee2cdbc9fe17c6f5312b8c2cebdac"
+                "HG00844.csv:md5,175ee2cdbc9fe17c6f5312b8c2cebdac"
             ],
             [
-                "chr21_ann_sample.IDremoved.vcf.gz:md5,2b75dcfffa100d95308752e44aa704c8",
-                "chr21_ann_sample.merge.vcf.gz:md5,7a68fafa5dd5bddc2547f1163bcbb68a",
-                "chr21_ann_sample.chr21_ann_callerA.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
-                "chr21_ann_sample.chr21_ann_callerB.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
+                "HG00844.IDremoved.vcf.gz:md5,2b75dcfffa100d95308752e44aa704c8",
+                "HG00844.merge.vcf.gz:md5,7a68fafa5dd5bddc2547f1163bcbb68a",
+                "HG00844.chr21_ann_callerA.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
+                "HG00844.chr21_ann_callerB.reheader.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
                 "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
                 "annotated.filter.vcf.gz:md5,97cd79b71fb0424bfa642e23f22bb035",
                 "annotated.indexed.vcf.gz:md5,c507b1cbd540e8324f686618013ad137",
                 "annotated.indexed.vcf.gz:md5,c507b1cbd540e8324f686618013ad137"
             ],
             [
+                [
+                    "sample_name,reason"
+                ],
+                [
+                    "metric,value",
+                    "n_samples,1",
+                    "n_callers,2",
+                    "callers,chr21_ann_callerA|chr21_ann_callerB",
+                    "n_rows,7",
+                    "n_variants,7",
+                    "n_na_filled,0",
+                    "n_populations,1",
+                    "n_superpopulations,1",
+                    "include_sex,FALSE",
+                    "metadata_file,sequence.subset.index"
+                ],
                 [
                     ",chr21_ann_callerA,chr21_ann_callerB",
                     "chr21:10462834_A/G,1,1",
@@ -254,7 +282,7 @@
                 ]
             ]
         ],
-        "timestamp": "2026-11-12T12:03:45.637321",
+        "timestamp": "2026-11-26T12:41:52.378621",
         "meta": {
             "nf-test": "0.9.5",
             "nextflow": "26.04.0"

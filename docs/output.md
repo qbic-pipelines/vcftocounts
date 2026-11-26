@@ -18,7 +18,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom Python script written by @ellisdoro
-- [Merge to RDS](#merge-to-rds) - Merges the per-sample matrices into one RDS with sample metadata using `counts2rds`
+- [Merge to RDS](#merge-to-rds) - Merges the per-sample matrices into the prepared null, variants and info objects the diversity analysis reads, using `counts2rds`
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -140,33 +140,26 @@ The first column holds the variant id (chromosome and position, unless rsIDs wer
 <summary>Output files</summary>
 
 - `counts2rds/`
-  - `all_samples.rds`: one R object holding all samples, all callers, and the sample metadata. This is the file the downstream diversity analysis reads.
-  - `all_samples.csv`: csv copy of the same table, written only when `write_csv` is set, because the RDS is binary and not inspectable by eye.
-  - `all_samples_summary.csv`: run metrics as `metric,value` rows (`n_samples`, `n_callers`, `callers`, `n_rows`, `n_variants`, `n_duplicate_keys_collapsed`, `n_samples_dropped`, `n_rows_without_metadata`, `n_na_genotypes`, `n_populations`, `n_superpopulations`, `metadata_file`, `population_lookup_file`).
-  - `all_samples_dropped_samples.csv`: samples that were dropped, with `sample_name`, `source_file` and `reason`. Written even when no sample was dropped, so the file always exists.
+  - `all_samples.null.rds`: the prepared null. `M` (integer call matrix, rows = sample x variant, columns = callers), `row_var`, `var_start`, `var_len`, `variant_chr`, `row_sample`, `sample_pop`, `sample_super`.
+  - `all_samples.variants.rds`: `id`, `chr`, `pos`, in the null's variant order.
+  - `all_samples.info.rds`: `samples`, the code-to-description maps, the pipeline names, the number of null rows and variants.
+  - `all_samples.q2.rds`: call-pattern codes for `--fastQ2`, which needs `--qHillNumber 2`. One integer per null row. Absent above 1e8 call patterns, where `--fastQ2` cannot be used.
+  - `all_samples.summary.csv`: `metric,value` run metrics.
 
-</details>
+Every name carries the task prefix (`all_samples`). The analysis reads the bare names, so strip it before handing the directory to `--prepDir`:
 
-The per-sample CSVs from the previous step are pooled into a single table and saved as an RDS. The table has one row per sample and variant, with these columns:
+```bash
+main.R plan --filteredCSV filtered.csv --demoInfo metadata.tsv \
+    --prepDir <dir with null.rds, variants.rds, info.rds> --out plan.rds
+```
 
-| Column                         | Description                                      |
-| ------------------------------ | ------------------------------------------------ |
-| `sample_name`                  | Sample id, taken from the CSV filename.          |
-| `variant_called`               | Variant id.                                      |
-| one column per `label`         | Genotype call per caller: `0`, `1`, `2` or `NA`. |
-| `population_code`              | Population code, e.g. `GBR`.                     |
-| `super_population_code`        | Superpopulation code, e.g. `EUR`.                |
-| `population_description`       | Population description, e.g. `British`.          |
-| `super_population_description` | Superpopulation description, e.g. `European`.    |
+What the merge does:
 
-The four metadata columns are filled from `--sample_metadata` and `--population_info`; see the [usage documentation](usage.md#sample-metadata) for the accepted file shapes. Three behaviours are worth knowing before reading the RDS:
-
-- The genotype columns hold `0` (homozygous reference), `1` (heterozygous), `2` (homozygous alternate) and `0` (not called).
-
-- Repeated `(sample_name, variant_called)` pairs are collapsed by taking the maximum per caller column, so the strongest genotype call wins. `data.table` rejects duplicate row names and the downstream code builds rownames as `sample_name` + `_` + `variant_called`.
-- Rows whose sample has no metadata match are kept, but their metadata columns are `NA` and they drop out of any per-population downstream stage. The count is reported as `n_rows_without_metadata` in the summary and as a warning in the task log.
-
-The RDS is written by [`pyreadr`](https://ofajardo.github.io/pyreadr/), so the module needs no R installation. Count columns are stored as R integers and the metadata columns as character with `NA`, and the file is gzip-compressed without a timestamp, so the same input always gives a byte-identical RDS.
+- Calls are `0` (hom reference), `1` (het), `2` (hom alternate). A genotype the caller left uncalled or multi-allelic becomes `0`: the Hill numbers count absence, not missing data.
+- Variants are ordered by chromosome in byte order (`chr1`, `chr10`, `chr2`), then position, then id. Rows are grouped by variant, which `var_start` and `var_len` index.
+- Samples are indexed by the `row_sample` factor; the metadata decides the group of each row. Samples without a population or superpopulation label, or without a metadata row, are dropped.
+- chrX and chrY are dropped unless `--counts2rds_include_sex` is set.
+- Repeated `(sample, variant)` rows collapse to the maximum call per caller.
 
 ### MultiQC
 
