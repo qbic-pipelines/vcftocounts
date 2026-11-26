@@ -18,6 +18,7 @@ The pipeline is built using [Nextflow](https://www.nextflow.io/) and processes d
 - [Merge VCFs](#merge-vcfs) - Merges all vcfs from the same sample with bcftools/merge
 - [Remove IDs](#remove-ids) - Removes entries in ID field with bcftools/annotate
 - [Convert to matrix](#convert-to-matrix) - Converts the (merged) vcfs to a matrix using a custom Python script written by @ellisdoro
+- [Merge to RDS](#merge-to-rds) - Merges the per-sample matrices into the prepared null, variants and info objects the diversity analysis reads, using `counts2rds`
 - [MultiQC](#multiqc) - Aggregate report describing results and QC from the whole pipeline
 - [Pipeline information](#pipeline-information) - Report metrics generated during the workflow execution
 
@@ -130,6 +131,35 @@ Removes entries in the `ID` column of the VCF using `bcftools annotate -x ID` to
 A custom Python script is used to convert the finalized VCF to a CSV which can be used for further downstream analysis. Script was written by [Dorothy Ellis](https://github.com/ellisdoro). The VCF is streamed line by line rather than loaded into memory, so large cohort VCFs can be converted without a memory penalty.
 
 The CSV holds one row per variant, labelled `{chrom}:{pos}_{REF}/{ALT}` using the first ALT allele only, and one column per sample. Cells encode the genotype: `0` for hom-ref (`0/0`), `1` for het (`0/1`, `1/0`), `2` for hom-alt (`1/1`) and `NA` for anything else, such as multi-allelic genotypes (`0/2`).
+
+The first column holds the variant id (chromosome and position, unless rsIDs were kept), and every further column is one caller, holding the genotype call per variant as `0` (homozygous reference), `1` (heterozygous), `2` (homozygous alternate) or `NA` (not called). The column name is the `label` from the samplesheet, or the sample name recorded in the VCF when `--rename false` is used. A sample that had no variants surviving filtering still produces a header-only CSV rather than no file at all.
+
+### Merge to RDS
+
+<details markdown="1">
+<summary>Output files</summary>
+
+- `counts2rds/`
+  - `all_samples.null.rds`: the prepared null. `M` (integer call matrix, rows = sample x variant, columns = callers), `row_var`, `var_start`, `var_len`, `variant_chr`, `row_sample`, `sample_pop`, `sample_super`.
+  - `all_samples.variants.rds`: `id`, `chr`, `pos`, in the null's variant order.
+  - `all_samples.info.rds`: `samples`, the code-to-description maps, the pipeline names, the number of null rows and variants.
+  - `all_samples.q2.rds`: call-pattern codes for `--fastQ2`, which needs `--qHillNumber 2`. One integer per null row. Absent above 1e8 call patterns, where `--fastQ2` cannot be used.
+  - `all_samples.summary.csv`: `metric,value` run metrics.
+
+Every name carries the task prefix (`all_samples`). The analysis reads the bare names, so strip it before handing the directory to `--prepDir`:
+
+```bash
+main.R plan --filteredCSV filtered.csv --demoInfo metadata.tsv \
+    --prepDir <dir with null.rds, variants.rds, info.rds> --out plan.rds
+```
+
+What the merge does:
+
+- Calls are `0` (hom reference), `1` (het), `2` (hom alternate). A genotype the caller left uncalled or multi-allelic becomes `0`: the Hill numbers count absence, not missing data.
+- Variants are ordered by chromosome in byte order (`chr1`, `chr10`, `chr2`), then position, then id. Rows are grouped by variant, which `var_start` and `var_len` index.
+- Samples are indexed by the `row_sample` factor; the metadata decides the group of each row. Samples without a population or superpopulation label, or without a metadata row, are dropped.
+- chrX and chrY are dropped unless `--counts2rds_include_sex` is set.
+- Repeated `(sample, variant)` rows collapse to the maximum call per caller.
 
 ### MultiQC
 

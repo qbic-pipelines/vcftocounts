@@ -8,7 +8,7 @@ This document describes the usage of the pipeline. The pipeline processes (g)VCF
 
 ## Samplesheet input
 
-You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 4 columns, and a header row as shown in the examples below.
+You will need to create a samplesheet with information about the samples you would like to analyse before running the pipeline. Use this parameter to specify its location. It has to be a comma-separated file with 5 columns, and a header row as shown in the examples below.
 
 ```bash
 --input '[path to samplesheet file]' --genome '[genome version]'
@@ -95,6 +95,33 @@ Notably, this enables filtering for variants with certain impact levels or conse
 
 > [!NOTE]
 > The filtering step only works with conda for nextflow versions above 24.10.2 (use docker or singularity if you want to use an older nextflow version)
+
+### Sample metadata
+
+The pipeline joins sample metadata onto the final count matrix so that the RDS is ready for a population-level analysis without any further file wrangling. Two parameters control this:
+
+- `--sample_metadata`: maps each sample to a population code.
+- `--population_info`: maps each population code to a superpopulation code and descriptions.
+
+Both accept a local path or a URL and default to the 1000 Genomes phase 3 files, so a run on 1000 Genomes data needs no extra arguments:
+
+```bash
+--sample_metadata 'https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/20130502.phase3.analysis.sequence.index'
+--population_info 'https://ftp.1000genomes.ebi.ac.uk/vol1/ftp/phase3/20131219.populations.tsv'
+```
+
+`--sample_metadata` accepts two shapes, detected from the column names rather than from the file extension or a flag:
+
+| Shape                       | Example columns             | Notes                                                                                                                                                  |
+| --------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Analysis-shaped             | `Run`, `population`         | One row per sample. Also accepts `SAMPLE_NAME`, `Sample` or `sample` for the sample column and `POPULATION` or `Population` for the population column. |
+| 1000 Genomes sequence index | `SAMPLE_NAME`, `POPULATION` | Tab-separated, many rows per sample. Only those two columns are read; the other 24 are skipped, so the 67 MB index costs one two-column scan.          |
+
+The file is collapsed to one row per sample first, so many FASTQ rows per sample do not multiply the count table. The first row seen wins.
+
+`--population_info` is keyed on population code and supplies `super_population_code`. Header names with spaces (`Population Code`, `Super Population`, as in the 1000 Genomes `populations.tsv`) and the underscore form are both accepted. Since that file has no description column, `super_population_description` is derived from the code (`EAS` → `East Asian`).
+
+`--sample_metadata` supplies the sample names the count matrices are joined on and always has to resolve to a file. Samples it cannot group (no population or superpopulation code, or no row at all) are dropped, since the analysis compares populations.
 
 ### Updating the pipeline
 

@@ -91,8 +91,11 @@ workflow PIPELINE_INITIALISATION {
     // Create channel from input file provided through params.input
     //
 
+    def sheet = samplesheetToList(input, "${projectDir}/assets/schema_input.json")
+    validateLabels(sheet, input)
+
     channel
-        .fromList(samplesheetToList(input, "${projectDir}/assets/schema_input.json"))
+        .fromList(sheet)
         .set { ch_samplesheet }
 
     emit:
@@ -158,18 +161,38 @@ def validateInputParameters() {
 }
 
 //
-// Validate channels from input samplesheet
+// Check that every sample ends up with the same set of labels. Rows sharing a label are
+// concatenated (BCFTOOLS_CONCAT groups by id and label), and the per-label VCFs of a sample
+// are merged into one VCF whose sample columns are named after the labels, so one label
+// becomes one caller column in the count matrix. A sample missing a label therefore yields a
+// count table with a different set of callers, which cannot be compared across samples.
 //
-def validateInputSamplesheet(input) {
-    def (metas, fastqs) = input[1..2]
-
-    // Check that multiple runs of the same sample are of the same datatype i.e. single-end / paired-end
-    def endedness_ok = metas.collect{ meta -> meta.single_end }.unique().size == 1
-    if (!endedness_ok) {
-        error("Please check input samplesheet -> Multiple runs of a sample must be of the same datatype i.e. single-end or paired-end: ${metas[0].id}")
+def validateLabels(sheet, input) {
+    if (!sheet) {
+        error("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+            "  The samplesheet is empty: there is no VCF to process.\n" +
+            "  Check --input ${input}.\n" +
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
     }
 
-    return [ metas[0], fastqs ]
+    // sample id -> its distinct labels. Repeated rows with the same label are concatenated,
+    // so they count once; the order in the merged VCF is not something to enforce here.
+    def labels = [:].withDefault { [] as Set }
+    sheet.each { entry -> labels[entry[0].id] << entry[0].label }
+    def reference = labels.values().first().sort()
+    def first = labels.keySet().first()
+    def differing = labels.findAll { id, own -> own.sort() != reference }
+
+    if (!differing.isEmpty()) {
+        def detail = differing.collect { id, own -> "  ${id}: [${own.sort().join(', ')}]" }
+        error("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~\n" +
+            "  Every sample must have the same labels, one per caller column.\n" +
+            "  Expected [${reference.join(', ')}] (from ${first}), but:\n" +
+            detail.join(System.lineSeparator()) + System.lineSeparator() +
+            "  Rows with the same sample and label are concatenated, so an extra row is not the\n" +
+            "  problem - a missing or misnamed label is.\n" +
+            "~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~")
+    }
 }
 //
 // Get attribute from genome config file e.g. fasta

@@ -20,6 +20,7 @@ nextflow_pipeline {
                 fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
                 fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
                 dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
+                sample_metadata = 'https://github.com/qbic-pipelines/test-datasets/raw/refs/heads/main/vcftocounts/sequence.subset.index'
             }
         }
 
@@ -45,6 +46,7 @@ nextflow_pipeline {
             def vcf_files_summary = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'],
                 ignore: ['**/callerA.reheader.vcf.gz', '**/callerB.reheader.vcf.gz'])
             def vcf_files_header = getAllFilesFromDir(params.outdir, include: ['**/*.vcf{,.gz}'])
+            def csv_files = getAllFilesFromDir(params.outdir, include: ['counts2rds/*.csv'])
             assert workflow.success
             assertAll(
                 { assert snapshot(
@@ -60,7 +62,8 @@ nextflow_pipeline {
                     vcf_files.collect{ file -> file.name + ":md5," + path(file.path).vcf.variantsMD5 },
                     // vcfs with unstable variantsMD5
                     vcf_files_summary.collect{ file -> file.name + ":summary," + path(file.path).vcf.summary },
-                    vcf_files_header.collect{ file -> file.name + ":headerCols," + path(file.path).vcf.header.getColumnCount() }
+                    vcf_files_header.collect{ file -> file.name + ":headerCols," + path(file.path).vcf.header.getColumnCount() },
+                    csv_files.collect{ file -> path(file.path).readLines().take(11) }
                 ).match() }
             )
         }
@@ -80,6 +83,7 @@ nextflow_pipeline {
                 fasta = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta"
                 fai = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.fasta.fai"
                 dict = "https://github.com/nf-core/test-datasets/raw/refs/heads/modules/data/genomics/homo_sapiens/genome/genome.dict"
+                sample_metadata = 'https://github.com/qbic-pipelines/test-datasets/raw/refs/heads/main/vcftocounts/sequence.subset.index'
             }
         }
 
